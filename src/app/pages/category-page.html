@@ -1,0 +1,45 @@
+<div class="page">
+  <app-breadcrumbs [crumbs]="crumbs()" />
+
+  <header class="intro">
+    <span class="intro__icon"><app-icon [name]="cat().icon" [size]="26" /></span>
+    <p class="eyebrow">{{ 'ui.groups.' + cat().group | t }} · {{ cat().items.length }} {{ 'ui.examples' | t }}</p>
+    <h1 [innerHTML]="cat().key + '.title' | t"></h1>
+    <div class="prose intro__text" [innerHTML]="cat().key + '.description' | t"></div>
+  </header>
+
+  <ul class="grid">
+    @for (item of cat().items; track item.id; let i = $index) {
+      <li>
+        <a class="card" [routerLink]="nav.link(cat().path + '/' + item.id)" [style.--i]="i">
+          <div class="card__head">
+            <h2 class="card__title" [class.mono]="isCode()">{{ cat().key + '.' + item.id + '.title' | t }}</h2>
+            @if (item.isNew) {
+              <span class="badge badge--new">{{ 'ui.isNew' | t }}</span>
+            }
+            @if (item.deprecated) {
+              <span class="badge badge--deprecated">{{ 'ui.deprecated' | t }}</span>
+            }
+          </div>
+          <span class="card__text prose" [innerHTML]="summary(item.id)"></span>
+          <span class="card__cta">
+            {{ 'ui.openExample' | t }}
+            <app-icon name="arrowRight" [size]="14" />
+          </span>
+        </a>
+      </li>
+    }
+  </ul>
+
+  <section class="others" aria-labelledby="others-title">
+    <h2 id="others-title" class="others__title">{{ 'ui.allSections' | t }}</h2>
+    <div class="others__list">
+      @for (c of others(); track c.key) {
+        <a class="chip" [routerLink]="nav.link(c.path)">
+          <app-icon [name]="c.icon" [size]="15" />
+          {{ c.key + '.title' | t }}
+        </a>
+      }
+    </div>
+  </section>
+</div>

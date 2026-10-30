@@ -1,0 +1,129 @@
+@use 'page';
+
+.intro {
+  position: relative;
+  margin-bottom: 2.5rem;
+  h1 {
+    margin: 0.4rem 0 1rem;
+    b {
+      font-weight: inherit;
+    }
+  }
+}
+
+.intro__icon {
+  display: inline-flex;
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-strong);
+  background: linear-gradient(135deg, rgba(242, 153, 251, 0.16), rgba(163, 254, 255, 0.08));
+  color: var(--pink);
+  box-shadow: var(--glow-pink);
+}
+
+.intro__text {
+  max-width: 760px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.25rem 1.3rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  animation: rise 0.45s ease both;
+  animation-delay: calc(min(var(--i, 0), 12) * 30ms);
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(420px 140px at 0% 0%, rgba(242, 153, 251, 0.1), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+  &:hover {
+    color: var(--text);
+    transform: translateY(-3px);
+    border-color: var(--border-strong);
+    box-shadow: var(--glow-pink);
+    &::after {
+      opacity: 1;
+    }
+    .card__cta {
+      color: var(--cyan);
+      gap: 0.6rem;
+    }
+  }
+}
+
+.card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.card__title {
+  font-size: 1.15rem;
+  color: var(--pink);
+}
+
+.card__text {
+  flex: 1;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  font: 600 0.8rem var(--mono);
+  color: var(--muted);
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.others {
+  margin-top: 4rem;
+}
+
+.others__title {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+.others__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}

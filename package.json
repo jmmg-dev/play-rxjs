@@ -1,0 +1,53 @@
+{
+  "name": "play-rxjs",
+  "version": "3.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "serve:ssr": "node dist/play-rxjs/server/server.mjs",
+    "check:examples": "node scripts/check-examples.mjs"
+  },
+  "private": true,
+  "packageManager": "npm@11.19.1",
+  "dependencies": {
+    "@angular/common": "^22.2.0",
+    "@angular/compiler": "^22.2.0",
+    "@angular/core": "^22.2.0",
+    "@angular/forms": "^22.2.0",
+    "@angular/platform-browser": "^22.2.0",
+    "@angular/platform-server": "^22.2.0",
+    "@angular/router": "^22.2.0",
+    "@angular/ssr": "^22.2.4",
+    "@codemirror/autocomplete": "^6.20.4",
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/search": "^6.7.2",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@lezer/highlight": "^1.2.5",
+    "@lezer/javascript": "^1.5.6",
+    "express": "^5.1.0",
+    "rxjs": "~7.8.0",
+    "sucrase": "^3.35.1",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^22.2.4",
+    "@angular/cli": "^22.2.4",
+    "@angular/compiler-cli": "^22.2.0",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.12.0",
+    "prettier": "^3.8.1",
+    "typescript": "~6.0.2"
+  },
+  "description": "Play RxJS v2 — interactive, bilingual RxJS documentation with live playgrounds (Angular 22 SSR)",
+  "author": "Juan Manuel Muñoz González",
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  }
+}

@@ -1,0 +1,62 @@
+# Play RxJS v2
+
+Interactive, bilingual (English / Spanish) RxJS documentation. Every example is a **live playground**: edit the code, press **Run** (or `Ctrl + Enter`) and watch the console react in real time. **Reset** restores the original example.
+
+## Tech stack
+
+- Angular 22 (standalone, signals, zoneless) with SSR + prerendering (SSG) via `@angular/ssr`
+- RxJS 7.8
+- CodeMirror 6 (editor, lazy loaded) + Lezer (identical syntax highlighting on the server)
+- Sucrase (in-browser TypeScript transpilation, lazy loaded)
+- Express server, deployable on Vercel
+
+## How it works
+
+| Piece | Where |
+| --- | --- |
+| Sections, operators and their order | `src/app/content/catalog.ts` |
+| Example code + sandbox controls (buttons, inputs…) | `src/app/content/examples/*.ts` |
+| Texts (EN / ES), UI strings and SEO copy | `src/app/core/i18n/locales/{en,es}.json` |
+| Playground (editor, Run / Stop / Reset, console) | `src/app/playground/` |
+| SEO (title, meta, canonical, hreflang, Open Graph, JSON-LD) | `src/app/core/seo.service.ts` |
+| Sitemap (`/sitemap.xml`, with hreflang alternates) | `src/app/core/sitemap.ts` |
+
+- **URLs are localized**: `/en/...` and `/es/...`. `/` redirects to the preferred language (cookie → `Accept-Language`).
+- **Every documentation page is prerendered** for both languages (314 pages), so the full documentation reaches crawlers and users already rendered. Unknown pages are rendered on demand with a real `404` status.
+- **Sandbox**: user code is transpiled with Sucrase and executed inside a throw-away `<iframe sandbox="allow-scripts">` (opaque origin). Run / Stop / Reset destroy the iframe, so intervals and subscriptions never leak. `import ... from 'rxjs'`, `'rxjs/ajax'`, `'rxjs/fetch'` and `'rxjs/webSocket'` work as in a real project. A simulated `userService` (HTTP with latency) is available for the data examples.
+
+### Adding an operator
+
+1. Add `{ id: 'myOperator' }` to the right category in `catalog.ts`.
+2. Add its code (and optional `ui` controls) in `content/examples/<category>.ts`.
+3. Add `title` and `description` under `<category>.myOperator` in both locale files.
+4. Run `npm run check:examples` — it verifies that every example compiles, runs and has EN/ES texts.
+
+## Development
+
+Requires Node `^22.22.3 || ^24.15.0 || >=26`.
+
+```bash
+npm install
+npm start               # http://localhost:4200 (SSR dev server)
+npm run build           # dist/play-rxjs (browser + server + prerendered pages)
+npm run serve:ssr       # http://localhost:4000 (production server)
+npm run check:examples  # smoke test of every example
+```
+
+## Deploying to Vercel
+
+The repo is ready to import in Vercel (no framework preset needed, everything is in `vercel.json`):
+
+- `dist/play-rxjs/browser` (assets + prerendered pages) is served from the CDN.
+- Any other request goes to the `api/index.mjs` function, which runs the Angular SSR Express handler (`reqHandler`).
+
+Before going live with a custom domain, update:
+
+- `SITE_URL` in `src/app/core/site.ts` (canonical, hreflang, Open Graph, sitemap)
+- `public/robots.txt` (sitemap URL)
+- `security.allowedHosts` in `angular.json` (hosts allowed to be server-rendered)
+
+## Author
+
+Juan Manuel Muñoz González

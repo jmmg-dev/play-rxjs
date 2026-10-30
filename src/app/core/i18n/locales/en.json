@@ -1,0 +1,757 @@
+{
+  "console": "We use simple examples of the main functionalities of RxJS, which can be checked in real time from our console",
+  "home": {
+    "title": "Unlock a new way to learn"
+  },
+  "aboutMe": {
+    "title": "About me",
+    "description": "<p>I have created this <b>web tutorial</b> with the goal of <b>contributing</b> to the <b>developer community</b>, to which I owe much of my professional growth. My <b>gratitude</b> to those who have selflessly shared their knowledge is immense, and it is to them that I <b>dedicate this documentation</b>.</p><p><b>RxJS</b> is an <b>exceptional</b> tool for developing reactive code, although its understanding can be complex and overwhelming due to its advanced concepts. For this reason, I have aimed to make this guide as accessible and clear as possible, using <b>simple examples</b> that allow observing in real-time the behavior of the different operators, as well as the differences between them.</p><p>Often, a picture is worth a thousand words, and I hope this <b>visual approach</b> and practical perspective make learning easier. I hope you enjoy this documentation.</p>"
+  },
+  "operators": {
+    "title": "RxJS operators",
+    "description": "The <b>operators</b> in RxJS are <b>functions</b> that allow you to work <b>with observable data streams</b> in a <b>simple and efficient</b> way. They are key tools to <b>transform, filter, combine, and manage data</b> in reactive applications."
+  },
+  "basicConcepts": {
+    "welcome": {
+      "title": "Welcome to <b>Play RxJS!</b>",
+      "description": "Here you will find a <b>friendly and accessible documentation</b> about RxJS, designed to help you understand and make the most of this amazing tool for developing <b>reactive code</b>. If you're new to this technology, we recommend starting with the <b>basic concepts</b> to get familiar with the fundamentals. Enjoy exploring and learning!."
+    },
+    "title": "Basic concepts",
+    "description": "In this section, we will talk about the basic concepts of RxJS, such as observables, observers, and subscriptions. These are concepts we need to understand beforehand before diving into the wonderful world of RxJS.",
+    "shortDescription": "In this section, we will talk about the basic concepts of RxJS, such as observables, observers, and subscriptions. These are concepts we need to understand beforehand before diving into the wonderful world of RxJS.",
+    "observableObserverSubscription": {
+      "title": "Observable, Observer...",
+      "description": "<p>In RxJS, an <b>observable</b> is a <b>data source</b> that can <b>emit values</b> over time. It acts as a <b>'sender'</b> of data, and any <b>'observer'</b> (an object or function) <b>can subscribe to it</b> to <b>receive</b> those <b>values</b>. Observables allow you to manage asynchronous data flows, such as events, HTTP requests, or any kind of sequence of values.</p><p>In RxJS, an <b>observer</b> is an object or a function that <b>'listens'</b> to the values emitted by an observable. The observer receives those values and can do something with them, like displaying them on the screen or processing them. It has <b>three main methods</b>: <b>next</b>, <b>error</b>, and <b>complete</b>.</p><p>A <b>Subscription</b> is the result of <b>subscribing to an Observable</b> using the <b>subscribe</b> method. It allows you to receive the values emitted by the observable and also provides methods to cancel the subscription <b>(unsubscribe)</b> when you no longer need to receive values.</p>"
+    },
+    "unsubscribe": {
+      "title": "Unsubscribe",
+      "description": "<p>In RxJS, <b>unsubscribe</b> is a method used to <b>stop a subscription</b> to an observable. Basically, it tells the observable that you no longer want to receive values emitted by it.</p><p>If you don't use <b>unsubscribe</b> when you no longer need the data, the observable if it's long-lived <b>(fromEvent, interval, timer, webSocket, Subjects...)</b>, will continue running in the background, which can unnecessarily consume resources and lead to memory leaks.</p><p><b>In the examples on this website, we do not show the code used to unsubscribe from observables, in order to make the sections easier to read. However, internally, all observables that require it are unsubscribed from.</b></p><p>In this example, through <b>click</b> events, we create or remove the subscription. We use the <b>closed</b> property to check that the subscription is not still open before creating a new one.</p>"
+    },
+    "unsubscribeSeveral": {
+      "title": "Unsubscribe (multiple)",
+      "description": "<p>The <b>unsubscription</b> of <b>multiple observables at the same time</b> in RxJS is done easily using a tool called Subscription. This allows you to group several subscriptions using the <b>add</b> method and unsubscribe from all of them at once.</p><p>This is very useful when, at a certain point in a component's lifecycle <b>(ngOnDestroy in Angular)</b>, you want to remove all subscriptions.</p>"
+    }
+  },
+  "combination": {
+    "title": "Combination operators",
+    "description": "<b>Combination operators in RxJS</b> allow you to work with multiple observables to <b>combine them</b> and <b>create new</b> data streams flexibly. Each operator has a specific purpose depending on how you want to combine the values from the observables.",
+    "shortDescription": "Combination operators in RxJS allow you to work with multiple observables to combine them and create new data streams flexibly.",
+    "combineLatest": {
+      "title": "combineLatest",
+      "description": "<p>The <b>combineLatest</b> operator in RxJS is a way to combine multiple observables into a single one, emitting the <b>latest value</b> from each of them along with the <b>sequence of values</b> from the latest observable.</p>"
+    },
+    "concat": {
+      "title": "concat",
+      "description": "<p>The <b>concat</b> operator in RxJS combines multiple observables sequentially, emitting the values from <b>one until it completes</b>, and then moves on to the <b>next</b>.</p>"
+    },
+    "concatAll": {
+      "title": "concatAll",
+      "description": "<p>The <b>concatAll</b> operator in RxJS is used to <b>'flatten'</b> a stream of observables sequentially. This means that if you have an observable that emits other observables, <b>concatAll</b> takes those observables and emits them <b>one by one</b>, in the order they were emitted, waiting for each one to complete before moving on to the next.</p>"
+    },
+    "exhaust": {
+      "title": "exhaust",
+      "description": "<p>The <b>exhaust</b> operator in RxJS is used to handle observable streams in such a way that, when a source observable emits a new observable, the operator <b>will only listen to the first</b> observable and any new observables emitted will be ignored until the <b>first one completes</b>. In other words, if the source observable continues emitting observables but is already 'working' with one, those new observables will not be listened to until the previous one completes.</p><p>In this example, we can observe how the delay of the second observable prevents the third observable from executing.</p>"
+    },
+    "forkJoin": {
+      "title": "forkJoin",
+      "description": "<p>The <b>forkJoin</b> operator in RxJS is used to wait for all the observables passed as arguments to <b>complete</b>, and when all of them have emitted their last value, it emits a single <b>array with the last values</b> from each of those observables.</p>"
+    },
+    "merge": {
+      "title": "merge",
+      "description": "<p>The <b>merge operator</b> in RxJS is used to combine multiple observables and emit their values in an <b>interleaved</b> manner (without waiting for one to complete before listening to the next). The values are emitted in the <b>same order</b> in which the observables produce them, and all the observables are subscribed to and executed <b>simultaneously</b>.</p>"
+    },
+    "mergeAll": {
+      "title": "mergeAll",
+      "description": "<p>The <b>mergeAll</b> operator in RxJS is used to flatten an observable stream, but in a <b>different</b> way compared to other operators like <b>concatAll</b>. With <b>mergeAll</b>, when an observable emits other observables, <b>all</b> the observables are subscribed to and executed <b>simultaneously</b>.</p>"
+    },
+    "race": {
+      "title": "race",
+      "description": "<p>The <b>race</b> operator in RxJS is used to <b>race</b> between multiple observables and emit the values of the <b>first observable that emits something</b>. In other words, of all the observables passed to it, the operator subscribes only to the one that emits a value first, and <b>ignores</b> the other observables.</p>"
+    },
+    "startWith": {
+      "title": "startWith",
+      "description": "<p>The <b>startWith</b> operator in RxJS is used to emit an <b>initial value before</b> any other value is emitted by the observable. In other words, you can specify a value that will be emitted first, before the observable starts emitting its own values.</p>"
+    },
+    "switchAll": {
+      "title": "switchAll",
+      "description": "<p>The <b>switchAll</b> operator in RxJS is used to flatten an observable stream, but in a special way: when an observable emits a <b>new observable</b>, switchAll <b>stops listening</b> to the previous observable and starts listening to the new observable. In other words, it always subscribes only to the <b>last emitted observable(s)</b> and cancels the subscription to the previous ones.</p>"
+    },
+    "withLatestFrom": {
+      "title": "withLatestFrom",
+      "description": "<p>The <b>withLatestFrom</b> operator in RxJS is used to combine the <b>latest</b> value from one observable with the values of another observable, <b>without subscribing to the second observable</b>. This means that when the first observable emits a value, withLatestFrom takes the latest value from the second observable and combines it with the value emitted by the first observable.</p>"
+    },
+    "combineLatestAll": {
+      "title": "combineLatestAll",
+      "description": "<p>The <b>combineLatestAll</b> operator takes an observable that emits <b>other observables</b> (a higher-order observable), waits for the outer one to complete and then applies <b>combineLatest</b> to all the inner observables. Each time any of them emits, you get an <b>array with the latest value</b> of every inner observable.</p><p>In this example, two intervals with different speeds are combined into a single stream of arrays.</p>"
+    },
+    "combineLatestWith": {
+      "title": "combineLatestWith",
+      "description": "<p>The <b>combineLatestWith</b> operator is the <b>pipeable version</b> of combineLatest. It combines the source observable with the observables you pass to it and emits an <b>array with the latest values</b> of all of them every time any of them emits (once all have emitted at least once).</p><p>In this example, we combine the readings of a temperature sensor and a humidity sensor.</p>"
+    },
+    "concatWith": {
+      "title": "concatWith",
+      "description": "<p>The <b>concatWith</b> operator is the <b>pipeable version</b> of concat. It emits all the values of the source observable and, <b>when it completes</b>, subscribes to the next observables <b>one after another</b>, in order.</p>"
+    },
+    "endWith": {
+      "title": "endWith",
+      "description": "<p>The <b>endWith</b> operator is the opposite of <b>startWith</b>: it emits one or more values <b>right after the source observable completes</b>. It is useful to add a final value or signal to a data stream.</p><p>In this example, we simulate the steps of a process and emit <b>Done!</b> at the end.</p>"
+    },
+    "exhaustAll": {
+      "title": "exhaustAll",
+      "description": "<p>The <b>exhaustAll</b> operator flattens a higher-order observable by subscribing to an inner observable and <b>ignoring every new inner observable</b> that arrives <b>while the current one is still active</b>. It is the replacement for the deprecated <b>exhaust</b> operator.</p><p>In this example, the delay of the second observable causes the third one to be ignored.</p>"
+    },
+    "mergeWith": {
+      "title": "mergeWith",
+      "description": "<p>The <b>mergeWith</b> operator is the <b>pipeable version</b> of merge. It subscribes to the source and to all the observables passed as arguments <b>at the same time</b>, emitting their values <b>interleaved</b> in the order they are produced.</p>"
+    },
+    "raceWith": {
+      "title": "raceWith",
+      "description": "<p>The <b>raceWith</b> operator is the <b>pipeable version</b> of race. The source observable <b>competes</b> with the observables you pass to it: the <b>first one to emit wins</b>, and all the others are unsubscribed.</p><p>In this example, we simulate three servers with different response times.</p>"
+    },
+    "zip": {
+      "title": "zip",
+      "description": "<p>The <b>zip</b> operator combines several observables by <b>pairing their values by index</b>: the first value of each one, then the second value of each one, and so on. It emits an <b>array</b> for each complete group and finishes when the <b>shortest</b> observable completes.</p><p>In this example, we join names, ages and jobs to build a user description.</p>"
+    },
+    "zipAll": {
+      "title": "zipAll",
+      "description": "<p>The <b>zipAll</b> operator takes a higher-order observable, waits for it to complete and then applies <b>zip</b> to all the emitted inner observables, combining their values <b>by index</b>.</p>"
+    },
+    "zipWith": {
+      "title": "zipWith",
+      "description": "<p>The <b>zipWith</b> operator is the <b>pipeable version</b> of zip. It pairs each value of the source with the value at <b>the same position</b> in the other observables. Values without a partner are <b>never emitted</b>.</p><p>In this example, <b>strawberry</b> is not emitted because there is no fourth id.</p>"
+    }
+  },
+  "conditional": {
+    "title": "Conditional operators",
+    "description": "<b>Conditional operators in RxJS</b> are used to handle data streams in a <b>conditional</b> manner, meaning to execute logic based on whether or not a certain condition is met.",
+    "shortDescription": "Conditional operators in RxJS are used to handle data streams in a <b>conditional</b> manner, meaning to execute logic based on whether or not a certain condition is met.",
+    "defaultIfEmpty": {
+      "title": "defaultIfEmpty",
+      "description": "<p>The <b>defaultIfEmpty</b> operator in RxJS is used to provide a <b>default value</b> when an observable <b>does not emit any value</b>. That is, if the observable is empty (does not emit anything), defaultIfEmpty emits the value you specify as the default.</p>"
+    },
+    "every": {
+      "title": "every",
+      "description": "<p>The <b>every</b> operator in RxJS is used to check if all the values emitted by an observable <b>satisfy a specific condition</b>. It returns an observable that <b>emits true</b> if all the emitted values satisfy the condition, and <b>false</b> if at least one of the values does not satisfy it.</p>"
+    },
+    "find": {
+      "title": "find",
+      "description": "<p>The <b>find</b> operator in RxJS is used to search for the <b>first value</b> that satisfies a specific condition in an observable. Unlike other operators like <b>filter</b>, which emits <b>all</b> the values that satisfy the condition, find returns only the first value that satisfies the condition or undefined if no value does.</p>"
+    },
+    "findIndex": {
+      "title": "findIndex",
+      "description": "<p>The <b>findIndex</b> operator in RxJS is very similar to the find operator, but instead of returning the first value that satisfies a condition, it <b>returns the index</b> of that value. If no value satisfies the condition, it returns <b>-1</b>.</p>"
+    },
+    "isEmpty": {
+      "title": "isEmpty",
+      "description": "<p>The <b>isEmpty</b> operator in RxJS is used to check if an observable <b>does not emit any value</b>. It returns an observable that emits:</p><p>- <b>true</b> if the observable does not emit any value.</p><p>- <b>false</b> if the observable emits at least one value.</p>"
+    },
+    "sequenceEqual": {
+      "title": "sequenceEqual",
+      "description": "<p>The <b>sequenceEqual</b> operator in RxJS is used to check if <b>two observables</b> emit exactly <b>the same sequence of values, in the same order</b>.</p>"
+    },
+    "throwIfEmpty": {
+      "title": "throwIfEmpty",
+      "description": "<p>The <b>throwIfEmpty</b> operator makes an observable <b>emit an error</b> if it <b>completes without emitting any value</b>. If the source emits at least one value, it behaves normally. It is the opposite approach to <b>defaultIfEmpty</b>.</p>"
+    }
+  },
+  "creation": {
+    "title": "Creation operators",
+    "description": "<b>In RxJS, creation operators</b> are functions that <b>generate observables</b> from scratch or from other values or structures. These operators allow creating data streams that can then be processed.",
+    "shortDescription": "In RxJS, creation operators are functions that generate observables from scratch or from other values or structures.",
+    "ajax": {
+      "title": "ajax",
+      "description": "<p>The <b>ajax</b> operator in RxJS is a utility for <b>making HTTP requests</b> (such as GET, POST, PUT, DELETE) easily and handling responses as observables. It is ideal for working with data from APIs.</p>"
+    },
+    "defer": {
+      "title": "defer",
+      "description": "<p>The <b>defer</b> operator in RxJS is like an <b>'observable factory'</b>. Its main purpose is to create a <b>new observable</b> when someone <b>subscribes</b>, instead of doing so immediately. This allows the observable to be generated on demand, ensuring it always runs with the most updated logic or data.</p>"
+    },
+    "from": {
+      "title": "from",
+      "description": "<p>The <b>from</b> operator is like a bridge between common JavaScript structures and the reactive world of RxJS. It converts things like <b>arrays and promises into observables</b> that you can use in your reactive streams.</p>"
+    },
+    "fromEvent": {
+      "title": "fromEvent",
+      "description": "<p>The <b>fromEvent</b> operator in RxJS converts an <b>event into an observable</b>. This means you can listen to events, such as mouse clicks, cursor movements, key presses, and work with them as data streams.</p>"
+    },
+    "generate": {
+      "title": "generate",
+      "description": "<p>The <b>generate</b> operator in RxJS is an advanced way to <b>create observables</b> that emit a sequence of values based on a <b>generator function</b>. It allows you to generate a custom data stream by specifying conditions for starting, continuing, and updating the emitted values.</p>"
+    },
+    "iif": {
+      "title": "iif",
+      "description": "<p>The <b>iif</b> operator in RxJS is a way to create a conditional observable. In other words, iif allows you to <b>decide</b> which observable to emit based on a condition.</p>"
+    },
+    "interval": {
+      "title": "interval",
+      "description": "<p>The <b>interval</b> operator in RxJS <b>creates</b> an observable that emits <b>numeric values</b> continuously, starting from 0, and then incrementing each time after a specific time interval.</p>"
+    },
+    "of": {
+      "title": "of",
+      "description": "<p>The <b>of</b> operator in RxJS creates an observable from a set of values you pass to it. These values can be <b>any type of data</b>, such as numbers, strings, objects, etc.</p>"
+    },
+    "range": {
+      "title": "range",
+      "description": "<p>The <b>range</b> operator in RxJS creates an observable that emits a sequence of numbers within a specified range, starting from an <b>initial</b> value and up to a <b>final</b> value.</p>"
+    },
+    "throwError": {
+      "title": "throwError",
+      "description": "<p>The <b>throwError</b> operator in RxJS is used to <b>emit an error</b> in an observable manually. This is useful when you want a data stream to stop due to a specific condition and handle an error.</p>"
+    },
+    "timer": {
+      "title": "timer",
+      "description": "<p>The <b>timer</b> operator in RxJS creates an observable that emits a value <b>after a certain period of time</b> (in milliseconds) and can then continue emitting values at regular intervals if specified.</p>"
+    },
+    "animationFrames": {
+      "title": "animationFrames",
+      "description": "<p>The <b>animationFrames</b> function creates an observable that emits on <b>every frame</b> of the browser (using <b>requestAnimationFrame</b>), providing the <b>timestamp</b> and the <b>elapsed</b> time since subscription. It is perfect for creating <b>smooth animations</b> in a reactive way.</p><p>In this example, we move a box for 2 seconds by calculating the progress of the animation.</p>"
+    },
+    "bindCallback": {
+      "title": "bindCallback",
+      "description": "<p>The <b>bindCallback</b> function converts an API based on <b>callbacks</b> into a function that <b>returns an observable</b>. When you call that function, the observable emits the values passed to the callback and then completes.</p>"
+    },
+    "bindNodeCallback": {
+      "title": "bindNodeCallback",
+      "description": "<p>The <b>bindNodeCallback</b> function works like bindCallback, but for <b>Node.js style callbacks</b>, where the first argument is the <b>error</b> and the second one the <b>result</b>: <b>callback(err, data)</b>. If an error arrives, the observable <b>emits an error</b>; otherwise it emits the result.</p>"
+    },
+    "EMPTY": {
+      "title": "EMPTY",
+      "description": "<p><b>EMPTY</b> is a constant observable that <b>does not emit any value</b> and <b>completes immediately</b>. It is very useful inside flattening operators like <b>mergeMap</b> or <b>switchMap</b> to discard values, or as a return value in a <b>catchError</b>.</p><p>In this example, we use it to emit only the even numbers.</p>"
+    },
+    "fromEventPattern": {
+      "title": "fromEventPattern",
+      "description": "<p>The <b>fromEventPattern</b> function creates an observable from <b>any event API</b> by providing two functions: one to <b>add</b> the handler and another to <b>remove</b> it. It is the generic version of fromEvent, ideal for libraries with their own event system.</p><p>In this example, the handler is removed automatically after 3 clicks thanks to <b>take</b>.</p>"
+    },
+    "fromFetch": {
+      "title": "fromFetch",
+      "description": "<p>The <b>fromFetch</b> function (from <b>rxjs/fetch</b>) wraps the browser <b>Fetch API</b> in an observable. Unlike a promise, the request is <b>cancelled automatically</b> (AbortController) if you unsubscribe before it finishes.</p>"
+    },
+    "NEVER": {
+      "title": "NEVER",
+      "description": "<p><b>NEVER</b> is a constant observable that <b>never emits</b> any value, <b>never errors</b> and <b>never completes</b>. It is useful for testing, for keeping a stream alive or for combining it with operators like <b>timeout</b>.</p>"
+    },
+    "scheduled": {
+      "title": "scheduled",
+      "description": "<p>The <b>scheduled</b> function converts an array, promise or iterable into an observable whose emissions are <b>controlled by a scheduler</b>. It lets you decide <b>when</b> values are delivered: synchronously, as a microtask (<b>asapScheduler</b>) or as a macrotask (<b>asyncScheduler</b>).</p><p>In this example, the synchronous code ends before any value is emitted.</p>"
+    },
+    "webSocket": {
+      "title": "webSocket",
+      "description": "<p>The <b>webSocket</b> function (from <b>rxjs/webSocket</b>) creates a <b>WebSocketSubject</b>: a subject that lets you <b>send</b> messages with <b>next</b> and <b>receive</b> them by subscribing. The connection opens when the first subscriber arrives and <b>closes automatically</b> when the last one unsubscribes.</p><p>In this example, we connect to a public <b>echo server</b> that returns every message we send.</p>"
+    }
+  },
+  "error": {
+    "title": "Error handling operators",
+    "description": "The <b>error handling operators in RxJS</b> are used to <b>handle, recover, or react to errors</b> that may occur in the data flow of an Observable. These operators allow your application to continue running when an error occurs, giving you control over how to manage it.",
+    "shortDescription": "Error handling operators in RxJS are used to handle, recover, or react to errors that may occur in the data flow of an Observable.",
+    "catchError": {
+      "title": "catchError",
+      "description": "<p>The <b>catchError</b> operator in RxJS is used to <b>capture an error</b> that occurs in an Observable and allow you to <b>handle it in a controlled way</b>, without interrupting the data flow.</p><p>When an Observable emits an error, catchError gives you the opportunity to recover from that error. You can return a new Observable to emit instead of the error, or simply perform an action when the error occurs.</p>"
+    },
+    "retry": {
+      "title": "retry",
+      "description": "<p>The <b>retry</b> operator in RxJS is used to <b>reattempt the execution</b> of an Observable in case an error occurs. This operator allows you to automatically retry the data flow a <b>specified number of times</b> before it ultimately fails.</p><p>In this example, we will see in the browser console how the URL is retried once after the error.</p>"
+    },
+    "onErrorResumeNext": {
+      "title": "onErrorResumeNext",
+      "description": "<p>The <b>onErrorResumeNext</b> function subscribes to a list of observables <b>one after another</b>, moving on to the next one when the current one <b>completes or fails</b>. Errors are <b>silently ignored</b>, so the final observer never receives them.</p>"
+    },
+    "retryWhen": {
+      "title": "retryWhen",
+      "description": "<p>The <b>retryWhen</b> operator lets you <b>decide how and when to retry</b> after an error, using an observable of errors. It is <b>deprecated</b>: nowadays <b>retry</b> accepts a configuration object such as <b>retry({ count: 3, delay: 1000 })</b>.</p><p>In this example, the request fails twice and succeeds on the third attempt, waiting 1 second between retries.</p>"
+    }
+  },
+  "filtering": {
+    "title": "Filtering operators",
+    "description": "In RxJS, <b>filtering operators</b> are used to <b>filter</b> the items emitted by an observable, allowing only those that meet a specific condition to pass through. These operators are useful for working with data streams, ensuring that only the relevant values are processed.",
+    "shortDescription": "In RxJS, filtering operators are used to filter the items emitted by an observable, allowing only those that meet a specific condition to pass through.",
+    "audit": {
+      "title": "audit",
+      "description": "<p>The <b>audit</b> operator in RxJS is used to <b>control the emission</b> of values from an observable, based on another observable that acts as a <b>'time window'</b>.</p>"
+    },
+    "auditTime": {
+      "title": "auditTime",
+      "description": "<p>The <b>auditTime</b> operator in RxJS is a simple way to control the frequency at which values are emitted by an observable. It works <b>similarly to audit</b>, but instead of relying on an external observable, it uses a <b>fixed time period</b> that you define.</p>"
+    },
+    "debounce": {
+      "title": "debounce",
+      "description": "<p>The <b>debounce</b> operator in RxJS is useful for controlling <b>how many values</b> from an observable are processed, especially when the values arrive quickly (like key presses or clicks). This operator <b>waits for a period of time</b> after receiving a value, and only emits that value if no new values are received during that time.</p><p>In this example, we will log the last key pressed to the console.</p>"
+    },
+    "debounceTime": {
+      "title": "debounceTime",
+      "description": "<p>The <b>debounceTime</b> operator in RxJS is very similar to debounce, but instead of using an observable to define the wait time, it simply uses <b>a fixed time period</b>.</p>"
+    },
+    "distinct": {
+      "title": "distinct",
+      "description": "<p>The <b>distinct</b> operator in RxJS is used to <b>filter duplicate values</b> that an observable may emit. It only emits <b>unique values</b> (i.e., those that do not repeat) and discards the values that have already been emitted.</p>"
+    },
+    "distinctUntilChanged": {
+      "title": "distinctUntilChanged",
+      "description": "<p>The <b>distinctUntilChanged</b> operator in RxJS is used to filter <b>consecutive repeated</b> values in a data stream. It emits a value only if it is different from the last emitted value.</p>"
+    },
+    "distinctUntilKeyChanged": {
+      "title": "distinctUntilKeyChanged",
+      "description": "<p>The <b>distinctUntilKeyChanged</b> operator in RxJS is very similar to distinctUntilChanged, but it is used when the values emitted by the observable are <b>objects</b> or contain properties, and you want to filter out values that have not changed in <b>a specific property</b>.</p>"
+    },
+    "elementAt": {
+      "title": "elementAt",
+      "description": "<p>The <b>elementAt</b> operator in RxJS is used to get a <b>specific value at a given position</b> from a data stream emitted by an observable.</p>"
+    },
+    "filter": {
+      "title": "filter",
+      "description": "<p>The <b>filter</b> operator in RxJS is used to filter the values emitted by an observable, allowing only the values that <b>meet a specific condition</b> to pass through.</p><p>In this example, we filter for users who are older than 3 years and have different names.</p>"
+    },
+    "first": {
+      "title": "first",
+      "description": "<p>The <b>first</b> operator in RxJS is used to emit only the <b>first value</b> from an observable that <b>meets a specific condition</b>, or simply the <b>first</b> value if <b>no</b> condition is defined. If the observable does not emit any value, it can throw an error or emit a default value if specified.</p>"
+    },
+    "ignoreElements": {
+      "title": "ignoreElements",
+      "description": "<p>The <b>ignoreElements</b> operator in RxJS is used to ignore <b>all</b> values emitted by an observable. This operator <b>does not emit anything</b>, but it does pass errors or the <b>signal</b> that the observable has <b>completed</b>.</p>"
+    },
+    "last": {
+      "title": "last",
+      "description": "<p>The <b>last</b> operator in RxJS is used to emit only the <b>last value</b> from an observable that <b>meets a specific condition</b>. If the observable does not emit any value, it can throw an error or emit a default value if specified.</p><p>In this example, we force it to not find any value in order to see the default error message.</p>"
+    },
+    "sample": {
+      "title": "sample",
+      "description": "<p>The <b>sample</b> operator in RxJS is used to <b>take the last value</b> emitted by an observable at <b>specific moments</b> defined by another observable that acts as a 'time source'.</p><p>In this example, we only take the last value emitted from the interval every 5 seconds.</p>"
+    },
+    "sampleTime": {
+      "title": "sampleTime",
+      "description": "<p>The <b>sampleTime</b> operator in RxJS is used to <b>take the last value</b> emitted by an observable at <b>fixed time intervals</b>. Each time the specified time period passes, the operator emits the last value produced up to that moment.</p>"
+    },
+    "single": {
+      "title": "single",
+      "description": "<p>The <b>single</b> operator in RxJS is used to <b>ensure</b> that an observable emits <b>only one value</b>, and that value <b>must meet a specific condition</b> (if defined). If the observable emits more than one value or none at all, an <b>error will be thrown</b>.</p>"
+    },
+    "skip": {
+      "title": "skip",
+      "description": "<p>The <b>skip</b> operator in RxJS is a tool used to <b>ignore a certain number of initial values</b> emitted by an observable. After 'skipping' these values, it starts passing the subsequent values that are emitted.</p>"
+    },
+    "skipLast": {
+      "title": "skipLast",
+      "description": "<p>The <b>skipLast</b> operator in RxJS is very similar to skip, but instead of ignoring values at the beginning, it <b>ignores the last values emitted</b> by an observable. This means it allows all values to pass except for the last <b>n</b>.</p>"
+    },
+    "skipUntil": {
+      "title": "skipUntil",
+      "description": "<p>The <b>skipUntil</b> operator in RxJS is used to <b>ignore values emitted by an observable</b> until <b>another observable emits a value</b>. At that point, it starts allowing the values from the original observable to pass through.</p>"
+    },
+    "skipWhile": {
+      "title": "skipWhile",
+      "description": "<p>The <b>skipWhile</b> operator in RxJS is used to <b>ignore values emitted by an observable while a condition is met</b>. As soon as the condition is no longer met, it starts passing the values emitted by the observable.</p>"
+    },
+    "take": {
+      "title": "take",
+      "description": "<p>The <b>take</b> operator in RxJS is used to <b>limit the number of values</b> that an observable can emit. Once the observable has emitted the <b>specified</b> number of values, it completes automatically.</p>"
+    },
+    "takeLast": {
+      "title": "takeLast",
+      "description": "<p>The <b>takeLast</b> operator in RxJS is used to take the <b>last n emitted values</b> from an observable, after the observable has completed.</p>"
+    },
+    "takeUntil": {
+      "title": "takeUntil",
+      "description": "<p>The <b>takeUntil</b> operator in RxJS is used to take values emitted by an observable <b>until another observable emits a value</b>. When that <b>other observable emits</b>, the flow of the <b>original observable completes</b>, meaning it stops emitting more values.</p>"
+    },
+    "takeWhile": {
+      "title": "takeWhile",
+      "description": "<p>The <b>takeWhile</b> operator in RxJS is used to take values emitted by an observable <b>while a condition is met</b>. When the condition <b>is no longer met</b>, the <b>observable completes</b> and stops emitting more values.</p>"
+    },
+    "throttle": {
+      "title": "throttle",
+      "description": "<p>The <b>throttle</b> operator in RxJS is used to <b>limit the emission frequency</b> of an observable, ensuring that only <b>one value is emitted within a specified time interval</b>, and any values that arrive before the interval passes are ignored.</p><p>In this example, we are using the <b>throttle</b> operator to ignore emissions that occur within a 5-second interval. This causes only the values that occur at the end of each interval to be emitted, resulting in a 6-value increment between the emitted values.</p>"
+    },
+    "throttleTime": {
+      "title": "throttleTime",
+      "description": "<p>The <b>throttleTime</b> operator in RxJS is used to <b>limit the emission frequency</b> of an observable, in a <b>similar way to throttle</b>, but in a more <b>simplified</b> manner. With throttleTime, <b>you can specify a time interval</b> during which only one emission will be allowed, ignoring all intermediate emissions.</p>"
+    }
+  },
+  "mathematical": {
+    "title": "Mathematical operators",
+    "description": "<b>Mathematical operators in RxJS</b> are used to perform calculations and <b>mathematical transformations</b> on the values emitted by an observable. These operators allow summing, averaging, or finding minimum or maximum values within a data stream.",
+    "shortDescription": "Mathematical operators in RxJS are used to perform calculations and mathematical transformations on the values emitted by an observable.",
+    "count": {
+      "title": "count",
+      "description": "<p>The <b>count</b> operator in RxJS is used to count the <b>number of values</b> emitted by an observable <b>that meet a specific condition</b>. If no condition is provided, it counts all emitted values.</p>"
+    },
+    "max": {
+      "title": "max",
+      "description": "<p>The <b>max</b> operator in RxJS is used to find the <b>maximum value</b> emitted by an observable. This operator compares all emitted values and returns the highest one.</p>"
+    },
+    "min": {
+      "title": "min",
+      "description": "<p>The <b>min</b> operator in RxJS is used to find the <b>minimum value</b> emitted by an observable. This operator compares all emitted values and returns the lowest one.</p>"
+    },
+    "reduce": {
+      "title": "reduce",
+      "description": "<p>The <b>reduce</b> operator in RxJS is used to <b>accumulate the values emitted</b> by an observable, similar to how reduce works in JavaScript arrays. It takes all the emitted values and combines them into a single final value.</p>"
+    }
+  },
+  "multicasting": {
+    "title": "Multicasting operators",
+    "description": "<b>Multicasting operators in RxJS</b> are used to share <b>a single stream of values</b> among multiple subscribers, so the values emitted by the observable are not repeated for each subscriber. This <b>optimizes performance</b> by preventing values from being emitted multiple times for each subscriber.",
+    "shortDescription": "Multicasting operators in RxJS are used to share a single stream of values among multiple subscribers, so the values emitted by the observable are not repeated for each subscriber.",
+    "connect": {
+      "title": "connect",
+      "description": "<p>The <b>connect</b> operator in RxJS is used to <b>activate</b> an observable that is configured to be shared through a subject (usually with publish() or multicast()). This operator allows the observable to start emitting values only after <b>connect()</b> is called, meaning it controls when the observable starts emitting values.</p>"
+    },
+    "share": {
+      "title": "share",
+      "description": "<p>The <b>share</b> operator in RxJS is a form of multicast that allows a <b>single data stream</b> emitted by an observable to be shared among multiple subscribers, without each subscriber <b>receiving its own emissions</b>. This prevents the observable from being executed <b>more than once</b>, optimizing performance.</p>"
+    },
+    "shareReplay": {
+      "title": "shareReplay",
+      "description": "<p>The <b>shareReplay</b> operator in RxJS is similar to the <b>share</b> operator, but with a key difference: <b>it caches the last emitted values from the observable and replays (replays) them to new subscribers</b>. It is useful when you want new subscribers to receive the latest emitted values without re-executing the entire data flow.</p>"
+    },
+    "connectable": {
+      "title": "connectable",
+      "description": "<p>The <b>connectable</b> function creates an observable that <b>does not start emitting until you call connect()</b>, sharing a single execution among all its subscribers. It is the modern replacement for <b>publish</b>, <b>multicast</b> and <b>ConnectableObservable</b>.</p><p>In this example, both subscribers are ready, but nothing is emitted until we connect 2 seconds later.</p>"
+    },
+    "multicast": {
+      "title": "multicast",
+      "description": "<p>The <b>multicast</b> operator shares a single execution of the source through a <b>Subject</b> that you provide, returning a <b>ConnectableObservable</b> that starts when you call <b>connect()</b>. It is <b>deprecated</b> in favour of <b>connectable</b> and <b>share</b>.</p><p>In this example, the <b>tap</b> runs only once per value although there are two subscribers.</p>"
+    },
+    "publishBehavior": {
+      "title": "publishBehavior",
+      "description": "<p>The <b>publishBehavior</b> operator is like multicast with a <b>BehaviorSubject</b>: it needs an <b>initial value</b> and new subscribers receive the <b>latest emitted value</b> immediately. It is <b>deprecated</b> in favour of <b>connectable</b> with a BehaviorSubject.</p>"
+    },
+    "publishLast": {
+      "title": "publishLast",
+      "description": "<p>The <b>publishLast</b> operator is like multicast with an <b>AsyncSubject</b>: it shares the source but only emits the <b>last value</b>, and only when the source <b>completes</b>. It is <b>deprecated</b> in favour of <b>connectable</b> with an AsyncSubject.</p>"
+    },
+    "publishReplay": {
+      "title": "publishReplay",
+      "description": "<p>The <b>publishReplay</b> operator is like multicast with a <b>ReplaySubject</b>: it shares the source and <b>replays the last N values</b> to late subscribers. It is <b>deprecated</b> in favour of <b>shareReplay</b> or <b>connectable</b>.</p>"
+    },
+    "refCount": {
+      "title": "refCount",
+      "description": "<p>The <b>refCount</b> operator turns a ConnectableObservable into an observable that <b>connects automatically</b> when the <b>first subscriber</b> arrives and <b>disconnects</b> when the <b>last one leaves</b>. It is <b>deprecated</b>: the <b>share</b> operator does the same in a single step.</p>"
+    }
+  },
+  "transformation": {
+    "title": "Transformation operators",
+    "description": "<b>RxJS transformation operators</b> are tools that let you change (or 'transform') the data that flows through an observable stream. Imagine you have a stream of values, like numbers or objects, and you want to modify, filter, or reshape these values before they reach the final observer.",
+    "shortDescription": "RxJS transformation operators are tools for modifying the data flowing through an observable.",
+    "buffer": {
+      "title": "buffer",
+      "description": "<p>The <b>buffer</b> operator in RxJS collects emissions from a source observable into an array and delivers them together when another observable, known as the <b>trigger</b>, emits a value. It is useful for grouping values over time intervals or in response to events.</p><p>In this example, we count the clicks made on a button every 3 seconds.</p>"
+    },
+    "bufferCount": {
+      "title": "bufferCount",
+      "description": "<p>The <b>bufferCount</b> operator in RxJS is used to group emissions from an observable into 'buffers' or <b>fixed-size</b> batches and emit them as an array.</p><p>In this example, we will emit the array after making 5 clicks.</p>"
+    },
+    "bufferTime": {
+      "title": "bufferTime",
+      "description": "<p>The <b>bufferTime</b> operator in RxJS groups the emissions of an observable over a <b>fixed period of time</b> and emits them together as an array.</p><p>In this example, we display the array generated by the interval emission every 3 seconds.</p>"
+    },
+    "bufferWhen": {
+      "title": "bufferWhen",
+      "description": "<p>The <b>bufferWhen</b> operator in RxJS allows you to collect values emitted by a source observable into 'buffers' (arrays) and emit those buffers when <b>a condition is met</b>. The condition for closing each buffer is defined by a function that returns an observable. When this observable emits a value, the buffer is closed, and a new one begins.</p><p>In this example, we will capture the values emitted by a 1-second interval each time we click the button.</p>"
+    },
+    "concatMap": {
+      "title": "concatMap",
+      "description": "<p>The <b>concatMap</b> operator in RxJS is used to queue up observables one after another, ensuring they run in sequence. When concatMap receives a value, it maps that value to a new observable (like a network request or a timer) and waits for it to complete before moving to the next one.</p><p>In this example, we merge the observable from a button click with the observable from an interval. Each time we click the button, we can see in the console how the observables are concatenated in an orderly manner, respecting their sequence.</p>"
+    },
+    "exhaustMap": {
+      "title": "exhaustMap",
+      "description": "<p>The <b>exhaustMap</b> operator in RxJS is used to handle <b>asynchronous data streams</b>, ensuring that <b>only one operation is processed at a time</b> and ignoring any new actions while the current operation is still in progress.</p><p>In this example, we load a list of users through a button click. You can observe how the list will not load until the previous call has finished.</p>"
+    },
+    "expand": {
+      "title": "expand",
+      "description": "<p>The <b>expand</b> operator in RxJS is used to generate a stream of values <b>recursively</b>, meaning it allows each emitted value to <b>generate new values</b> based on a defined logic.</p><p>In this example, we add 10 to each emitted value and repeat the operation 5 times.</p>"
+    },
+    "groupBy": {
+      "title": "groupBy",
+      "description": "<p>The <b>groupBy</b> operator in RxJS is used to group elements emitted by an observable <b>based on a key</b> that you define. Think of it as a way to separate a data stream into different 'boxes' based on certain characteristics.</p><p>In this example, we group the species into different arrays, through a mergeMap and a toArray.</p>"
+    },
+    "map": {
+      "title": "map",
+      "description": "<p>The <b>map</b> operator in RxJS applies a function to each value emitted by an observable and returns an observable that emits the transformed values.</p><p>In this example, we transform the user's name using the map operator and use the array's map method to update the name of each item within it.</p>"
+    },
+    "mapTo": {
+      "title": "mapTo",
+      "description": "<p>The <b>mapTo</b> operator in RxJS replaces each value emitted by an observable with a specific value you provide.</p><p>In this example, with the mapTo operator, we replace all values from the observable with the value <b>strawberry</b>.</p>"
+    },
+    "mergeMap": {
+      "title": "mergeMap",
+      "description": "<p>The <b>mergeMap</b> operator in RxJS is used to transform the values emitted by an observable into other observables and then <b>'flattens'</b> or combines all those emissions into a single data stream. This is useful when you want to perform multiple asynchronous operations in sequence and combine their results.</p><p>In this example, we merge an observable made up of a list of letters with an observable containing a numeric range from 1 to 2.</p>"
+    },
+    "mergeMapTo": {
+      "title": "mergeMapTo",
+      "description": "<p>The <b>mergeMapTo</b> operator in RxJS is used to replace each value emitted by an observable with a different observable that you specify, and it then 'flattens' all the results into a single output stream.</p><p>In this example, we merge an observable made up of a list of letters with an observable containing a numeric range from 1 to 2. <b>Unlike mergeMap</b>, we don`t take into account the output of the first observable, emitting the <b>same value</b> for each letter.</p>"
+    },
+    "mergeScan": {
+      "title": "mergeScan",
+      "description": "<p>The RxJS <b>mergeScan</b> operator is like a combination of a <b>reduce</b> and a <b>mergeMap</b>, but it is applied to a stream of data (an observable) instead of a static collection like an array. It is used when you want to maintain an accumulative state as values are emitted from an observable, while simultaneously generating new observables from each emitted value.</p><p>In this example, we cumulatively sum the numbers from the observable.</p>"
+    },
+    "pairwise": {
+      "title": "pairwise",
+      "description": "<p>The RxJS <b>pairwise</b> operator is a simple operator that groups consecutive values emitted by an observable into <b>pairs</b>. Each time the observable emits a new value, this operator takes the <b>previous and the current</b> values and combines them into a two-element array.</p><p>In this example, we can see how the last two emitted values are concatenated into an array.</p>"
+    },
+    "partition": {
+      "title": "partition",
+      "description": "<p>The RxJS <b>partition</b> operator is a simple way to split a stream of data (observable) into two parts based on a condition. Essentially, it separates the emitted values into two different observables:</p><p>- <b>One observable</b> for the values that meet the condition.</p><p>- <b>Another observable</b> for the values that do not meet the condition.</p><p>In this example, we group the animals into two categories, those that are cats and those that are not.</p>"
+    },
+    "pluck": {
+      "title": "pluck",
+      "description": "<p>The RxJS <b>pluck</b> operator is a simple way to extract a specific value from an object emitted by an observable. Essentially, it works like directly accessing a property by its <b>name</b>, but within the context of a data stream.</p><p>In this example, we will log the names of the animals from our observable to the console.</p>"
+    },
+    "scan": {
+      "title": "scan",
+      "description": "<p>The <b>scan</b> operator in RxJS is very similar to the <b>reduce function of arrays</b>, but it applies to data streams. Essentially, it accumulates a value over time as new values arrive in the stream.</p><p>In this example, we cumulatively sum the values of the observable.</p>"
+    },
+    "switchMap": {
+      "title": "switchMap",
+      "description": "<p>The <b>switchMap</b> operator in RxJS is used to switch from one observable to a new one whenever a new value is emitted by the original observable. When this happens, switchMap <b>cancels (or 'unsubscribes' from)</b> the previous observable and only listens to the latest one.</p><p>In this example, we merge the observable from a button click with the observable from an interval. Each time we click the button, we can see in the console how the previous observable is canceled.</p>"
+    },
+    "window": {
+      "title": "window",
+      "description": "<p>The RxJS <b>window</b> operator divides a data stream (observable) into <b>sub-observables</b>, called <b>'windows'</b>. Each window groups the elements emitted by the original stream according to a defined criterion and closes when a specific event occurs.</p><p>In this example, we group numbers into 'windows' of three.</p>"
+    },
+    "windowCount": {
+      "title": "windowCount",
+      "description": "<p>The RxJS <b>windowCount</b> operator divides a data stream (observable) into sub-observables (windows) based on a <b>fixed number</b> of emissions. In other words, each 'window' groups a specific number of emitted values.</p><p>In this example, we group numbers into 'windows' of three starting every 2 values.</p>"
+    },
+    "windowTime": {
+      "title": "windowTime",
+      "description": "<p>The RxJS <b>windowTime</b> operator divides a data stream (observable) into <b>'fixed-time windows'</b>. Each window is a sub-observable that groups the values emitted during a specific time interval.</p><p>In this example, we group the values emitted by the interval into 3-second windows.</p>"
+    },
+    "windowWhen": {
+      "title": "windowWhen",
+      "description": "<p>The RxJS <b>windowWhen</b> operator divides a data stream (observable) into windows that <b>close and open</b> based on a custom criterion. You decide when a window should close and a new one should open using a function that generates observables.</p><p>In this example, we emit values from an interval that opens and closes every 3 seconds.</p>"
+    },
+    "bufferToggle": {
+      "title": "bufferToggle",
+      "description": "<p>The <b>bufferToggle</b> operator in RxJS allows you to collect values emitted by an observable into buffers (arrays) and emit those buffers based on signals from other observables. It works by opening and closing buffers based on events triggered by <b>opening and closing</b> observables.</p><p>In this example, we will capture the values emitted at 1-second intervals from the moment we press 'Start' until we press 'Stop'.</p>"
+    },
+    "windowToggle": {
+      "title": "windowToggle",
+      "description": "<p>The RxJS <b>windowToggle</b> operator divides a data stream (observable) into windows that open and close based on two observables:</p><p><b>- Opener (openings)</b>: An observable that indicates when to open a new window.</p><p><b>- Closer (closings)</b>: A function that generates an observable to decide when to close the window.</p><p>In this example, we emit the values from the interval, opening a new window every 5 seconds and closing it after 3 seconds.</p>"
+    },
+    "concatMapTo": {
+      "title": "concatMapTo",
+      "description": "<p>The <b>concatMapTo</b> operator maps every value of the source to the <b>same inner observable</b> and subscribes to them <b>in order</b>, waiting for each one to complete. It is <b>deprecated</b>: use <b>concatMap(() => obs$)</b>.</p><p>In this example, each click queues a new count from 0 to 2.</p>"
+    },
+    "switchMapTo": {
+      "title": "switchMapTo",
+      "description": "<p>The <b>switchMapTo</b> operator maps every value of the source to the <b>same inner observable</b>, <b>cancelling the previous one</b> each time. It is <b>deprecated</b>: use <b>switchMap(() => obs$)</b>.</p><p>In this example, each click restarts the interval from 0.</p>"
+    },
+    "switchScan": {
+      "title": "switchScan",
+      "description": "<p>The <b>switchScan</b> operator combines <b>scan</b> and <b>switchMap</b>: it keeps an <b>accumulator</b>, but the accumulator function returns an <b>observable</b>. If a new value arrives before that observable emits, the previous one is <b>cancelled</b> and the last accumulated value is used.</p><p>In this example, the slow accumulations (600ms) are cancelled by the next value.</p>"
+    }
+  },
+  "utility": {
+    "title": "Utility operators",
+    "description": "<p>The <b>utility operators in RxJS</b> are tools that <b>help control and manage data streams</b> (Observables) more efficiently, <b>without directly transforming</b> the values passing through them. They are like <b>'helpers'</b> for common tasks, such as debugging, subscription, or flow manipulation.</p>",
+    "shortDescription": "Utility operators in RxJS are tools that help control and manage data streams (Observables) more efficiently, without directly transforming the values that pass through them.",
+    "delay": {
+      "title": "delay",
+      "description": "<p>The <b>delay</b> operator in RxJS is like a <b>'clock' that delays</b> the emissions of values from an Observable for a period of time that <b>you determine</b>.</p>"
+    },
+    "delayWhen": {
+      "title": "delayWhen",
+      "description": "<p>The <b>delayWhen</b> operator in RxJS is like <b>delay</b>, but <b>more flexible</b>. Instead of delaying a value for a fixed time, it <b>allows delaying it using another Observable</b> to decide when it should be emitted.</p>"
+    },
+    "dematerialize": {
+      "title": "dematerialize",
+      "description": "<p>The <b>dematerialize</b> operator in RxJS converts the <b>'notifications'</b> of an Observable <b>(which are encapsulated as special objects)</b> <b>back into normal values or events</b>.</p>"
+    },
+    "finalize": {
+      "title": "finalize",
+      "description": "<p>The <b>finalize</b> operator in RxJS is used to execute an <b>action when an Observable finishes (whether completing or encountering an error)</b>. It acts like a 'cleaner' that ensures something happens at the end of the data flow, regardless of whether everything was successful or there was an error.</p>"
+    },
+    "materialize": {
+      "title": "materialize",
+      "description": "<p>The <b>materialize</b> operator in RxJS converts the emissions of an Observable into <b>notifications</b>. That is, instead of emitting just the values, the Observable emits <b>objects that represent flow events like next, error, or complete.</b></p>"
+    },
+    "repeat": {
+      "title": "repeat",
+      "description": "<p>The <b>repeat</b> operator in RxJS is used to <b>re-emit</b> an Observable after it has completed, <b>repeating its flow</b> the number of times you specify.</p>"
+    },
+    "tap": {
+      "title": "tap",
+      "description": "<p>The <b>tap</b> operator in RxJS is very useful for <b>intercepting and observing</b> the emissions of an Observable without modifying its values. It's like a 'spy' that allows you to perform secondary actions (such as logging to the console) in the data flow, but without affecting the data passing through the Observable.</p>"
+    },
+    "timeInterval": {
+      "title": "timeInterval",
+      "description": "<p>The <b>timeInterval</b> operator in RxJS is used to <b>measure the time elapsed between the emissions</b> of an Observable. It's like a clock that tells you how much time has passed between each emission of a value.</p>"
+    },
+    "timeout": {
+      "title": "timeout",
+      "description": "<p>The <b>timeout</b> operator in RxJS is used to <b>set a time limit on an Observable</b>. If the Observable <b>does not emit a value</b> within the specified time, it emits an <b>error or a default action</b>.</p><p>In this example, we create an observable using the <b>timer</b> operator, but since the <b>timeout</b> operator has a shorter time interval, we will force the error.</p>"
+    },
+    "timestamp": {
+      "title": "timestamp",
+      "description": "<p>The <b>timestamp</b> operator in RxJS is used to <b>add a timestamp to each value emitted</b> by an Observable. This timestamp indicates the exact moment (in milliseconds since the Unix epoch) when the value was emitted.</p>"
+    },
+    "toArray": {
+      "title": "toArray",
+      "description": "<p>The <b>toArray</b> operator in RxJS is used to <b>collect all the values emitted</b> by an Observable and <b>store them in an array</b>. Once the Observable <b>has completed its emission</b> of values, <b>toArray returns that array</b> with all the emitted values.</p><p>In this example, we take only 10 values emitted by an interval and group them into an array.</p>"
+    },
+    "firstValueFrom": {
+      "title": "firstValueFrom",
+      "description": "<p>The <b>firstValueFrom</b> function converts an observable into a <b>Promise</b> that resolves with the <b>first emitted value</b> and then <b>unsubscribes</b>. It is the modern replacement for <b>toPromise()</b> and works great with <b>async/await</b>.</p>"
+    },
+    "lastValueFrom": {
+      "title": "lastValueFrom",
+      "description": "<p>The <b>lastValueFrom</b> function converts an observable into a <b>Promise</b> that resolves with the <b>last value</b> once the observable <b>completes</b>. Be careful: if the observable never completes, the promise never resolves.</p>"
+    },
+    "observeOn": {
+      "title": "observeOn",
+      "description": "<p>The <b>observeOn</b> operator <b>re-emits</b> every notification of the source <b>using a scheduler</b>. With <b>asyncScheduler</b>, values that would be delivered synchronously are delivered asynchronously, after the current code finishes.</p>"
+    },
+    "subscribeOn": {
+      "title": "subscribeOn",
+      "description": "<p>The <b>subscribeOn</b> operator controls <b>when the subscription</b> to the source happens, using a scheduler. Unlike observeOn, it affects the <b>moment of subscription</b>, not the delivery of each value.</p><p>In this example, the <b>B</b> values are printed first because the subscription to <b>A</b> is delayed.</p>"
+    }
+  },
+  "subjects": {
+    "welcome": "Discover how to <b>easily manage</b> the <b>state changes</b> in the data models of any reactive application using <b>Subjects</b>. These tools allow you to keep all <b>components and services</b> always <b>updated simultaneously</b>, in a simple and efficient way!.",
+    "title": "Subjects",
+    "description": "<p>In RxJS, <b>Subjects</b> are a key concept that <b>combines two roles</b>: that of an <b>observable</b> (something that emits values) and that of an <b>observer</b> (something that receives values). This means you can use them both to receive data and to emit it to other observers. They enable the multicast of values to many observers. While <b>simple Observables are unicast</b> (each subscribed Observer owns an independent execution of the Observable), subjects are <b>multicast</b>.</p>",
+    "shortDescription": "In RxJS, Subjects are a key concept that combines two roles: that of an observable (something that emits values) and that of an observer (something that receives values).",
+    "behaviorSubject": {
+      "title": "BehaviorSubject",
+      "description": "<p>The <b>BehaviorSubject</b> is a special type of subject in RxJS that always has an <b>initial value</b> and also <b>remembers the last emitted value</b>. This means that any new subscriber automatically receives the most recent value, even if they subscribe after that value has been emitted.</p><p>We can access its content without needing to subscribe by using the <b>getValue</b> method.</p><p>In this example, we create a <b>BehaviorSubject</b>, and its content is immediately propagated to all subscriptions (initial value). We also log its content to the console using the <b>getValue</b> method and then update its age using the <b>next</b> method, which <b>propagates the change</b>, allowing us to see the <b>new value in the subscription</b>.</p>"
+    },
+    "replaySubject": {
+      "title": "ReplaySubject",
+      "description": "<p>The <b>ReplaySubject</b> in RxJS is a type of Subject that <b>stores a history of emitted values</b> and, when a new subscriber joins, it replays all the values that have been emitted up until that point. You can configure how many previous values you want the ReplaySubject to remember.</p><p>In this example, we give our ReplaySubject the values emitted by an <b>interval</b> and after 5 seconds, we subscribe to it, where we can visualize the <b>last 2 stored</b> values.</p>"
+    },
+    "subject": {
+      "title": "Subject",
+      "description": "<p>The <b>Subject</b> is a special type of Subject in RxJS that does not require an <b>initial value</b> and also <b>remembers the last emitted value</b>. This means that any new subscriber automatically receives the most recent value, even if they subscribe after that value has been emitted.</p><p>In this example, through a click event and based on the content of the variable user, we either create the user or increment their age, and through the <b>next</b> function, we propagate the change.</p>"
+    },
+    "asyncSubject": {
+      "title": "AsyncSubject",
+      "description": "<p>The <b>AsyncSubject</b> is a type of subject that <b>only emits the last value</b> it received, and <b>only when it completes</b>. Subscribers that arrive after completion also receive that last value. It is similar to how a <b>Promise</b> works.</p>"
+    }
+  },
+  "realLife": {
+    "title": "Real-life examples",
+    "description": "In this section, we will present a series of <b>practical examples</b> that might be encountered in real-life situations and demonstrate how to address them using the concepts and techniques outlined in this <b>RxJS</b> documentation.",
+    "shortDescription": "In this section, we will present a series of practical examples that may arise in real-life situations and demonstrate how to address them using the concepts and techniques covered in this RxJS documentation.",
+    "filterUsersMap": {
+      "title": "Filter (map)",
+      "description": "<p>In this example, we explain how to <b>filter</b> a list of users obtained through an <b>HTTP GET</b> service. We will use the RxJS <b>map</b> operator <b>in combination</b> with the array's <b>filter function</b> to apply filtering efficiently.</p>"
+    },
+    "filterUsersMergeMapFilter": {
+      "title": "Filter (mergeMap, filter)",
+      "description": "<p>In this example, we present an <b>alternative</b> for filtering users using the <b>mergeMap and filter</b> operators. With the first operator, we transform the <b>array of users</b> into <b>individual emissions</b>, which <b>allows the application</b> of the <b>filter</b> operator. Subsequently, we use the <b>toArray</b> operator to reassemble an <b>array</b> with the <b>filtered users</b>. From an efficiency standpoint, I consider the <b>previous example to be more optimal</b>; however, from a didactic perspective, this approach is very useful for practicing the concepts learned in this documentation.</p>"
+    },
+    "mergeUsersHobbiesforkJoinConcatMap": {
+      "title": "Merge (data API)",
+      "description": "<p>In this example, the <b>integration</b> of the <b>user</b> list with the <b>hobbies</b> list is performed through the <b>name</b> field. For this purpose, the <b>forkJoin</b> operator is used, which allows <b>combining</b> two observables that will emit their values only when both have <b>completed</b>. Next, the <b>concatMap</b> operator <b>combines</b> the emissions resulting from forkJoin into a <b>new observable</b>, created using the <b>of</b> operator, which structures the data into an object of the type <b>{ users: u, hobbies: h }</b>. Finally, the <b>map</b> operator is used to transform and enrich this data, utilizing the <b>map</b> and <b>find</b> functions of arrays to establish the association and perform the necessary modifications.</p>"
+    },
+    "filterAndmergeUsersHobbies": {
+      "title": "Filter and merge (data API)",
+      "description": "<p>In this example, the <b>integration</b> of <b>a user</b> filtered by the <b>name</b> field from the <b>user</b> list with the <b>hobbies</b> list is carried out. Then, using the <b>map</b> operator and the <b>find</b> function, an <b>object</b> is created that contains the <b>data</b> of the <b>user</b> and their respective <b>hobbies</b>.</p>"
+    },
+    "searchApi": {
+      "title": "Search (data API)",
+      "description": "<p>In this example, we will implement <b>search</b> in an <b>API</b> using the <b>input event</b> on a text field. We use the <b>debounceTime</b> operator to wait <b>1 second</b> after the <b>last</b> keystroke, in order to <b>avoid multiple calls</b> to the API. The <b>filter</b> operator ensures that the search only runs when the text has at least <b>2 characters</b>, and <b>switchMap</b> cancels any previous request that is still pending.</p>"
+    }
+  },
+  "ui": {
+    "tagline": "Unlock a new way to learn",
+    "skipToContent": "Skip to content",
+    "home": "Home",
+    "search": "Search operators…",
+    "searchLabel": "Search the documentation",
+    "searchHint": "Type at least 2 characters",
+    "noResults": "No results for",
+    "openSearch": "Open search",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "mainNav": "Documentation",
+    "language": "Language",
+    "switchLanguage": "Ver en español",
+    "run": "Run",
+    "stop": "Stop",
+    "reset": "Reset",
+    "clear": "Clear console",
+    "console": "Console",
+    "preview": "Sandbox",
+    "editorLabel": "Editable code example",
+    "loadingEditor": "Loading editor…",
+    "modified": "modified",
+    "running": "running",
+    "idle": "idle",
+    "consoleEmpty": "Press Run (Ctrl + Enter) to execute the example in real time.",
+    "compileError": "Compilation error",
+    "playgroundTitle": "Interactive playground",
+    "playgroundHint": "Edit the code and press Run. Reset restores the original example.",
+    "sandboxHelpers": "userService simulates HTTP requests",
+    "deprecated": "Deprecated",
+    "deprecatedText": "This API is deprecated in RxJS 7 and will be removed in RxJS 8. Prefer",
+    "isNew": "New",
+    "previous": "Previous",
+    "next": "Next",
+    "moreInSection": "More in this section",
+    "examples": "examples",
+    "operatorsLabel": "operators",
+    "openExample": "Open example",
+    "startLearning": "Start with the basics",
+    "exploreOperators": "Explore operators",
+    "allSections": "Sections",
+    "sectionsTitle": "Everything you need to master RxJS",
+    "stats": {
+      "operators": "operators with live examples",
+      "sections": "sections",
+      "languages": "languages"
+    },
+    "features": {
+      "title": "Learn by doing",
+      "live": {
+        "title": "Live playground",
+        "text": "Every example is editable. Change the code, press Run and watch the console react instantly."
+      },
+      "visual": {
+        "title": "Interactive sandboxes",
+        "text": "Buttons, inputs and animations inside an isolated sandbox to feel every operator in action."
+      },
+      "real": {
+        "title": "Real-life cases",
+        "text": "From filtering API responses to search-as-you-type: patterns you will use every day."
+      }
+    },
+    "groups": {
+      "fundamentals": "Fundamentals",
+      "operators": "Operators",
+      "subjects": "Subjects",
+      "practice": "Practice"
+    },
+    "notFound": {
+      "title": "Page not found",
+      "text": "This stream completed without emitting any value. The page you are looking for does not exist.",
+      "back": "Back to home"
+    },
+    "footer": "Made with ♥ for the developer community.",
+    "author": "Author",
+    "buttons": {
+      "subscribe": "Subscribe",
+      "unsubscribe": "Unsubscribe",
+      "unsubscribeAll": "Unsubscribe all",
+      "makeClick": "Make click",
+      "make3Clicks": "Make 3 clicks",
+      "make5Clicks": "Make 5 clicks",
+      "countClicks": "Count clicks",
+      "makeSeveralClicks": "Make several clicks",
+      "start": "Start",
+      "stop": "Stop",
+      "connect": "Connect",
+      "increaseAge": "Increase age",
+      "createOrIncreaseAge": "Create or increase age",
+      "typeHere": "Click here and type…",
+      "pokemon": "Enter the name of a Pokémon"
+    }
+  },
+  "seo": {
+    "homeTitle": "Play RxJS — Interactive RxJS documentation with live examples",
+    "homeDescription": "Learn RxJS with a friendly documentation: observables, subjects and 140+ operators explained with editable examples you can run in real time.",
+    "categoryTitle": "{title} — RxJS explained with live examples",
+    "operatorTitle": "{name} — RxJS {category} with live example",
+    "operatorTitleConcept": "{name} — RxJS {category}",
+    "keywords": "RxJS, RxJS documentation, reactive programming, observables, RxJS operators, RxJS examples, RxJS playground, Angular"
+  }
+}

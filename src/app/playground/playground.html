@@ -1,0 +1,89 @@
+<section class="pg" [class.pg--running]="running()" [attr.aria-label]="'ui.playgroundTitle' | t">
+  <div class="pg__bar">
+    <span class="pg__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="pg__file">
+      <app-icon name="code" [size]="14" />
+      {{ name() }}.ts
+      @if (modified()) {
+        <span class="pg__modified">● {{ 'ui.modified' | t }}</span>
+      }
+    </span>
+    <div class="pg__actions">
+      <button
+        type="button"
+        class="btn btn--ghost btn--sm"
+        (click)="reset()"
+        [disabled]="!modified() && !running() && !logs().length"
+        [attr.aria-label]="'ui.reset' | t"
+      >
+        <app-icon name="reset" [size]="15" />
+        <span class="pg__label">{{ 'ui.reset' | t }}</span>
+      </button>
+      @if (running()) {
+        <button type="button" class="btn btn--secondary btn--sm" (click)="stop()">
+          <app-icon name="stop" [size]="15" />
+          <span class="pg__label">{{ 'ui.stop' | t }}</span>
+        </button>
+      }
+      <button type="button" class="btn btn--primary btn--sm pg__run" (click)="run()" title="Ctrl + Enter">
+        <app-icon name="play" [size]="15" />
+        {{ 'ui.run' | t }}
+      </button>
+    </div>
+  </div>
+
+  <div class="pg__editor">
+    <div #cmHost class="pg__cm" [class.pg__cm--hidden]="!editorReady()"></div>
+    @if (!editorReady()) {
+      <div
+        class="pg__static"
+        role="textbox"
+        aria-multiline="true"
+        aria-readonly="false"
+        tabindex="0"
+        [attr.aria-label]="('ui.editorLabel' | t) + ': ' + name()"
+        (pointerdown)="focusEditor()"
+        (focus)="focusEditor()"
+      >
+        <pre class="pg__gutter" aria-hidden="true">@for (line of lines(); track $index) {<span>{{ $index + 1 }}</span>}</pre>
+        <pre class="pg__code"><code>@for (line of lines(); track $index) {<span [innerHTML]="line"></span>}</code></pre>
+      </div>
+    }
+  </div>
+
+  <div class="pg__sandbox" [class.pg__sandbox--visible]="running()" [style.height.px]="running() ? frameHeight() : 0">
+    <div #frameHost class="pg__frame-host"></div>
+  </div>
+
+  <div class="pg__console">
+    <div class="pg__console-bar">
+      <span class="pg__console-title">
+        <app-icon name="terminal" [size]="15" />
+        {{ 'ui.console' | t }}
+        <span class="pg__state" [class.pg__state--on]="running()">{{ (running() ? 'ui.running' : 'ui.idle') | t }}</span>
+      </span>
+      <button
+        type="button"
+        class="pg__clear"
+        (click)="clear()"
+        [disabled]="!logs().length"
+        [attr.aria-label]="'ui.clear' | t"
+        [attr.title]="'ui.clear' | t"
+      >
+        <app-icon name="trash" [size]="15" />
+      </button>
+    </div>
+    <ol #consoleList class="pg__logs" role="log" aria-live="polite" aria-relevant="additions">
+      @for (log of logs(); track log.id) {
+        <li class="log log--{{ log.level }}">
+          <span class="log__time">{{ log.time }}</span>
+          <pre class="log__text">{{ log.text }}</pre>
+        </li>
+      } @empty {
+        <li class="pg__empty">
+          <span class="pg__prompt">❯</span> {{ 'ui.consoleEmpty' | t }}
+        </li>
+      }
+    </ol>
+  </div>
+</section>

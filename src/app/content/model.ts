@@ -1,0 +1,66 @@
+export const LANGS = ['en', 'es'] as const;
+export type Lang = (typeof LANGS)[number];
+export const DEFAULT_LANG: Lang = 'en';
+
+export function isLang(value: unknown): value is Lang {
+  return typeof value === 'string' && (LANGS as readonly string[]).includes(value);
+}
+
+export type GroupKey = 'fundamentals' | 'operators' | 'subjects' | 'practice';
+
+export type CategoryKey =
+  | 'basicConcepts'
+  | 'combination'
+  | 'conditional'
+  | 'creation'
+  | 'error'
+  | 'filtering'
+  | 'mathematical'
+  | 'multicasting'
+  | 'transformation'
+  | 'utility'
+  | 'subjects'
+  | 'realLife';
+
+export interface CatalogItem {
+  id: string;
+  /** Present when the API is deprecated: name of the recommended replacement. */
+  deprecated?: string;
+  /** Added in Play RxJS v2. */
+  isNew?: boolean;
+}
+
+export interface Category {
+  key: CategoryKey;
+  /** URL path after the language segment, e.g. `operators/filtering`. */
+  path: string;
+  group: GroupKey;
+  icon: IconName;
+  items: CatalogItem[];
+}
+
+export type UiControl =
+  | { kind: 'button'; id: string; label: string; variant?: 'primary' | 'secondary' }
+  | { kind: 'input'; id: string; placeholder: string }
+  | { kind: 'box'; id: string };
+
+export interface ExampleDef {
+  code: string;
+  ui?: UiControl[];
+}
+
+export type ExampleMap = Record<string, ExampleDef>;
+
+export type IconName =
+  | 'atom'
+  | 'merge'
+  | 'branch'
+  | 'sparkles'
+  | 'shield'
+  | 'filter'
+  | 'sigma'
+  | 'broadcast'
+  | 'shuffle'
+  | 'wrench'
+  | 'subject'
+  | 'rocket';

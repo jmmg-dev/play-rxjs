@@ -1,0 +1,142 @@
+<div class="home">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__text">
+      <p class="eyebrow"><span class="live-dot"></span> RxJS 7.8 · Live playground</p>
+      <h1 class="hero__title">Play <span class="gradient-text">RxJS</span></h1>
+      <p class="hero__tagline">{{ 'ui.tagline' | t }}</p>
+      <p class="hero__lead">{{ 'console' | t }}</p>
+      <div class="hero__ctas">
+        <a class="btn btn--primary" [routerLink]="nav.link(basics.path)">
+          {{ 'ui.startLearning' | t }}
+          <app-icon name="arrowRight" [size]="16" />
+        </a>
+        <a class="btn btn--ghost" [routerLink]="nav.link()" fragment="operators">{{ 'ui.exploreOperators' | t }}</a>
+      </div>
+      <dl class="stats">
+        @for (s of stats; track s.label) {
+          <div class="stats__item">
+            <dt class="visually-hidden">{{ s.label | t }}</dt>
+            <dd class="stats__value gradient-text">{{ s.value }}</dd>
+            <dd class="stats__label">{{ s.label | t }}</dd>
+          </div>
+        }
+      </dl>
+    </div>
+
+    <div class="hero__visual" aria-hidden="true">
+      <div class="orbit orbit--1"></div>
+      <div class="orbit orbit--2"></div>
+      <div class="orbit orbit--3"><span class="orbit__dot"></span></div>
+      <img class="hero__logo" ngSrc="/images/rxjs.webp" width="512" height="512" priority alt="" />
+      <div class="marbles glass">
+        @for (m of marbles; track $index) {
+          <div class="marbles__line">
+            @for (v of m.values; track $index) {
+              <span class="marble marble--{{ m.color }}" [style.animation-delay.s]="m.delay + $index * 0.9">{{ v }}</span>
+            }
+          </div>
+        }
+        <div class="marbles__op mono">combineLatest</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="logos">
+    <img src="/images/rxjs-logo.webp" width="56" height="56" alt="RxJS logo" loading="lazy" />
+    <span class="logos__plus">+</span>
+    <img src="/images/angular.webp" width="56" height="58" alt="Angular logo" loading="lazy" />
+  </div>
+
+  <!-- Features -->
+  <section class="section" aria-labelledby="features-title">
+    <h2 id="features-title" class="section__title">{{ 'ui.features.title' | t }}</h2>
+    <div class="features">
+      @for (f of features; track f.key) {
+        <article class="feature glass">
+          <span class="feature__icon"><app-icon [name]="f.icon" [size]="22" /></span>
+          <h3>{{ 'ui.features.' + f.key + '.title' | t }}</h3>
+          <p>{{ 'ui.features.' + f.key + '.text' | t }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <!-- Welcome / basics -->
+  <section class="panel panel--cyan" aria-labelledby="welcome-title">
+    <h2 id="welcome-title" [innerHTML]="'basicConcepts.welcome.title' | t"></h2>
+    <p class="prose" [innerHTML]="'basicConcepts.welcome.description' | t"></p>
+    <a class="btn btn--secondary" [routerLink]="nav.link(basics.path)">
+      <app-icon [name]="basics.icon" [size]="16" />
+      {{ 'basicConcepts.title' | t }}
+    </a>
+  </section>
+
+  <!-- Operators -->
+  <section id="operators" class="section" aria-labelledby="operators-title">
+    <p class="eyebrow">{{ 'ui.groups.operators' | t }}</p>
+    <h2 id="operators-title" class="section__title">{{ 'operators.title' | t }}</h2>
+    <p class="prose section__lead" [innerHTML]="'operators.description' | t"></p>
+    <ul class="categories">
+      @for (c of operatorCategories; track c.key; let i = $index) {
+        <li>
+          <a class="category" [routerLink]="nav.link(c.path)">
+            <span class="category__top">
+              <span class="category__icon"><app-icon [name]="c.icon" [size]="20" /></span>
+              <span class="category__count mono">{{ c.items.length }} {{ 'ui.operatorsLabel' | t }}</span>
+            </span>
+            <h3 class="category__title">{{ c.key + '.title' | t }}</h3>
+            <span class="category__text" [innerHTML]="c.key + '.shortDescription' | t"></span>
+            <span class="category__ops mono">
+              @for (item of c.items.slice(0, 4); track item.id) {
+                <span>{{ item.id }}</span>
+              }
+              <span>…</span>
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+  </section>
+
+  <!-- Subjects & real life -->
+  <div class="duo">
+    <section class="panel panel--pink" aria-labelledby="subjects-title">
+      <span class="panel__icon"><app-icon [name]="subjects.icon" [size]="22" /></span>
+      <h2 id="subjects-title">{{ 'subjects.title' | t }}</h2>
+      <p class="prose" [innerHTML]="'subjects.welcome' | t"></p>
+      <a class="btn btn--primary" [routerLink]="nav.link(subjects.path)">
+        {{ 'subjects.title' | t }} <app-icon name="arrowRight" [size]="16" />
+      </a>
+    </section>
+    <section class="panel panel--cyan" aria-labelledby="real-title">
+      <span class="panel__icon"><app-icon [name]="realLife.icon" [size]="22" /></span>
+      <h2 id="real-title">{{ 'realLife.title' | t }}</h2>
+      <p class="prose" [innerHTML]="'realLife.description' | t"></p>
+      <a class="btn btn--secondary" [routerLink]="nav.link(realLife.path)">
+        {{ 'realLife.title' | t }} <app-icon name="arrowRight" [size]="16" />
+      </a>
+    </section>
+  </div>
+
+  <!-- About me -->
+  <section class="about glass" aria-labelledby="about-title">
+    <div class="about__profile">
+      <img ngSrc="/images/photo.webp" width="468" height="468" [alt]="author.name" class="about__photo" />
+      <h3>{{ author.name }}</h3>
+      <p class="about__job">{{ author.jobTitle }}</p>
+      <div class="about__links">
+        <a class="btn btn--ghost btn--sm" [href]="author.linkedin" target="_blank" rel="noopener author">
+          <app-icon name="linkedin" [size]="15" /> LinkedIn
+        </a>
+        <a class="btn btn--ghost btn--sm" [href]="author.portfolio" target="_blank" rel="noopener">
+          <app-icon name="user" [size]="15" /> CV
+        </a>
+      </div>
+    </div>
+    <div class="about__text">
+      <h2 id="about-title">{{ 'aboutMe.title' | t }}</h2>
+      <div class="prose" [innerHTML]="'aboutMe.description' | t"></div>
+    </div>
+  </section>
+</div>

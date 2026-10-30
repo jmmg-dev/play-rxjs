@@ -1,0 +1,80 @@
+<div class="page">
+  <app-breadcrumbs [crumbs]="crumbs()" />
+
+  <article class="doc">
+    <header class="doc__header">
+      <a class="doc__category" [routerLink]="nav.link(cat().path)">
+        <app-icon [name]="cat().icon" [size]="15" />
+        {{ cat().key + '.title' | t }}
+      </a>
+      <h1 class="doc__title" [class.mono]="isCode()">
+        <span class="doc__comment" aria-hidden="true">/*</span>
+        {{ key() + '.title' | t }}
+      </h1>
+      <div class="doc__badges">
+        @if (item().isNew) {
+          <span class="badge badge--new">{{ 'ui.isNew' | t }}</span>
+        }
+        @if (item().deprecated) {
+          <span class="badge badge--deprecated">{{ 'ui.deprecated' | t }}</span>
+        }
+      </div>
+    </header>
+
+    <div class="doc__body">
+      <div class="prose doc__description" [innerHTML]="key() + '.description' | t"></div>
+
+      @if (item().deprecated; as replacement) {
+        <aside class="callout" role="note">
+          <app-icon name="warning" [size]="18" />
+          <p>
+            {{ 'ui.deprecatedText' | t }} <code>{{ replacement }}</code>.
+          </p>
+        </aside>
+      }
+    </div>
+
+    @if (example(); as ex) {
+      <section class="doc__playground" aria-labelledby="playground-title">
+        <div class="doc__playground-head">
+          <h2 id="playground-title">
+            <app-icon name="bolt" [size]="20" />
+            {{ 'ui.playgroundTitle' | t }}
+          </h2>
+          <p>{{ 'ui.playgroundHint' | t }}</p>
+        </div>
+        @for (current of [ex]; track current) {
+          <app-playground [code]="current.code" [ui]="current.ui ?? []" [name]="id()" />
+        }
+      </section>
+    }
+
+    <nav class="pager" [attr.aria-label]="('ui.previous' | t) + ' / ' + ('ui.next' | t)">
+      @if (prev(); as p) {
+        <a class="pager__link" [routerLink]="nav.link(p.category.path + '/' + p.item.id)" rel="prev">
+          <span class="pager__dir"><app-icon name="arrowLeft" [size]="14" /> {{ 'ui.previous' | t }}</span>
+          <span class="pager__name">{{ p.category.key + '.' + p.item.id + '.title' | t }}</span>
+        </a>
+      } @else {
+        <span></span>
+      }
+      @if (next(); as n) {
+        <a class="pager__link pager__link--next" [routerLink]="nav.link(n.category.path + '/' + n.item.id)" rel="next">
+          <span class="pager__dir">{{ 'ui.next' | t }} <app-icon name="arrowRight" [size]="14" /></span>
+          <span class="pager__name">{{ n.category.key + '.' + n.item.id + '.title' | t }}</span>
+        </a>
+      }
+    </nav>
+  </article>
+
+  @if (siblings().length) {
+    <section class="related" aria-labelledby="related-title">
+      <h2 id="related-title" class="related__title">{{ 'ui.moreInSection' | t }} · {{ cat().key + '.title' | t }}</h2>
+      <div class="related__list">
+        @for (s of siblings(); track s.id) {
+          <a class="chip" [class.mono]="isCode()" [routerLink]="nav.link(cat().path + '/' + s.id)">{{ cat().key + '.' + s.id + '.title' | t }}</a>
+        }
+      </div>
+    </section>
+  }
+</div>
