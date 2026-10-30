@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanMatchFn, ResolveFn, Routes } from '@angular/router';
-import { CATEGORIES, getItem, loadExamples } from './content/catalog';
-import { CategoryKey, DEFAULT_LANG, ExampleDef, isLang } from './content/model';
+import { CATEGORIES, getItem, loadExamples, loadMarble } from './content/catalog';
+import { CategoryKey, DEFAULT_LANG, ExampleDef, isLang, MarbleData } from './content/model';
 import { I18n } from './core/i18n/i18n.service';
 import { Shell } from './layout/shell';
 
@@ -23,6 +23,9 @@ const exampleResolver: ResolveFn<ExampleDef | undefined> = async (route) => {
   return examples[route.paramMap.get('id') ?? ''];
 };
 
+const marbleResolver: ResolveFn<MarbleData | undefined> = (route) =>
+  loadMarble(route.data['category'] as CategoryKey, route.paramMap.get('id') ?? '');
+
 const categoryPage = () => import('./pages/category-page').then((m) => m.CategoryPage);
 const operatorPage = () => import('./pages/operator-page').then((m) => m.OperatorPage);
 const notFoundPage = () => import('./pages/not-found-page').then((m) => m.NotFoundPage);
@@ -43,7 +46,7 @@ export const routes: Routes = [
           canMatch: [itemGuard],
           loadComponent: operatorPage,
           data: { category: category.key },
-          resolve: { example: exampleResolver },
+          resolve: { example: exampleResolver, marble: marbleResolver },
         },
       ]),
       { path: '**', loadComponent: notFoundPage },

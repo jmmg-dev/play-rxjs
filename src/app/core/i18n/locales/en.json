@@ -744,6 +744,14 @@
       "createOrIncreaseAge": "Create or increase age",
       "typeHere": "Click here and type…",
       "pokemon": "Enter the name of a Pokémon"
+    },
+    "marble": {
+      "title": "Marble diagram",
+      "hint": "Each line is an observable over time, read from left to right.",
+      "value": "Emitted value",
+      "complete": "Completes",
+      "error": "Error",
+      "time": "Time"
     }
   },
   "seo": {

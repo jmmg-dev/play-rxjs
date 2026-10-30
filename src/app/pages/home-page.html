@@ -25,20 +25,14 @@
     </div>
 
     <div class="hero__visual" aria-hidden="true">
-      <div class="orbit orbit--1"></div>
-      <div class="orbit orbit--2"></div>
-      <div class="orbit orbit--3"><span class="orbit__dot"></span></div>
+      <div class="ring ring--1"></div>
+      <div class="ring ring--2"></div>
       <img class="hero__logo" ngSrc="/images/rxjs.webp" width="512" height="512" priority alt="" />
-      <div class="marbles glass">
-        @for (m of marbles; track $index) {
-          <div class="marbles__line">
-            @for (v of m.values; track $index) {
-              <span class="marble marble--{{ m.color }}" [style.animation-delay.s]="m.delay + $index * 0.9">{{ v }}</span>
-            }
-          </div>
-        }
-        <div class="marbles__op mono">combineLatest</div>
-      </div>
+      @for (b of orbitBalls; track $index) {
+        <div class="orbiter orbiter--{{ b.ring }}" [style.--angle.deg]="b.angle">
+          <span class="ball ball--{{ b.tone }}">{{ b.label }}</span>
+        </div>
+      }
     </div>
   </section>
 

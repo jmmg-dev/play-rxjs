@@ -104,112 +104,67 @@
     float 7s ease-in-out infinite;
 }
 
-.orbit {
+.ring {
   position: absolute;
-  inset: 0;
   border-radius: 50%;
-  border: 1px dashed rgba(242, 153, 251, 0.25);
+  pointer-events: none;
   &--1 {
-    inset: 8%;
-    animation: spin 40s linear infinite;
+    inset: 1%;
+    border: 1px solid rgba(163, 254, 255, 0.14);
   }
   &--2 {
-    inset: 0;
-    border-style: solid;
-    border-color: rgba(163, 254, 255, 0.12);
-    animation: spin 60s linear infinite reverse;
-  }
-  &--3 {
-    inset: 15%;
-    border: 0;
-    animation: spin 9s linear infinite;
+    inset: 9%;
+    border: 1px dashed rgba(242, 153, 251, 0.25);
   }
 }
 
-.orbit__dot {
-  position: absolute;
-  top: -6px;
-  left: 50%;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--cyan);
-  box-shadow: 0 0 18px 4px rgba(163, 254, 255, 0.7);
-}
-
-.marbles {
+/* Static angle first: without animation the balls stay spread around the logo */
+.orbiter {
+  --angle: 0deg;
+  --speed: 34s;
   position: absolute;
   z-index: 2;
-  right: -4%;
-  bottom: 2%;
-  width: min(300px, 70%);
-  padding: 0.9rem 1rem 0.7rem;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
-}
-
-.marbles__line {
-  position: relative;
-  height: 28px;
-  margin-bottom: 0.3rem;
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 6px;
-    top: 50%;
-    height: 1px;
-    background: rgba(245, 242, 240, 0.25);
+  pointer-events: none;
+  transform: rotate(var(--angle));
+  animation: orbit var(--speed) linear infinite;
+  &--1 {
+    inset: 1%;
   }
-  &::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: calc(50% - 4px);
-    border: 4px solid transparent;
-    border-left-color: rgba(245, 242, 240, 0.35);
-  }
-  &:nth-child(3) {
-    margin-top: 1.6rem;
+  &--2 {
+    --speed: 24s;
+    inset: 9%;
+    animation-direction: reverse;
+    .ball {
+      animation-direction: reverse;
+    }
   }
 }
 
-.marble {
+.ball {
   position: absolute;
-  top: 2px;
-  left: 0;
+  top: 0;
+  left: 50%;
   display: grid;
   place-items: center;
-  min-width: 24px;
-  height: 24px;
-  padding: 0 4px;
-  border-radius: 999px;
-  font: 700 0.65rem var(--mono);
+  width: var(--ball, 36px);
+  height: var(--ball, 36px);
+  border-radius: 50%;
+  font: 700 0.8rem var(--mono);
   color: var(--dark);
-  opacity: 0;
-  animation: travel 3.6s linear infinite;
+  transform: translate(-50%, -50%) rotate(calc(-1 * var(--angle)));
+  animation: orbit-counter var(--speed) linear infinite;
   &--pink {
     background: var(--pink);
+    box-shadow: 0 0 16px rgba(242, 153, 251, 0.6);
   }
   &--cyan {
     background: var(--cyan);
+    box-shadow: 0 0 16px rgba(163, 254, 255, 0.55);
   }
   &--grad {
     background: var(--grad);
+    box-shadow: 0 0 16px rgba(201, 182, 255, 0.55);
   }
-}
-
-.marbles__op {
-  position: absolute;
-  left: 1rem;
-  right: 1rem;
-  top: calc(0.9rem + 2 * 28px + 0.6rem);
-  padding: 0.1rem 0;
-  border: 1px solid var(--border-strong);
-  border-radius: 6px;
-  background: rgba(22, 17, 23, 0.9);
-  font-size: 0.72rem;
-  text-align: center;
-  color: var(--pink);
 }
 
 .logos {
@@ -478,9 +433,8 @@
 }
 
 @media (max-width: 480px) {
-  .marbles {
-    right: 0;
-    width: 78%;
+  .hero__visual {
+    --ball: 28px;
   }
   .categories {
     grid-template-columns: 1fr;
@@ -488,9 +442,21 @@
 }
 
 /* ---------- Animations ---------- */
-@keyframes spin {
+@keyframes orbit {
+  from {
+    transform: rotate(var(--angle));
+  }
   to {
-    transform: rotate(360deg);
+    transform: rotate(calc(var(--angle) + 360deg));
+  }
+}
+
+@keyframes orbit-counter {
+  from {
+    transform: translate(-50%, -50%) rotate(calc(-1 * var(--angle)));
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(calc(-1 * var(--angle) - 360deg));
   }
 }
 
@@ -515,22 +481,5 @@
 @keyframes blink {
   50% {
     opacity: 0.35;
-  }
-}
-
-@keyframes travel {
-  0% {
-    left: 0;
-    opacity: 0;
-  }
-  8% {
-    opacity: 1;
-  }
-  88% {
-    opacity: 1;
-  }
-  100% {
-    left: calc(100% - 30px);
-    opacity: 0;
   }
 }

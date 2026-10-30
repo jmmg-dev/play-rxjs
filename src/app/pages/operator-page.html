@@ -34,6 +34,12 @@
       }
     </div>
 
+    @if (marble(); as diagram) {
+      @for (current of [diagram]; track current) {
+        <app-marble-diagram [data]="current" />
+      }
+    }
+
     @if (example(); as ex) {
       <section class="doc__playground" aria-labelledby="playground-title">
         <div class="doc__playground-head">

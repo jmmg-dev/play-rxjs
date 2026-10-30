@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FLAT_ITEMS, getCategory } from '../content/catalog';
-import { CategoryKey, ExampleDef } from '../content/model';
+import { CategoryKey, ExampleDef, MarbleData } from '../content/model';
 import { firstParagraph, stripHtml, truncate } from '../core/html';
 import { I18n } from '../core/i18n/i18n.service';
 import { TranslatePipe } from '../core/i18n/translate.pipe';
@@ -11,11 +11,12 @@ import { SITE_NAME } from '../core/site';
 import { Playground } from '../playground/playground';
 import { Breadcrumbs } from '../shared/breadcrumbs';
 import { Icon } from '../shared/icon';
+import { MarbleDiagram } from '../shared/marble-diagram';
 
 @Component({
   selector: 'app-operator-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, Icon, Breadcrumbs, Playground, TranslatePipe],
+  imports: [RouterLink, Icon, Breadcrumbs, MarbleDiagram, Playground, TranslatePipe],
   templateUrl: './operator-page.html',
   styleUrl: './operator-page.scss',
 })
@@ -23,6 +24,7 @@ export class OperatorPage {
   readonly category = input.required<CategoryKey>();
   readonly id = input.required<string>();
   readonly example = input<ExampleDef>();
+  readonly marble = input<MarbleData>();
 
   protected readonly i18n = inject(I18n);
   protected readonly nav = inject(Nav);

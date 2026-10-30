@@ -37,10 +37,14 @@ export class HomePage {
     { key: 'visual', icon: 'bolt' },
     { key: 'real', icon: 'rocket' },
   ];
-  protected readonly marbles = [
-    { values: ['1', '2', '3'], color: 'pink', delay: 0 },
-    { values: ['a', 'b'], color: 'cyan', delay: 1.2 },
-    { values: ['1a', '2a', '2b', '3b'], color: 'grad', delay: 0.6 },
+  protected readonly orbitBalls = [
+    { label: '1', tone: 'pink', ring: 1, angle: 10 },
+    { label: 'a', tone: 'cyan', ring: 1, angle: 100 },
+    { label: '2', tone: 'pink', ring: 1, angle: 190 },
+    { label: 'b', tone: 'cyan', ring: 1, angle: 280 },
+    { label: '1a', tone: 'grad', ring: 2, angle: 40 },
+    { label: '3', tone: 'pink', ring: 2, angle: 160 },
+    { label: '2b', tone: 'grad', ring: 2, angle: 280 },
   ];
 
   constructor() {

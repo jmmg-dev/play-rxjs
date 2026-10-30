@@ -66,7 +66,7 @@ import { LangSwitch } from './lang-switch';
     .brand {
       display: flex;
       align-items: center;
-      gap: 0.7rem;
+      gap: 1.1rem;
       color: var(--text);
       min-width: 0;
       &:hover {

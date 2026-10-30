@@ -1,0 +1,171 @@
+:host {
+  display: block;
+  --marble-bg: #1d1620;
+}
+
+.marble {
+  margin-top: 2.5rem;
+}
+
+.marble__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin-bottom: 1rem;
+  h2 {
+    font-size: 1.3rem;
+  }
+  p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--subtle);
+  }
+}
+
+.marble__card {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--marble-bg);
+  overflow: hidden;
+}
+
+.marble__scroll {
+  overflow-x: auto;
+  padding: 0.5rem 0.5rem 0;
+}
+
+.marble__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 720px;
+  margin: 0 auto;
+  &:hover .curtain {
+    animation-play-state: paused;
+  }
+}
+
+.lane {
+  stroke: rgba(245, 242, 240, 0.32);
+  stroke-width: 1.5;
+}
+
+.lane__arrow {
+  fill: none;
+  stroke: rgba(245, 242, 240, 0.5);
+  stroke-width: 1.5;
+}
+
+.lane__label {
+  fill: var(--muted);
+  font: 500 12.5px var(--mono);
+}
+
+.end {
+  fill: none;
+  stroke: var(--clear);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  &--error {
+    stroke: var(--danger);
+    stroke-width: 3;
+  }
+}
+
+.pill {
+  rect {
+    stroke: rgba(22, 17, 23, 0.65);
+    stroke-width: 1;
+  }
+  text {
+    fill: var(--dark);
+    font: 700 14px var(--mono);
+  }
+  &--pink rect {
+    fill: var(--pink);
+  }
+  &--cyan rect {
+    fill: var(--cyan);
+  }
+  &--grad rect {
+    fill: url(#marble-grad);
+  }
+}
+
+.op {
+  fill: rgba(47, 38, 48, 0.95);
+  stroke: var(--border-strong);
+}
+
+.op__text {
+  fill: var(--pink);
+  font: 600 14px var(--mono);
+}
+
+/* Final state is the base style, so the diagram is complete without animation */
+.curtain {
+  transform: translateX(760px);
+  &--play {
+    animation: sweep 5.5s linear;
+  }
+  rect {
+    fill: var(--marble-bg);
+  }
+}
+
+.curtain__head {
+  stroke: var(--cyan);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 5px var(--cyan));
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  margin: 0.5rem 0 0;
+  padding: 0.7rem 1.1rem;
+  border-top: 1px solid var(--border);
+  list-style: none;
+  font: 500 0.76rem var(--mono);
+  color: var(--subtle);
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+}
+
+.legend__pill {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--pink);
+}
+
+.legend__bar {
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--clear);
+}
+
+.legend__x {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.legend__time {
+  color: var(--text);
+}
+
+@keyframes sweep {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(760px);
+  }
+}

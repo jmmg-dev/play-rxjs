@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "serve:ssr": "node dist/play-rxjs/server/server.mjs",
-    "check:examples": "node scripts/check-examples.mjs"
+    "check:examples": "node scripts/check-examples.mjs",
+    "marbles": "node scripts/generate-marbles.mjs"
   },
   "private": true,
   "packageManager": "npm@11.19.1",

@@ -1,4 +1,4 @@
-import { Category, CategoryKey, ExampleMap, GroupKey } from './model';
+import { Category, CategoryKey, ExampleMap, GroupKey, MarbleData } from './model';
 
 const items = (ids: string): { id: string }[] => ids.split(/\s+/).filter(Boolean).map((id) => ({ id }));
 
@@ -210,6 +210,11 @@ const loaders: Record<CategoryKey, () => Promise<{ default: ExampleMap }>> = {
   subjects: () => import('./examples/subjects'),
   realLife: () => import('./examples/real-life'),
 };
+
+export async function loadMarble(key: CategoryKey, id: string): Promise<MarbleData | undefined> {
+  const { default: marbles } = await import('./marbles.json');
+  return (marbles as unknown as Record<string, MarbleData>)[key + '/' + id];
+}
 
 export async function loadExamples(key: CategoryKey): Promise<ExampleMap> {
   return (await loaders[key]()).default;

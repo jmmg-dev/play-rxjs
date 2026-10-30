@@ -744,6 +744,14 @@
       "createOrIncreaseAge": "Crear o aumentar edad",
       "typeHere": "Haz clic aquí y escribe…",
       "pokemon": "Introduce el nombre de un Pokémon"
+    },
+    "marble": {
+      "title": "Diagrama de canicas",
+      "hint": "Cada línea es un observable en el tiempo, se lee de izquierda a derecha.",
+      "value": "Valor emitido",
+      "complete": "Se completa",
+      "error": "Error",
+      "time": "Tiempo"
     }
   },
   "seo": {
