@@ -2,8 +2,10 @@
   <app-breadcrumbs [crumbs]="crumbs()" />
 
   <header class="intro">
-    <span class="intro__icon"><app-icon [name]="cat().icon" [size]="26" /></span>
-    <p class="eyebrow">{{ 'ui.groups.' + cat().group | t }} · {{ cat().items.length }} {{ 'ui.examples' | t }}</p>
+    <div class="intro__head">
+      <span class="intro__icon"><app-icon [name]="cat().icon" [size]="26" /></span>
+      <p class="eyebrow">{{ 'ui.groups.' + cat().group | t }} · {{ cat().items.length }} {{ 'ui.examples' | t }}</p>
+    </div>
     <h1 [innerHTML]="cat().key + '.title' | t"></h1>
     <div class="prose intro__text" [innerHTML]="cat().key + '.description' | t"></div>
   </header>

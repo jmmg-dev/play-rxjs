@@ -79,6 +79,7 @@ const SPECS = {
   // ---------- Error handling ----------
   'error/catchError': { ins: ['-a-b-#', '-y-z|'], labels: ['source$', 'fallback$'], op: 'catchError(() => fallback$)', run: ([a, b]) => a.pipe(rx.catchError(() => b)) },
   'error/onErrorResumeNext': { ins: ['-a-b-#', '-1-2|'], labels: ['a$', 'b$'], op: 'onErrorResumeNext(a$, b$)', run: ([a, b]) => rx.onErrorResumeNext(a, b) },
+  'error/onErrorResumeNextWith': { ins: ['-a-b-#', '-1-2|'], labels: ['a$', 'b$'], op: 'a$.pipe(onErrorResumeNextWith(b$))', run: ([a, b]) => a.pipe(rx.onErrorResumeNextWith(b)) },
   'error/retry': { ins: ['-a-b-#'], op: 'retry(1)', run: ([a]) => a.pipe(rx.retry(1)) },
   'error/retryWhen': { ins: ['-a-b-#'], op: 'retryWhen((e) => e.pipe(delay(20), take(2)))', run: ([a]) => a.pipe(rx.retryWhen((e) => e.pipe(delay(2), take(2)))) },
 
@@ -116,6 +117,7 @@ const SPECS = {
   'mathematical/reduce': { ins: ['-1-2-3-4|'], op: 'reduce((acc, n) => acc + n, 0)', run: ([a]) => a.pipe(num, rx.reduce((acc, n) => acc + n, 0)) },
 
   // ---------- Multicasting ----------
+  'multicasting/connect': { ins: ['-1-2-3|'], op: 'connect((s$) => merge(s$, s$.pipe(map((n) => n * 10))))', run: ([a]) => a.pipe(num, rx.connect((s) => merge(s, s.pipe(map((n) => n * 10))))) },
   'multicasting/share': { ins: ['-a-b-c-d-e|'], op: 'share()', run: ([a]) => { const s = a.pipe(rx.share()); return [['A', s], ['B', late(4, s)]]; } },
   'multicasting/shareReplay': { ins: ['-a-b-c-d-e|'], op: 'shareReplay(2)', run: ([a]) => { const s = a.pipe(rx.shareReplay(2)); return [['A', s], ['B', late(6, s)]]; } },
 

@@ -258,6 +258,10 @@
     "retryWhen": {
       "title": "retryWhen",
       "description": "<p>The <b>retryWhen</b> operator lets you <b>decide how and when to retry</b> after an error, using an observable of errors. It is <b>deprecated</b>: nowadays <b>retry</b> accepts a configuration object such as <b>retry({ count: 3, delay: 1000 })</b>.</p><p>In this example, the request fails twice and succeeds on the third attempt, waiting 1 second between retries.</p>"
+    },
+    "onErrorResumeNextWith": {
+      "title": "onErrorResumeNextWith",
+      "description": "<p>The <b>onErrorResumeNextWith</b> operator is the <b>pipeable version</b> of onErrorResumeNext. When the source <b>completes or fails</b>, it moves on to the next observable you pass to it. Errors are <b>silently ignored</b>, so the final observer never receives them.</p><p>In this example, <b>failing$</b> throws an error on its third value and <b>backup$</b> takes over.</p>"
     }
   },
   "filtering": {
@@ -392,7 +396,7 @@
     "shortDescription": "Multicasting operators in RxJS are used to share a single stream of values among multiple subscribers, so the values emitted by the observable are not repeated for each subscriber.",
     "connect": {
       "title": "connect",
-      "description": "<p>The <b>connect</b> operator in RxJS is used to <b>activate</b> an observable that is configured to be shared through a subject (usually with publish() or multicast()). This operator allows the observable to start emitting values only after <b>connect()</b> is called, meaning it controls when the observable starts emitting values.</p>"
+      "description": "<p>The <b>connect</b> operator shares a <b>single subscription</b> to the source inside a function you provide. That function receives a <b>multicast observable</b> that you can subscribe to as many times as you need, and the source only starts once all of those subscriptions are in place, so <b>no value is lost</b>. It is the modern replacement for <b>multicast</b> and <b>publish</b> when the sharing is only needed inside the pipe.</p><p>In this example, the source is used twice, but the <b>tap</b> runs only once per value.</p>"
     },
     "share": {
       "title": "share",
@@ -425,6 +429,10 @@
     "refCount": {
       "title": "refCount",
       "description": "<p>The <b>refCount</b> operator turns a ConnectableObservable into an observable that <b>connects automatically</b> when the <b>first subscriber</b> arrives and <b>disconnects</b> when the <b>last one leaves</b>. It is <b>deprecated</b>: the <b>share</b> operator does the same in a single step.</p>"
+    },
+    "publish": {
+      "title": "publish",
+      "description": "<p>The <b>publish</b> operator turns an observable into a <b>ConnectableObservable</b>: it shares a single execution among its subscribers through a Subject and <b>does not start emitting until you call connect()</b>. It is <b>deprecated</b> in favour of <b>connectable</b> and <b>share</b>.</p><p>In this example, the interval only starts when we press the button.</p>"
     }
   },
   "transformation": {
@@ -683,7 +691,7 @@
     "playgroundHint": "Edit the code and press Run. Reset restores the original example.",
     "sandboxHelpers": "userService simulates HTTP requests",
     "deprecated": "Deprecated",
-    "deprecatedText": "This API is deprecated in RxJS 7 and will be removed in RxJS 8. Prefer",
+    "deprecatedText": "This API is deprecated and will be removed in a future version of RxJS. Prefer",
     "isNew": "New",
     "previous": "Previous",
     "next": "Next",
@@ -752,7 +760,8 @@
       "complete": "Completes",
       "error": "Error",
       "time": "Time"
-    }
+    },
+    "isNewHint": "New in RxJS 7"
   },
   "seo": {
     "homeTitle": "Play RxJS — Interactive RxJS documentation with live examples",

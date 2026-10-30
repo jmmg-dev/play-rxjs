@@ -31,6 +31,24 @@ onErrorResumeNext(failing$, throwError(() => new Error('ignored')), of('a', 'b')
   complete: () => console.log('complete'),
 });`,
   },
+  onErrorResumeNextWith: {
+    code: `import { map, of, onErrorResumeNextWith } from 'rxjs';
+
+const failing$ = of(1, 2, 3).pipe(
+  map((n: number) => {
+    if (n === 3) throw new Error('boom');
+    return n;
+  }),
+);
+const backup$ = of('a', 'b');
+
+// Pipeable version: when failing$ errors or completes, backup$ takes over
+failing$.pipe(onErrorResumeNextWith(backup$)).subscribe({
+  next: (data) => console.log(data),
+  error: () => console.log('It never runs'),
+  complete: () => console.log('complete'),
+});`,
+  },
   retry: {
     code: `import { retry, tap } from 'rxjs';
 import { ajax } from 'rxjs/ajax';

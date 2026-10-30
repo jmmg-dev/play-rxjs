@@ -2,6 +2,27 @@ import { ExampleMap } from '../model';
 
 export default {
   connect: {
+    code: `import { connect, filter, map, merge, of, tap } from 'rxjs';
+
+const source$ = of(1, 2, 3, 4).pipe(
+  tap((n: number) => console.log('source emits ' + n)), // Runs only once per value
+);
+
+source$
+  .pipe(
+    connect((shared$) =>
+      merge(
+        shared$.pipe(
+          filter((n: number) => n % 2 === 0),
+          map((n: number) => 'even -> ' + n),
+        ),
+        shared$.pipe(map((n: number) => 'x10 -> ' + n * 10)),
+      ),
+    ),
+  )
+  .subscribe((data: string) => console.log(data));`,
+  },
+  publish: {
     code: `import { ConnectableObservable, fromEvent, interval, publish, take } from 'rxjs';
 
 const click$ = fromEvent(document.getElementById('btn-click-connect')!, 'click').pipe(take(1));

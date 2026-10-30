@@ -18,6 +18,7 @@
   --subtle: rgba(245, 242, 240, 0.5);
   --danger: #ff7a90;
   --warning: #ffd479;
+  --orange: #ff9f45;
   --success: #8dffb5;
 
   --grad: linear-gradient(120deg, var(--pink) 0%, #c9b6ff 50%, var(--cyan) 100%);
@@ -266,8 +267,8 @@ pre {
     background: rgba(163, 254, 255, 0.08);
   }
   &--deprecated {
-    color: var(--warning);
-    background: rgba(255, 212, 121, 0.08);
+    color: var(--orange);
+    background: rgba(255, 159, 69, 0.1);
   }
 }
 

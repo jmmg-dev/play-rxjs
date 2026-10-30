@@ -26,7 +26,7 @@ export interface CatalogItem {
   id: string;
   /** Present when the API is deprecated: name of the recommended replacement. */
   deprecated?: string;
-  /** Added in Play RxJS v2. */
+  /** Introduced in RxJS 7 (not available in RxJS 6). */
   isNew?: boolean;
 }
 

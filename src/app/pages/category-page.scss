@@ -11,9 +11,19 @@
   }
 }
 
+.intro__head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  .eyebrow {
+    margin: 0;
+  }
+}
+
 .intro__icon {
   display: inline-flex;
-  margin-bottom: 1rem;
+  flex-shrink: 0;
   padding: 0.8rem;
   border-radius: 16px;
   border: 1px solid var(--border-strong);

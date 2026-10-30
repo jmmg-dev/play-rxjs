@@ -15,7 +15,10 @@ import { Icon } from '../shared/icon';
     <div class="backdrop" [class.backdrop--visible]="nav.drawerOpen()" (click)="nav.drawerOpen.set(false)"></div>
     <aside id="sidebar" class="sidebar" [class.sidebar--open]="nav.drawerOpen()">
       <div class="sidebar__top">
-        <span class="eyebrow">{{ 'ui.mainNav' | t }}</span>
+        <a class="sidebar__brand" [routerLink]="nav.link()" aria-label="Play RxJS — {{ 'ui.home' | t }}" (click)="nav.drawerOpen.set(false)">
+          <img src="/images/logo-prx.svg" width="32" height="32" alt="" />
+          <span>Play <span class="gradient-text">RxJS</span></span>
+        </a>
         <button type="button" class="sidebar__close" [attr.aria-label]="'ui.closeMenu' | t" (click)="nav.drawerOpen.set(false)">
           <app-icon name="close" />
         </button>
@@ -45,13 +48,15 @@ import { Icon } from '../shared/icon';
                     <li>
                       <a
                         class="item"
-                        [class.item--deprecated]="item.deprecated"
                         [routerLink]="nav.link(category.path + '/' + item.id)"
                         routerLinkActive="is-active"
                         ariaCurrentWhenActive="page"
                         >{{ category.key + '.' + item.id + '.title' | t }}
                         @if (item.isNew) {
-                          <span class="dot" [attr.title]="'ui.isNew' | t"></span>
+                          <span class="dot" [attr.title]="'ui.isNewHint' | t"></span>
+                        }
+                        @if (item.deprecated) {
+                          <span class="dot dot--deprecated" [attr.title]="'ui.deprecated' | t"></span>
                         }
                       </a>
                     </li>
@@ -84,6 +89,21 @@ import { Icon } from '../shared/icon';
       align-items: center;
       justify-content: space-between;
       margin-bottom: 0.5rem;
+    }
+    .sidebar__brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--text);
+      font: 700 1.1rem/1.1 var(--mono);
+      letter-spacing: -0.02em;
+      &:hover {
+        color: var(--text);
+      }
+      img {
+        display: block;
+        border-radius: 6px;
+      }
     }
     .sidebar__close {
       display: inline-flex;
@@ -175,10 +195,6 @@ import { Icon } from '../shared/icon';
           background: var(--pink);
         }
       }
-      &--deprecated:not(.is-active) {
-        text-decoration: line-through;
-        text-decoration-color: rgba(255, 212, 121, 0.5);
-      }
     }
     .dot {
       width: 6px;
@@ -187,6 +203,13 @@ import { Icon } from '../shared/icon';
       background: var(--cyan);
       box-shadow: 0 0 8px var(--cyan);
     }
+    .dot--deprecated {
+      background: var(--orange);
+      box-shadow: 0 0 8px var(--orange);
+    }
+    .is-active .dot {
+      box-shadow: 0 0 0 1.5px var(--dark);
+    }
     .backdrop {
       display: none;
     }
@@ -194,6 +217,7 @@ import { Icon } from '../shared/icon';
       .sidebar {
         top: 0;
         z-index: 70;
+        padding-top: 0;
         width: min(340px, 88vw);
         background: var(--surface-solid);
         transform: translateX(-102%);
@@ -203,8 +227,16 @@ import { Icon } from '../shared/icon';
       .sidebar--open {
         transform: none;
       }
+      /* Stays pinned while the list scrolls: negative margins cancel the side padding */
       .sidebar__top {
         display: flex;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        margin: 0 -0.75rem 0.75rem -1rem;
+        padding: 0.8rem 0.75rem 0.8rem 1rem;
+        background: var(--surface-solid);
+        border-bottom: 1px solid var(--border);
       }
       .backdrop {
         display: block;
