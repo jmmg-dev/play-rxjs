@@ -8,7 +8,7 @@
   "theme_color": "#161117",
   "icons": [
     {
-      "src": "/images/logo-prx.svg",
+      "src": "/images/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"

@@ -1,7 +1,7 @@
 {
   "console": "We use simple examples of the main functionalities of RxJS, which can be checked in real time from our console",
   "home": {
-    "title": "Unlock a new way to learn"
+    "title": "A new way to learn"
   },
   "aboutMe": {
     "title": "About me",
@@ -14,7 +14,7 @@
   "basicConcepts": {
     "welcome": {
       "title": "Welcome to <b>Play RxJS!</b>",
-      "description": "Here you will find a <b>friendly and accessible documentation</b> about RxJS, designed to help you understand and make the most of this amazing tool for developing <b>reactive code</b>. If you're new to this technology, we recommend starting with the <b>basic concepts</b> to get familiar with the fundamentals. Enjoy exploring and learning!."
+      "description": "Here you will find a <b>friendly and accessible documentation</b> about RxJS, designed to help you understand and make the most of this amazing tool for developing <b>reactive code</b>. If you're new to this technology, we recommend starting with the <b>basic concepts</b> to get familiar with the fundamentals. Enjoy exploring and learning!"
     },
     "title": "Basic concepts",
     "description": "In this section, we will talk about the basic concepts of RxJS, such as observables, observers, and subscriptions. These are concepts we need to understand beforehand before diving into the wonderful world of RxJS.",
@@ -38,7 +38,7 @@
     "shortDescription": "Combination operators in RxJS allow you to work with multiple observables to combine them and create new data streams flexibly.",
     "combineLatest": {
       "title": "combineLatest",
-      "description": "<p>The <b>combineLatest</b> operator in RxJS is a way to combine multiple observables into a single one, emitting the <b>latest value</b> from each of them along with the <b>sequence of values</b> from the latest observable.</p>"
+      "description": "<p>The <b>combineLatest</b> operator in RxJS is a way to combine multiple observables into a single one, that emits an array with the <b>latest value</b> of each of them. It waits until all of them have emitted at least once and, from then on, it emits <b>every time any of them emits</b>.</p>"
     },
     "concat": {
       "title": "concat",
@@ -66,7 +66,7 @@
     },
     "race": {
       "title": "race",
-      "description": "<p>The <b>race</b> operator in RxJS is used to <b>race</b> between multiple observables and emit the values of the <b>first observable that emits something</b>. In other words, of all the observables passed to it, the operator subscribes only to the one that emits a value first, and <b>ignores</b> the other observables.</p>"
+      "description": "<p>The <b>race</b> operator in RxJS is used to <b>race</b> between multiple observables and emit the values of the <b>first observable that emits something</b>. In other words, the operator subscribes to all the observables passed to it, keeps the one that emits a value first and <b>unsubscribes</b> from the others.</p>"
     },
     "startWith": {
       "title": "startWith",
@@ -78,7 +78,7 @@
     },
     "withLatestFrom": {
       "title": "withLatestFrom",
-      "description": "<p>The <b>withLatestFrom</b> operator in RxJS is used to combine the <b>latest</b> value from one observable with the values of another observable, <b>without subscribing to the second observable</b>. This means that when the first observable emits a value, withLatestFrom takes the latest value from the second observable and combines it with the value emitted by the first observable.</p>"
+      "description": "<p>The <b>withLatestFrom</b> operator in RxJS is used to combine each value of the source observable with the <b>latest</b> value of another observable. Only the <b>source sets the pace</b>: when it emits, withLatestFrom takes the latest value from the second observable and combines them, while the emissions of the second observable alone produce no output. Until the second observable has emitted at least once, the values of the source are discarded.</p>"
     },
     "combineLatestAll": {
       "title": "combineLatestAll",
@@ -192,7 +192,7 @@
     },
     "range": {
       "title": "range",
-      "description": "<p>The <b>range</b> operator in RxJS creates an observable that emits a sequence of numbers within a specified range, starting from an <b>initial</b> value and up to a <b>final</b> value.</p>"
+      "description": "<p>The <b>range</b> operator in RxJS creates an observable that emits a sequence of consecutive numbers: you specify the <b>initial</b> value and <b>how many</b> numbers to emit, so range(1, 5) emits from 1 to 5.</p>"
     },
     "throwError": {
       "title": "throwError",
@@ -245,11 +245,11 @@
     "shortDescription": "Error handling operators in RxJS are used to handle, recover, or react to errors that may occur in the data flow of an Observable.",
     "catchError": {
       "title": "catchError",
-      "description": "<p>The <b>catchError</b> operator in RxJS is used to <b>capture an error</b> that occurs in an Observable and allow you to <b>handle it in a controlled way</b>, without interrupting the data flow.</p><p>When an Observable emits an error, catchError gives you the opportunity to recover from that error. You can return a new Observable to emit instead of the error, or simply perform an action when the error occurs.</p>"
+      "description": "<p>The <b>catchError</b> operator in RxJS is used to <b>capture an error</b> that occurs in an Observable and allow you to <b>handle it in a controlled way</b>, so that the error does not reach the subscriber. The source that failed does not continue: the stream carries on with the Observable you return.</p><p>When an Observable emits an error, catchError gives you the opportunity to recover from that error. You can return a new Observable to emit instead of the error, or simply perform an action when the error occurs.</p>"
     },
     "retry": {
       "title": "retry",
-      "description": "<p>The <b>retry</b> operator in RxJS is used to <b>reattempt the execution</b> of an Observable in case an error occurs. This operator allows you to automatically retry the data flow a <b>specified number of times</b> before it ultimately fails.</p><p>In this example, we will see in the browser console how the URL is retried once after the error.</p>"
+      "description": "<p>The <b>retry</b> operator in RxJS is used to <b>reattempt the execution</b> of an Observable in case an error occurs. This operator allows you to automatically retry the data flow a <b>specified number of times</b> before it ultimately fails.</p><p>In this example, we will see in the console how the URL is retried once after the error.</p>"
     },
     "onErrorResumeNext": {
       "title": "onErrorResumeNext",
@@ -314,7 +314,7 @@
     },
     "last": {
       "title": "last",
-      "description": "<p>The <b>last</b> operator in RxJS is used to emit only the <b>last value</b> from an observable that <b>meets a specific condition</b>. If the observable does not emit any value, it can throw an error or emit a default value if specified.</p><p>In this example, we force it to not find any value in order to see the default error message.</p>"
+      "description": "<p>The <b>last</b> operator in RxJS is used to emit only the <b>last value</b> from an observable that <b>meets a specific condition</b>. If the observable does not emit any value, it can throw an error or emit a default value if specified.</p><p>In this example, we force it to not find any value in order to see the default value.</p>"
     },
     "sample": {
       "title": "sample",
@@ -362,7 +362,7 @@
     },
     "throttle": {
       "title": "throttle",
-      "description": "<p>The <b>throttle</b> operator in RxJS is used to <b>limit the emission frequency</b> of an observable, ensuring that only <b>one value is emitted within a specified time interval</b>, and any values that arrive before the interval passes are ignored.</p><p>In this example, we are using the <b>throttle</b> operator to ignore emissions that occur within a 5-second interval. This causes only the values that occur at the end of each interval to be emitted, resulting in a 6-value increment between the emitted values.</p>"
+      "description": "<p>The <b>throttle</b> operator in RxJS is used to <b>limit the emission frequency</b> of an observable, ensuring that only <b>one value is emitted within a specified time interval</b>, and any values that arrive before the interval passes are ignored.</p><p>In this example, we are using the <b>throttle</b> operator to ignore emissions that occur within a 5-second interval. The first value is emitted and the following ones are ignored until the interval ends, resulting in a 6-value increment between the emitted values.</p>"
     },
     "throttleTime": {
       "title": "throttleTime",
@@ -404,7 +404,7 @@
     },
     "shareReplay": {
       "title": "shareReplay",
-      "description": "<p>The <b>shareReplay</b> operator in RxJS is similar to the <b>share</b> operator, but with a key difference: <b>it caches the last emitted values from the observable and replays (replays) them to new subscribers</b>. It is useful when you want new subscribers to receive the latest emitted values without re-executing the entire data flow.</p>"
+      "description": "<p>The <b>shareReplay</b> operator in RxJS is similar to the <b>share</b> operator, but with a key difference: <b>it caches the last emitted values from the observable and replays them to new subscribers</b>. It is useful when you want new subscribers to receive the latest emitted values without re-executing the entire data flow.</p>"
     },
     "connectable": {
       "title": "connectable",
@@ -481,11 +481,11 @@
     },
     "mergeMap": {
       "title": "mergeMap",
-      "description": "<p>The <b>mergeMap</b> operator in RxJS is used to transform the values emitted by an observable into other observables and then <b>'flattens'</b> or combines all those emissions into a single data stream. This is useful when you want to perform multiple asynchronous operations in sequence and combine their results.</p><p>In this example, we merge an observable made up of a list of letters with an observable containing a numeric range from 1 to 2.</p>"
+      "description": "<p>The <b>mergeMap</b> operator in RxJS is used to transform the values emitted by an observable into other observables and then <b>'flattens'</b> or combines all those emissions into a single data stream. This is useful when you want to perform multiple asynchronous operations at the same time and combine their results as they arrive.</p><p>In this example, we merge an observable made up of a list of letters with an observable containing a numeric range from 1 to 2.</p>"
     },
     "mergeMapTo": {
       "title": "mergeMapTo",
-      "description": "<p>The <b>mergeMapTo</b> operator in RxJS is used to replace each value emitted by an observable with a different observable that you specify, and it then 'flattens' all the results into a single output stream.</p><p>In this example, we merge an observable made up of a list of letters with an observable containing a numeric range from 1 to 2. <b>Unlike mergeMap</b>, we don`t take into account the output of the first observable, emitting the <b>same value</b> for each letter.</p>"
+      "description": "<p>The <b>mergeMapTo</b> operator in RxJS is used to replace each value emitted by an observable with a different observable that you specify, and it then 'flattens' all the results into a single output stream.</p><p>In this example, we merge an observable made up of a list of letters with an observable containing a numeric range from 1 to 2. <b>Unlike mergeMap</b>, we don't take into account the output of the first observable, emitting the <b>same value</b> for each letter.</p>"
     },
     "mergeScan": {
       "title": "mergeScan",
@@ -628,7 +628,7 @@
     },
     "subject": {
       "title": "Subject",
-      "description": "<p>The <b>Subject</b> is a special type of Subject in RxJS that does not require an <b>initial value</b> and also <b>remembers the last emitted value</b>. This means that any new subscriber automatically receives the most recent value, even if they subscribe after that value has been emitted.</p><p>In this example, through a click event and based on the content of the variable user, we either create the user or increment their age, and through the <b>next</b> function, we propagate the change.</p>"
+      "description": "<p>The <b>Subject</b> is a special type of observable in RxJS that is also an observer: you can push values into it with <b>next</b> and it delivers them to all its current subscribers. It does not require an <b>initial value</b> and <b>does not remember past values</b>, so a new subscriber only receives what is emitted after subscribing. If you need the last value, use a BehaviorSubject or a ReplaySubject.</p><p>In this example, through a click event and based on the content of the variable user, we either create the user or increment their age, and through the <b>next</b> function, we propagate the change.</p>"
     },
     "asyncSubject": {
       "title": "AsyncSubject",
@@ -661,7 +661,7 @@
     }
   },
   "ui": {
-    "tagline": "Unlock a new way to learn",
+    "tagline": "A new way to learn",
     "skipToContent": "Skip to content",
     "home": "Home",
     "search": "Search operators…",

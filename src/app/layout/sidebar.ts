@@ -16,7 +16,7 @@ import { Icon } from '../shared/icon';
     <aside id="sidebar" class="sidebar" [class.sidebar--open]="nav.drawerOpen()">
       <div class="sidebar__top">
         <a class="sidebar__brand" [routerLink]="nav.link()" aria-label="Play RxJS — {{ 'ui.home' | t }}" (click)="nav.drawerOpen.set(false)">
-          <img src="/images/logo-prx.svg" width="32" height="32" alt="" />
+          <img src="/images/icon-512.png" width="32" height="32" alt="" />
           <span>Play <span class="gradient-text">RxJS</span></span>
         </a>
         <button type="button" class="sidebar__close" [attr.aria-label]="'ui.closeMenu' | t" (click)="nav.drawerOpen.set(false)">

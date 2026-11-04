@@ -65,7 +65,8 @@ const RUNTIME = `
     var parts = isArr
       ? v.map(function (x) { return fmt(x, depth + 1, seen); })
       : keys.map(function (k) { return (/^[A-Za-z_$][\\w$]*$/.test(k) ? k : "'" + k + "'") + ': ' + fmt(v[k], depth + 1, seen); });
-    var ctor = v.constructor && v.constructor.name;
+    // The RxJS bundle is minified, so its classes do not keep a readable constructor name
+    var ctor = typeof rxjs !== 'undefined' && v instanceof rxjs.Notification ? 'Notification' : v.constructor && v.constructor.name;
     var prefix = !isArr && ctor && ctor !== 'Object' ? ctor + ' ' : '';
     var open = isArr ? '[' : '{', close = isArr ? ']' : '}';
     if (!parts.length) return prefix + open + close;

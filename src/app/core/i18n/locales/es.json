@@ -1,7 +1,7 @@
 {
   "console": "Usamos ejemplos sencillos de las principales funcionalidades de RxJS, los cuales se pueden verificar en tiempo real desde nuestra consola.",
   "home": {
-    "title": "Descubre una nueva forma de aprender"
+    "title": "Una nueva forma de aprender"
   },
   "aboutMe": {
     "title": "Sobre mí",
@@ -14,7 +14,7 @@
   "basicConcepts": {
     "welcome": {
       "title": "¡Bienvenido a <b>Play RxJS!</b>",
-      "description": "Aquí encontrarás una <b>documentación amigable</b> y accesible sobre RxJS, diseñada para ayudarte a comprender y aprovechar al máximo esta increíble herramienta para desarrollar <b>código reactivo</b>. Si estás comenzando con esta tecnología, te recomendamos empezar por los <b>conceptos básicos</b> para familiarizarte con los fundamentos. ¡Disfruta explorando y aprendiendo!."
+      "description": "Aquí encontrarás una <b>documentación amigable</b> y accesible sobre RxJS, diseñada para ayudarte a comprender y aprovechar al máximo esta increíble herramienta para desarrollar <b>código reactivo</b>. Si estás comenzando con esta tecnología, te recomendamos empezar por los <b>conceptos básicos</b> para familiarizarte con los fundamentos. ¡Disfruta explorando y aprendiendo!"
     },
     "title": "Conceptos básicos",
     "description": "En esta sección, hablaremos de los conceptos básicos de RxJS, como son los observables, observadores y suscripciones. Conceptos que tendremos que comprender previamente antes de adentrarnos en el maravilloso mundo de RxJS.",
@@ -38,7 +38,7 @@
     "shortDescription": "Los operadores de combinación en RxJS permiten trabajar con múltiples observables para combinarlos y crear nuevos flujos de datos de manera flexible.",
     "combineLatest": {
       "title": "combineLatest",
-      "description": "<p>El operador <b>combineLatest</b> en RxJS es una forma de combinar múltiples observables en uno solo, emitiendo el <b>último valor</b> de cada uno de ellos con la <b>secuencia de valores</b> del último observable.</p>"
+      "description": "<p>El operador <b>combineLatest</b> en RxJS es una forma de combinar múltiples observables en uno solo, que emite un array con el <b>último valor</b> de cada uno de ellos. Espera a que todos hayan emitido al menos una vez y, a partir de ahí, emite <b>cada vez que cualquiera de ellos emite</b>.</p>"
     },
     "concat": {
       "title": "concat",
@@ -66,7 +66,7 @@
     },
     "race": {
       "title": "race",
-      "description": "<p>El operador <b>race</b> en RxJS se utiliza para <b>competir</b> entre varios observables y emitir los valores del <b>primer observable que emita algo</b>. Es decir, de todos los observables que se le pasen, el operador se suscribe solo al que primero emita un valor, y <b>descarta</b> los demás observables.</p>"
+      "description": "<p>El operador <b>race</b> en RxJS se utiliza para <b>competir</b> entre varios observables y emitir los valores del <b>primer observable que emita algo</b>. Es decir, el operador se suscribe a todos los observables que se le pasen, se queda con el que primero emita un valor y <b>cancela la suscripción</b> a los demás.</p>"
     },
     "startWith": {
       "title": "startWith",
@@ -78,7 +78,7 @@
     },
     "withLatestFrom": {
       "title": "withLatestFrom",
-      "description": "<p>El operador <b>withLatestFrom</b> en RxJS se utiliza para combinar el valor <b>más reciente</b> de un observable con los valores de otro observable, <b>sin suscribirse al segundo observable</b>. Esto significa que cuando el primer observable emite un valor, withLatestFrom toma el valor más reciente del segundo observable y lo combina con el valor emitido por el primer observable.</p>"
+      "description": "<p>El operador <b>withLatestFrom</b> en RxJS se utiliza para combinar cada valor del observable de origen con el valor <b>más reciente</b> de otro observable. Solo el <b>origen marca el ritmo</b>: cuando emite, withLatestFrom toma el valor más reciente del segundo observable y los combina, mientras que las emisiones del segundo observable por sí solas no producen salida. Hasta que el segundo observable haya emitido al menos una vez, los valores del origen se descartan.</p>"
     },
     "combineLatestAll": {
       "title": "combineLatestAll",
@@ -192,7 +192,7 @@
     },
     "range": {
       "title": "range",
-      "description": "<p>El operador <b>range</b> de RxJS crea un observable que emite una secuencia de números dentro de un rango especificado, comenzando desde un valor <b>inicial</b> y hasta un valor <b>final</b>.</p>"
+      "description": "<p>El operador <b>range</b> de RxJS crea un observable que emite una secuencia de números consecutivos: indicas el valor <b>inicial</b> y <b>cuántos</b> números emitir, de modo que range(1, 5) emite del 1 al 5.</p>"
     },
     "throwError": {
       "title": "throwError",
@@ -245,11 +245,11 @@
     "shortDescription": "Los operadores de gestión de error en RxJS se utilizan para manejar, recuperar o reaccionar ante errores que pueden ocurrir en el flujo de datos de un Observable.",
     "catchError": {
       "title": "catchError",
-      "description": "<p>El operador <b>catchError</b> en RxJS se utiliza para <b>capturar un error</b> que ocurre en un Observable y permitir <b>manejarlo de una manera controlada</b>, sin que el flujo de datos se detenga.</p><p>Cuando un Observable emite un error, catchError te da la oportunidad de recuperarte de ese error. Puedes devolver un nuevo Observable que se emitirá en lugar del error, o simplemente realizar una acción cuando el error ocurra.</p>"
+      "description": "<p>El operador <b>catchError</b> en RxJS se utiliza para <b>capturar un error</b> que ocurre en un Observable y permitir <b>manejarlo de una manera controlada</b>, sin que el error llegue al suscriptor. El origen que ha fallado no continúa: el flujo sigue con el Observable que devuelvas.</p><p>Cuando un Observable emite un error, catchError te da la oportunidad de recuperarte de ese error. Puedes devolver un nuevo Observable que se emitirá en lugar del error, o simplemente realizar una acción cuando el error ocurra.</p>"
     },
     "retry": {
       "title": "retry",
-      "description": "<p>El operador <b>retry</b> en RxJS se utiliza para <b>volver a intentar ejecutar</b> un Observable en caso de que ocurra un error. Este operador te permite reintentar el flujo de datos automáticamente un <b>número específico de veces</b> antes de que finalmente falle.</p><p>En este ejemplo podremos comprobar en la consola del navegador como se reintenta llamar 1 vez a la url después del error.</p>"
+      "description": "<p>El operador <b>retry</b> en RxJS se utiliza para <b>volver a intentar ejecutar</b> un Observable en caso de que ocurra un error. Este operador te permite reintentar el flujo de datos automáticamente un <b>número específico de veces</b> antes de que finalmente falle.</p><p>En este ejemplo podremos comprobar en la consola cómo se reintenta llamar 1 vez a la url después del error.</p>"
     },
     "onErrorResumeNext": {
       "title": "onErrorResumeNext",
@@ -314,7 +314,7 @@
     },
     "last": {
       "title": "last",
-      "description": "<p>El operador <b>last</b> en RxJS se utiliza para emitir solo el <b>último valor</b> de un observable que <b>cumpla con una condición específica</b>. Si el observable no emite ningún valor, puede lanzar un error o emitir un valor predeterminado si lo especificas.</p><p>En este ejemplo forzamos que no encuentre ningún valor, para ver el mensaje de error por defecto.</p>"
+      "description": "<p>El operador <b>last</b> en RxJS se utiliza para emitir solo el <b>último valor</b> de un observable que <b>cumpla con una condición específica</b>. Si el observable no emite ningún valor, puede lanzar un error o emitir un valor predeterminado si lo especificas.</p><p>En este ejemplo forzamos que no encuentre ningún valor, para ver el valor por defecto.</p>"
     },
     "sample": {
       "title": "sample",
@@ -362,7 +362,7 @@
     },
     "throttle": {
       "title": "throttle",
-      "description": "<p>El operador <b>throttle</b> en RxJS se utiliza para <b>limitar la frecuencia de emisiones</b> de un observable, asegurando que solo se emita <b>un valor en un intervalo de tiempo determinado</b>, y los valores que lleguen antes de que pase ese intervalo se ignoren.</p><p>En este ejemplo, estamos utilizando el operador <b>throttle</b> para ignorar las emisiones que ocurren dentro de un intervalo de 5 segundos. Esto provoca que solo se emitan los valores que ocurren al final de cada intervalo, lo que resulta en un incremento de 6 entre los valores emitidos.</p>"
+      "description": "<p>El operador <b>throttle</b> en RxJS se utiliza para <b>limitar la frecuencia de emisiones</b> de un observable, asegurando que solo se emita <b>un valor en un intervalo de tiempo determinado</b>, y los valores que lleguen antes de que pase ese intervalo se ignoren.</p><p>En este ejemplo, estamos utilizando el operador <b>throttle</b> para ignorar las emisiones que ocurren dentro de un intervalo de 5 segundos. Se emite el primer valor y se ignoran los siguientes hasta que termina el intervalo, lo que resulta en un incremento de 6 entre los valores emitidos.</p>"
     },
     "throttleTime": {
       "title": "throttleTime",
@@ -481,7 +481,7 @@
     },
     "mergeMap": {
       "title": "mergeMap",
-      "description": "<p>El operador <b>mergeMap</b> en RxJS se utiliza para transformar los valores emitidos por un observable en otros observables y luego <b>'aplana'</b> o combina todas esas emisiones en un único flujo de datos. Esto es útil cuando deseas realizar múltiples operaciones asíncronas en secuencia y combinar sus resultados.</p><p>En este ejemplo, combinamos un observable compuesto por una lista de letras con un observable que contiene un rango numérico del 1 al 2.</p>"
+      "description": "<p>El operador <b>mergeMap</b> en RxJS se utiliza para transformar los valores emitidos por un observable en otros observables y luego <b>'aplana'</b> o combina todas esas emisiones en un único flujo de datos. Esto es útil cuando deseas realizar múltiples operaciones asíncronas a la vez y combinar sus resultados a medida que llegan.</p><p>En este ejemplo, combinamos un observable compuesto por una lista de letras con un observable que contiene un rango numérico del 1 al 2.</p>"
     },
     "mergeMapTo": {
       "title": "mergeMapTo",
@@ -628,7 +628,7 @@
     },
     "subject": {
       "title": "Subject",
-      "description": "<p>El <b>Subject</b> es un tipo especial de Subject en RxJS que no requiere de un <b>valor inicial</b> y además <b>recuerda el último valor emitido</b>. Esto significa que cualquier nuevo suscriptor automáticamente recibe el valor más reciente, incluso si se suscribe después de que ese valor haya sido emitido.</p><p>En este ejemplo a través de un evento clic y en función del contenido de la variable user, creamos el usuario o incrementamos su edad y a través de la función <b>next</b> propagamos el cambio.</p>"
+      "description": "<p>El <b>Subject</b> es un tipo especial de observable en RxJS que además es un observer: puedes enviarle valores con <b>next</b> y los entrega a todos sus suscriptores actuales. No requiere de un <b>valor inicial</b> y <b>no recuerda los valores pasados</b>, por lo que un nuevo suscriptor solo recibe lo que se emita después de suscribirse. Si necesitas el último valor, utiliza un BehaviorSubject o un ReplaySubject.</p><p>En este ejemplo a través de un evento clic y en función del contenido de la variable user, creamos el usuario o incrementamos su edad y a través de la función <b>next</b> propagamos el cambio.</p>"
     },
     "asyncSubject": {
       "title": "AsyncSubject",
@@ -661,7 +661,7 @@
     }
   },
   "ui": {
-    "tagline": "Descubre una nueva forma de aprender",
+    "tagline": "Una nueva forma de aprender",
     "skipToContent": "Saltar al contenido",
     "home": "Inicio",
     "search": "Buscar operadores…",

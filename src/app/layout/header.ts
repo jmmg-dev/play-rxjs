@@ -23,7 +23,7 @@ import { LangSwitch } from './lang-switch';
       </button>
 
       <a class="brand" [routerLink]="nav.link()" aria-label="Play RxJS — {{ 'ui.home' | t }}">
-        <img class="brand__logo" src="/images/logo-prx.svg" width="38" height="38" alt="" />
+        <img class="brand__logo" src="/images/icon-512.png" width="38" height="38" alt="" />
         <span class="brand__text">
           <span class="brand__name">Play <span class="gradient-text">RxJS</span></span>
           <span class="brand__tagline">{{ 'ui.tagline' | t }}</span>
