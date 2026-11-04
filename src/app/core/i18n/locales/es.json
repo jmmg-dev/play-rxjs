@@ -686,6 +686,7 @@
     "running": "ejecutando",
     "idle": "en espera",
     "consoleEmpty": "Pulsa Ejecutar (Ctrl + Enter) para lanzar el ejemplo en tiempo real.",
+    "consoleWaiting": "Ejecutando… la salida aparecerá aquí.",
     "compileError": "Error de compilación",
     "playgroundTitle": "Playground interactivo",
     "playgroundHint": "Edita el código y pulsa Ejecutar. Resetear restaura el ejemplo original.",

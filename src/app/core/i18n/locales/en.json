@@ -686,6 +686,7 @@
     "running": "running",
     "idle": "idle",
     "consoleEmpty": "Press Run (Ctrl + Enter) to execute the example in real time.",
+    "consoleWaiting": "Running… the output will appear here.",
     "compileError": "Compilation error",
     "playgroundTitle": "Interactive playground",
     "playgroundHint": "Edit the code and press Run. Reset restores the original example.",

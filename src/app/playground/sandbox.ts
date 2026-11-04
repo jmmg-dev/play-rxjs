@@ -134,8 +134,11 @@ const RUNTIME = `
     clock.textContent = String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
   }, 1000);
 
-  function reportHeight() { send('height', document.documentElement.scrollHeight); }
+  // The first measurement can run before the frame has a size (it reports 0), so keep
+  // reporting whenever the content box changes instead of trusting a single reading
+  function reportHeight() { send('height', document.body.scrollHeight); }
   window.addEventListener('resize', reportHeight);
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(reportHeight).observe(document.body);
 
   window.addEventListener('message', function (e) {
     if (e.source !== host || !e.data || e.data.tag !== TAG || e.data.type !== 'run') return;

@@ -81,7 +81,7 @@
         </li>
       } @empty {
         <li class="pg__empty">
-          <span class="pg__prompt">❯</span> {{ 'ui.consoleEmpty' | t }}
+          <span class="pg__prompt">❯</span> {{ (running() ? 'ui.consoleWaiting' : 'ui.consoleEmpty') | t }}
         </li>
       }
     </ol>
