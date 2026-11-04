@@ -50,7 +50,7 @@
           <p>{{ 'ui.playgroundHint' | t }}</p>
         </div>
         @for (current of [ex]; track current) {
-          <app-playground [code]="current.code" [ui]="current.ui ?? []" [name]="id()" />
+          <app-playground [code]="current.code" [ui]="current.ui ?? []" [name]="id()" [info]="key() + '.example' | t" />
         }
       </section>
     }

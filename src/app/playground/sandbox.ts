@@ -109,14 +109,14 @@ const RUNTIME = `
 
   // Simulated HTTP service used by the examples (no real network involved)
   var USERS = [
-    { name: 'Jhon', firstName: 'Trump', age: 40, job: 'Front end developer', salary: 30000 },
-    { name: 'Patricia', firstName: 'Biden', age: 36, job: 'Quality Manager', salary: 40000 },
-    { name: 'Benito', firstName: 'Aznar', age: 12, job: 'Youtuber', salary: 50000 }
+    { name: 'John', lastName: 'Smith', age: 40, job: 'Front end developer', salary: 30000 },
+    { name: 'Patricia', lastName: 'García', age: 36, job: 'Quality Manager', salary: 40000 },
+    { name: 'Benito', lastName: 'Rossi', age: 28, job: 'Content creator', salary: 50000 }
   ];
   var HOBBIES = [
-    { name: 'Jhon', hobbies: ['fishing, music, sport'] },
-    { name: 'Patricia', hobbies: ['Read, music, go to gym'] },
-    { name: 'Benito', hobbies: ['run, football, go to restaurants'] }
+    { name: 'John', hobbies: ['fishing', 'music', 'sport'] },
+    { name: 'Patricia', hobbies: ['reading', 'music', 'gym'] },
+    { name: 'Benito', hobbies: ['running', 'football', 'restaurants'] }
   ];
   function http(data, ms) {
     return rxjs.defer(function () { return rxjs.of(JSON.parse(JSON.stringify(data))); }).pipe(rxjs.delay(ms == null ? 400 : ms));

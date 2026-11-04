@@ -38,6 +38,8 @@ export class Playground {
   readonly code = input.required<string>();
   readonly ui = input<UiControl[]>([]);
   readonly name = input.required<string>();
+  /** HTML that explains what the example does, shown in a collapsible panel. */
+  readonly info = input('');
 
   private readonly i18n = inject(I18n);
   private readonly cmHost = viewChild.required<ElementRef<HTMLElement>>('cmHost');
@@ -51,6 +53,7 @@ export class Playground {
   protected readonly editorReady = signal(false);
   protected readonly logs = signal<LogEntry[]>([]);
   protected readonly frameHeight = signal(0);
+  protected readonly infoOpen = signal(false);
 
   private editor?: EditorHandle;
   private editorLoading?: Promise<void>;

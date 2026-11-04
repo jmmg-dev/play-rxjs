@@ -36,7 +36,7 @@ animationFrames()
 
 // A classic callback-based API
 function getUser(id: number, callback: (user: { id: number; name: string }) => void) {
-  setTimeout(() => callback({ id, name: 'Jhon' }), 1000);
+  setTimeout(() => callback({ id, name: 'John' }), 1000);
 }
 
 const getUser$ = bindCallback(getUser);
@@ -193,7 +193,7 @@ NEVER.pipe(
 
 const obs1$ = of('hello');
 const obs2$ = of(1, 2, 3);
-const obs3$ = of({ name: 'Jhon', age: 40 }, [1, 2]);
+const obs3$ = of({ name: 'John', age: 40 }, [1, 2]);
 
 obs1$.subscribe((data) => console.log(data));
 obs2$.subscribe((data) => console.log(data));

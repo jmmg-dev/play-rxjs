@@ -77,6 +77,47 @@
   padding-inline: 1rem;
 }
 
+.pg__info-toggle--open {
+  color: var(--cyan);
+  border-color: rgba(163, 254, 255, 0.35);
+  background: rgba(163, 254, 255, 0.08);
+}
+
+/* Accordion: animating grid rows lets the panel grow to its natural height */
+.pg__info {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+  &--open {
+    grid-template-rows: 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+.pg__info-inner {
+  min-height: 0;
+  overflow: hidden;
+  background: rgba(163, 254, 255, 0.04);
+  .pg__info--open & {
+    padding: 0.9rem 1.1rem 0.2rem;
+  }
+}
+
+.pg__info-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.4rem;
+  font: 600 0.78rem var(--mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.pg__info-text {
+  font-size: 0.93rem;
+}
+
 .pg__editor {
   position: relative;
   max-height: 560px;

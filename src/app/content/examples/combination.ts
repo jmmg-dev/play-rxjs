@@ -2,13 +2,13 @@ import { ExampleMap } from '../model';
 
 export default {
   combineLatest: {
-    code: `import { combineLatest, of } from 'rxjs';
+    code: `import { combineLatest, interval, map, take } from 'rxjs';
 
-const obs1$ = of(1, 2);
-const obs2$ = of('a', 'b');
-const obs3$ = of(3, 4, 5);
+const letters$ = interval(1000).pipe(take(3), map((n: number) => ['a', 'b', 'c'][n]));
+const numbers$ = interval(1700).pipe(take(3));
 
-combineLatest([obs1$, obs2$, obs3$]).subscribe((data) => console.log(data));`,
+// Waits until both have emitted, then emits every time either of them emits
+combineLatest([letters$, numbers$]).subscribe(([letter, n]) => console.log(letter + n));`,
   },
   combineLatestAll: {
     code: `import { combineLatestAll, interval, map, of, take } from 'rxjs';
@@ -164,38 +164,39 @@ const obs1$ = of(1, 2).pipe(delay(2000));
 obs1$.pipe(startWith(0)).subscribe((data: number) => console.log(data));`,
   },
   switchAll: {
-    code: `import { delay, of, switchAll } from 'rxjs';
+    code: `import { interval, map, switchAll, take } from 'rxjs';
 
-const obs1$ = of(1, 2).pipe(delay(2000));
-const obs2$ = of('a', 'b');
-const obs3$ = of(3, 4, 5);
-const obsAll$ = of(obs1$, obs2$, obs3$);
+// Every 2 seconds a new round starts, counting every 0.7 seconds
+const rounds$ = interval(2000).pipe(
+  take(3),
+  map((round: number) => interval(700).pipe(take(4), map((n: number) => 'round ' + round + ' -> ' + n))),
+);
 
-obsAll$
+rounds$
   .pipe(
-    switchAll(), // Unsubscribes from the previous inner observable on every new one
+    switchAll(), // Unsubscribes from the previous round when a new one arrives
   )
-  .subscribe((data) => console.log(data));`,
+  .subscribe((data: string) => console.log(data));`,
   },
   withLatestFrom: {
-    code: `import { map, of, withLatestFrom } from 'rxjs';
+    code: `import { interval, map, take, withLatestFrom } from 'rxjs';
 
-const obs1$ = of(1, 2);
-const obs2$ = of('a', 'b');
+const seconds$ = interval(1000).pipe(take(5)); // The source: it sets the pace
+const color$ = interval(1300).pipe(map((n: number) => ['red', 'green', 'blue'][n % 3]));
 
-obs1$
+seconds$
   .pipe(
-    withLatestFrom(obs2$),
-    map(([obs1, obs2]) => obs1 + ' - ' + obs2),
+    withLatestFrom(color$),
+    map(([second, color]) => 'second ' + second + ' -> ' + color),
   )
   .subscribe((data: string) => console.log(data));`,
   },
   zip: {
     code: `import { of, zip } from 'rxjs';
 
-const names$ = of('Jhon', 'Patricia', 'Benito');
-const ages$ = of(40, 36, 12);
-const jobs$ = of('Front end developer', 'Quality Manager', 'Youtuber');
+const names$ = of('John', 'Patricia', 'Benito');
+const ages$ = of(40, 36, 28);
+const jobs$ = of('Front end developer', 'Quality Manager', 'Content creator');
 
 // Pairs the values by index: 1st with 1st, 2nd with 2nd...
 zip(names$, ages$, jobs$).subscribe(([name, age, job]) =>

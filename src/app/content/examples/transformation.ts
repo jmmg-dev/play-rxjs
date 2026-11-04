@@ -38,29 +38,38 @@ interval$
   .subscribe((n: number[]) => console.log(n));`,
   },
   bufferToggle: {
-    code: `import { bufferToggle, fromEvent, interval } from 'rxjs';
+    code: `import { bufferToggle, fromEvent, interval, take, tap } from 'rxjs';
 
-const start$ = fromEvent(document.getElementById('btn-click-buffer-toggle-start')!, 'click');
-const stop$ = () => fromEvent(document.getElementById('btn-click-buffer-toggle-stop')!, 'click');
-const interval$ = interval(1000);
+const start$ = fromEvent(document.getElementById('btn-click-buffer-toggle-start')!, 'click').pipe(
+  tap(() => console.log('Buffer opened')),
+);
+// Called once per opened buffer: the next click on the stop button closes it
+const stop$ = () =>
+  fromEvent(document.getElementById('btn-click-buffer-toggle-stop')!, 'click').pipe(
+    take(1),
+    tap(() => console.log('Buffer closed')),
+  );
+const interval$ = interval(1000); // Starts counting when you press Run
 
 interval$
   .pipe(bufferToggle(start$, stop$))
-  .subscribe((n: number[]) => console.log(n));`,
+  .subscribe((n: number[]) => console.log('values ->', n));`,
     ui: [
       { kind: 'button', id: 'btn-click-buffer-toggle-start', label: 'start' },
       { kind: 'button', id: 'btn-click-buffer-toggle-stop', label: 'stop', variant: 'secondary' },
     ],
   },
   bufferWhen: {
-    code: `import { bufferWhen, fromEvent, interval } from 'rxjs';
+    code: `import { bufferWhen, fromEvent, interval, tap } from 'rxjs';
 
-const interval$ = interval(1000);
-const click$ = fromEvent(document.getElementById('btn-click-buffer-when')!, 'click');
+const interval$ = interval(1000); // Starts counting when you press Run
+const click$ = fromEvent(document.getElementById('btn-click-buffer-when')!, 'click').pipe(
+  tap(() => console.log('Click: the buffer is emitted and a new one starts')),
+);
 
 interval$
   .pipe(bufferWhen(() => click$))
-  .subscribe((n: number[]) => console.log(n));`,
+  .subscribe((n: number[]) => console.log('values ->', n));`,
     ui: [{ kind: 'button', id: 'btn-click-buffer-when', label: 'makeClick' }],
   },
   concatMap: {
@@ -82,25 +91,32 @@ fromEvent(document.getElementById('btn-start-cc-map')!, 'click')
     ui: [{ kind: 'button', id: 'btn-start-cc-map', label: 'makeSeveralClicks' }],
   },
   concatMapTo: {
-    code: `import { concatMapTo, fromEvent, interval, take } from 'rxjs';
+    code: `import { concatMapTo, fromEvent, interval, take, tap } from 'rxjs';
 
 fromEvent(document.getElementById('btn-start-cc-map-to')!, 'click')
   .pipe(
+    tap(() => console.log('click')),
     concatMapTo(interval(1000).pipe(take(3))), // Same inner observable for every click
   )
-  .subscribe((n: number) => console.log(n));`,
+  .subscribe((n: number) => console.log('count -> ' + n));`,
     ui: [{ kind: 'button', id: 'btn-start-cc-map-to', label: 'makeSeveralClicks' }],
   },
   exhaustMap: {
-    code: `import { exhaustMap, fromEvent, tap } from 'rxjs';
+    code: `import { exhaustMap, fromEvent, map, tap } from 'rxjs';
+
+let clicks = 0;
 
 // userService simulates an HTTP service with 2s of latency
 fromEvent(document.getElementById('btn-start-exhaust-map')!, 'click')
   .pipe(
-    tap(() => console.log('click')),
-    exhaustMap(() => userService.getUsers(2000)), // clicks are ignored while loading
+    map(() => ++clicks),
+    tap((click: number) => console.log('click ' + click)),
+    exhaustMap((click: number) =>
+      // Clicks are ignored while this request is loading
+      userService.getUsers(2000).pipe(map((users: IUser[]) => 'click ' + click + ' -> ' + users.length + ' users loaded')),
+    ),
   )
-  .subscribe((users: IUser[]) => console.log(users));`,
+  .subscribe((result: string) => console.log(result));`,
     ui: [{ kind: 'button', id: 'btn-start-exhaust-map', label: 'makeSeveralClicks' }],
   },
   expand: {
@@ -147,22 +163,29 @@ from(['orange', 'lemon', 'melon'])
   .subscribe((data: string) => console.log(data));`,
   },
   mergeMap: {
-    code: `import { from, map, mergeMap, range } from 'rxjs';
+    code: `import { delay, from, mergeMap, of } from 'rxjs';
 
-from(['a', 'b', 'c'])
+// Simulates a request that takes a different time for each id
+const request = (id: number, ms: number) => of('response ' + id + ' (' + ms + 'ms)').pipe(delay(ms));
+
+from([
+  { id: 1, ms: 1500 },
+  { id: 2, ms: 500 },
+  { id: 3, ms: 1000 },
+])
   .pipe(
-    mergeMap((e: string) =>
-      range(1, 2).pipe(map((n: number) => e + ' + ' + n + ' = ?')),
-    ),
+    mergeMap(({ id, ms }) => request(id, ms)), // All requests run at the same time
   )
   .subscribe((data: string) => console.log(data));`,
   },
   mergeMapTo: {
-    code: `import { from, map, mergeMapTo, range } from 'rxjs';
+    code: `import { delay, interval, mergeMapTo, of, take, tap } from 'rxjs';
 
-from(['a', 'b', 'c'])
+interval(400)
   .pipe(
-    mergeMapTo(range(1, 2).pipe(map((n: number) => 'the same output + ' + n + ' = ?'))),
+    take(3),
+    tap((n: number) => console.log('ping ' + n)),
+    mergeMapTo(of('pong').pipe(delay(1000))), // Same inner observable, the value is ignored
   )
   .subscribe((data: string) => console.log(data));`,
   },
@@ -229,13 +252,14 @@ fromEvent(document.getElementById('btn-start-sw-map')!, 'click')
     ui: [{ kind: 'button', id: 'btn-start-sw-map', label: 'makeSeveralClicks' }],
   },
   switchMapTo: {
-    code: `import { fromEvent, interval, switchMapTo } from 'rxjs';
+    code: `import { fromEvent, interval, switchMapTo, tap } from 'rxjs';
 
 fromEvent(document.getElementById('btn-start-sw-map-to')!, 'click')
   .pipe(
+    tap(() => console.log('click')),
     switchMapTo(interval(1000)), // Restarts the interval on every click
   )
-  .subscribe((n: number) => console.log(n));`,
+  .subscribe((n: number) => console.log('count -> ' + n));`,
     ui: [{ kind: 'button', id: 'btn-start-sw-map-to', label: 'makeSeveralClicks' }],
   },
   switchScan: {
@@ -290,9 +314,9 @@ source$
   windowToggle: {
     code: `import { interval, mergeMap, toArray, windowToggle } from 'rxjs';
 
-const source$ = interval(1000);
-const openings$ = interval(5000);
-const closings = () => interval(3000);
+const source$ = interval(700);
+const openings$ = interval(3000);
+const closings = () => interval(2000);
 
 source$
   .pipe(

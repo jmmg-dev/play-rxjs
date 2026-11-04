@@ -23,14 +23,14 @@ Interactive, bilingual (English / Spanish) RxJS documentation. Every example is 
 | Sitemap (`/sitemap.xml`, with hreflang alternates) | `src/app/core/sitemap.ts` |
 
 - **URLs are localized**: `/en/...` and `/es/...`. `/` redirects to the preferred language (cookie → `Accept-Language`).
-- **Every documentation page is prerendered** for both languages (314 pages), so the full documentation reaches crawlers and users already rendered. Unknown pages are rendered on demand with a real `404` status.
+- **Every documentation page is prerendered** for both languages (330 pages), so the full documentation reaches crawlers and users already rendered. Unknown pages are rendered on demand with a real `404` status.
 - **Sandbox**: user code is transpiled with Sucrase and executed inside a throw-away `<iframe sandbox="allow-scripts">` (opaque origin). Run / Stop / Reset destroy the iframe, so intervals and subscriptions never leak. `import ... from 'rxjs'`, `'rxjs/ajax'`, `'rxjs/fetch'` and `'rxjs/webSocket'` work as in a real project. A simulated `userService` (HTTP with latency) is available for the data examples.
 
 ### Adding an operator
 
 1. Add `{ id: 'myOperator' }` to the right category in `catalog.ts`.
 2. Add its code (and optional `ui` controls) in `content/examples/<category>.ts`.
-3. Add `title` and `description` under `<category>.myOperator` in both locale files.
+3. Add `title`, `description` (the operator) and `example` (what the example does, shown under the playground's Info button) under `<category>.myOperator` in both locale files.
 4. If a marble diagram makes sense, add its spec to `scripts/generate-marbles.mjs` and run `npm run marbles` (`-- --print` shows them as text).
 5. Run `npm run check:examples` — it verifies that every example compiles, runs and has EN/ES texts.
 

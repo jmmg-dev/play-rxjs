@@ -1,8 +1,8 @@
 import { ExampleMap } from '../model';
 
 const users = `of(
-  { name: 'Jhon', age: 2 },
-  { name: 'Jhon', age: 3 },
+  { name: 'John', age: 2 },
+  { name: 'John', age: 3 },
   { name: 'Mari', age: 4 },
   { name: 'Mari', age: 4 },
   { name: 'Beni', age: 5 },
@@ -10,22 +10,34 @@ const users = `of(
 
 export default {
   audit: {
-    code: `import { audit, fromEvent, interval } from 'rxjs';
+    code: `import { audit, fromEvent, interval, map, tap } from 'rxjs';
 
-const click$ = fromEvent(document.getElementById('btn-click-audit')!, 'click');
-const obs$ = click$.pipe(audit(() => interval(2000)));
+let clicks = 0;
 
-obs$.subscribe(() => console.log('audit -> Click made!!'));`,
-    ui: [{ kind: 'button', id: 'btn-click-audit', label: 'makeClick' }],
+const click$ = fromEvent(document.getElementById('btn-click-audit')!, 'click').pipe(
+  map(() => ++clicks),
+  tap((n: number) => console.log('click ' + n)),
+);
+
+click$
+  .pipe(audit(() => interval(2000))) // Waits 2s and emits the last click of that time
+  .subscribe((n: number) => console.log('audit -> click ' + n + ' emitted'));`,
+    ui: [{ kind: 'button', id: 'btn-click-audit', label: 'makeSeveralClicks' }],
   },
   auditTime: {
-    code: `import { auditTime, fromEvent } from 'rxjs';
+    code: `import { auditTime, fromEvent, map, tap } from 'rxjs';
 
-const click$ = fromEvent(document.getElementById('btn-click-audit-time')!, 'click');
-const obs$ = click$.pipe(auditTime(2000));
+let clicks = 0;
 
-obs$.subscribe(() => console.log('auditTime -> Click made!!'));`,
-    ui: [{ kind: 'button', id: 'btn-click-audit-time', label: 'makeClick' }],
+const click$ = fromEvent(document.getElementById('btn-click-audit-time')!, 'click').pipe(
+  map(() => ++clicks),
+  tap((n: number) => console.log('click ' + n)),
+);
+
+click$
+  .pipe(auditTime(2000)) // Waits 2s and emits the last click of that time
+  .subscribe((n: number) => console.log('auditTime -> click ' + n + ' emitted'));`,
+    ui: [{ kind: 'button', id: 'btn-click-audit-time', label: 'makeSeveralClicks' }],
   },
   debounce: {
     code: `import { debounce, fromEvent, interval } from 'rxjs';
@@ -209,19 +221,29 @@ obs$.subscribe({
 });`,
   },
   throttle: {
-    code: `import { interval, throttle } from 'rxjs';
+    code: `import { fromEvent, interval, map, throttle } from 'rxjs';
 
-const interval$ = interval(1000);
-const obs$ = interval$.pipe(throttle(() => interval(5000)));
+let clicks = 0;
 
-obs$.subscribe((number: number) => console.log(number));`,
+fromEvent(document.getElementById('btn-click-throttle')!, 'click')
+  .pipe(
+    map(() => ++clicks),
+    throttle(() => interval(2000)), // After a click passes, the next ones are ignored for 2s
+  )
+  .subscribe((n: number) => console.log('click ' + n + ' accepted'));`,
+    ui: [{ kind: 'button', id: 'btn-click-throttle', label: 'makeSeveralClicks' }],
   },
   throttleTime: {
-    code: `import { interval, throttleTime } from 'rxjs';
+    code: `import { fromEvent, map, throttleTime } from 'rxjs';
 
-const interval$ = interval(1000);
-const obs$ = interval$.pipe(throttleTime(5000));
+let clicks = 0;
 
-obs$.subscribe((number: number) => console.log(number));`,
+fromEvent(document.getElementById('btn-click-throttle-time')!, 'click')
+  .pipe(
+    map(() => ++clicks),
+    throttleTime(2000), // After a click passes, the next ones are ignored for 2s
+  )
+  .subscribe((n: number) => console.log('click ' + n + ' accepted'));`,
+    ui: [{ kind: 'button', id: 'btn-click-throttle-time', label: 'makeSeveralClicks' }],
   },
 } satisfies ExampleMap;

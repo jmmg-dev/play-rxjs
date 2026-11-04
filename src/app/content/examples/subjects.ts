@@ -22,7 +22,7 @@ setTimeout(() => {
     code: `import { BehaviorSubject, fromEvent } from 'rxjs';
 
 const user$ = new BehaviorSubject<{ name: string; age: number }>({
-  name: 'Jhon',
+  name: 'John',
   age: 40,
 });
 
@@ -56,7 +56,7 @@ const user$ = new Subject<{ name: string; age: number }>();
 const click$ = fromEvent(document.getElementById('btn-click-subject')!, 'click');
 
 click$.subscribe(() => {
-  user = !user ? { name: 'Jhon', age: 40 } : { ...user, age: user.age + 1 };
+  user = !user ? { name: 'John', age: 40 } : { ...user, age: user.age + 1 };
   user$.next(user);
 });
 

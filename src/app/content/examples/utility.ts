@@ -119,7 +119,7 @@ obs$.subscribe((resp) => console.log(resp));`,
   toArray: {
     code: `import { interval, take, toArray } from 'rxjs';
 
-const obs$ = interval(1000).pipe(take(10), toArray());
+const obs$ = interval(500).pipe(take(5), toArray());
 
 obs$.subscribe((numbers: number[]) => console.log(numbers));`,
   },

@@ -30,6 +30,9 @@ const higher = ([outer, ...lanes]) => {
 const higherLabels = ['source$', 'A', 'B', 'C'];
 
 const SPECS = {
+  // ---------- Basic concepts ----------
+  'basicConcepts/marbleDiagrams': { ins: ['-1-2-3-4|'], op: 'map((n) => n * 10)', run: ([a]) => a.pipe(num, map((n) => n * 10)) },
+
   // ---------- Combination ----------
   'combination/combineLatest': { ins: [L, D], labels: ['a$', 'b$'], op: 'combineLatest([a$, b$])', run: ([a, b]) => combineLatest([a, b]) },
   'combination/combineLatestAll': { ins: [L, D], labels: ['a$', 'b$'], op: 'of(a$, b$).pipe(combineLatestAll())', run: ([a, b]) => of(a, b).pipe(rx.combineLatestAll()) },

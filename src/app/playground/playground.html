@@ -9,6 +9,20 @@
       }
     </span>
     <div class="pg__actions">
+      @if (info()) {
+        <button
+          type="button"
+          class="btn btn--ghost btn--sm pg__info-toggle"
+          [class.pg__info-toggle--open]="infoOpen()"
+          (click)="infoOpen.set(!infoOpen())"
+          [attr.aria-expanded]="infoOpen()"
+          [attr.aria-controls]="'pg-info-' + name()"
+          [attr.aria-label]="'ui.infoTitle' | t"
+        >
+          <app-icon name="info" [size]="15" />
+          <span class="pg__label">{{ 'ui.info' | t }}</span>
+        </button>
+      }
       <button
         type="button"
         class="btn btn--ghost btn--sm"
@@ -31,6 +45,23 @@
       </button>
     </div>
   </div>
+
+  @if (info()) {
+    <!-- Rendered on the server even while collapsed, so the explanation is part of the page -->
+    <div
+      class="pg__info"
+      [class.pg__info--open]="infoOpen()"
+      [id]="'pg-info-' + name()"
+      role="region"
+      [attr.aria-label]="'ui.infoTitle' | t"
+      [attr.inert]="infoOpen() ? null : ''"
+    >
+      <div class="pg__info-inner">
+        <p class="pg__info-title"><app-icon name="info" [size]="15" /> {{ 'ui.infoTitle' | t }}</p>
+        <div class="prose pg__info-text" [innerHTML]="info()"></div>
+      </div>
+    </div>
+  }
 
   <div class="pg__editor">
     <div #cmHost class="pg__cm" [class.pg__cm--hidden]="!editorReady()"></div>

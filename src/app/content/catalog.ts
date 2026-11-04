@@ -8,7 +8,9 @@ export const CATEGORIES: Category[] = [
     path: 'basic-concepts',
     group: 'fundamentals',
     icon: 'atom',
-    items: items('observableObserverSubscription unsubscribe unsubscribeSeveral'),
+    items: items(
+      'observableObserverSubscription lifecycle observableVsPromise operatorsAndPipe marbleDiagrams coldVsHot unsubscribe unsubscribeSeveral',
+    ),
   },
   {
     key: 'combination',
@@ -173,7 +175,7 @@ export const CATEGORIES: Category[] = [
     group: 'practice',
     icon: 'rocket',
     items: items(
-      'filterUsersMap filterUsersMergeMapFilter mergeUsersHobbiesforkJoinConcatMap filterAndmergeUsersHobbies searchApi',
+      'filterUsersMap filterUsersMergeMapFilter mergeUsersHobbiesforkJoinConcatMap filterAndmergeUsersHobbies searchApi flatteningOperators',
     ),
   },
 ];

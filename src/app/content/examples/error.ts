@@ -2,10 +2,9 @@ import { ExampleMap } from '../model';
 
 export default {
   catchError: {
-    code: `import { catchError, of, throwError, timeout } from 'rxjs';
+    code: `import { catchError, of, throwError } from 'rxjs';
 
 const obs$ = throwError(() => new Error('server error')).pipe(
-  timeout(2000),
   catchError((err: Error) => {
     console.log('Captured -> ' + err.message);
     return of([]);

@@ -54,7 +54,7 @@ for (const category of CATEGORIES) {
     const problems = [];
     for (const lang of ['en', 'es']) {
       const entry = locales[lang][category.key]?.[id];
-      if (!entry?.title || !entry?.description) problems.push(`missing ${lang} text`);
+      if (!entry?.title || !entry?.description || !entry?.example) problems.push(`missing ${lang} text`);
     }
     const example = examples[id];
     if (!example) problems.push('missing example');
