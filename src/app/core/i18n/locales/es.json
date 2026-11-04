@@ -1,7 +1,7 @@
 {
   "console": "Usamos ejemplos sencillos de las principales funcionalidades de RxJS, los cuales se pueden verificar en tiempo real desde nuestra consola.",
   "home": {
-    "title": "Una nueva forma de aprender"
+    "title": "Play, run, learn"
   },
   "aboutMe": {
     "title": "Sobre mí",
@@ -661,7 +661,7 @@
     }
   },
   "ui": {
-    "tagline": "Una nueva forma de aprender",
+    "tagline": "Play, run, learn",
     "skipToContent": "Saltar al contenido",
     "home": "Inicio",
     "search": "Buscar operadores…",

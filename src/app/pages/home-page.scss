@@ -42,6 +42,10 @@
   font-size: clamp(1.3rem, 2.6vw, 1.9rem);
   font-weight: 600;
   color: var(--cyan);
+  app-icon {
+    margin-left: 0.35rem;
+    vertical-align: -0.15em;
+  }
 }
 
 .hero__lead {
@@ -115,6 +119,7 @@
   &--2 {
     inset: 9%;
     border: 1px dashed rgba(242, 153, 251, 0.25);
+    animation: spin 40s linear infinite;
   }
 }
 
@@ -442,6 +447,12 @@
 }
 
 /* ---------- Animations ---------- */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes orbit {
   from {
     transform: rotate(var(--angle));

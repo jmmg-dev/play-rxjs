@@ -26,7 +26,7 @@ import { LangSwitch } from './lang-switch';
         <img class="brand__logo" src="/images/icon-512.png" width="38" height="38" alt="" />
         <span class="brand__text">
           <span class="brand__name">Play <span class="gradient-text">RxJS</span></span>
-          <span class="brand__tagline">{{ 'ui.tagline' | t }}</span>
+          <span class="brand__tagline">{{ 'ui.tagline' | t }} <app-icon name="bolt" [size]="11" /></span>
         </span>
       </a>
 
@@ -88,6 +88,9 @@ import { LangSwitch } from './lang-switch';
       letter-spacing: -0.02em;
     }
     .brand__tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
       font-size: 0.72rem;
       color: var(--cyan);
       white-space: nowrap;
