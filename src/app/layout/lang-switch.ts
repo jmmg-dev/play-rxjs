@@ -39,6 +39,14 @@ import { Icon } from '../shared/icon';
       color: var(--subtle);
       background: rgba(245, 242, 240, 0.03);
     }
+    @media (max-width: 760px) {
+      .lang {
+        padding-left: 0.25rem;
+      }
+      .lang > app-icon {
+        display: none;
+      }
+    }
     .lang__link {
       padding: 0.2rem 0.55rem;
       border-radius: 999px;

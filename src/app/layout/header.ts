@@ -23,7 +23,6 @@ import { LangSwitch } from './lang-switch';
       </button>
 
       <a class="brand" [routerLink]="nav.link()" aria-label="Play RxJS — {{ 'ui.home' | t }}">
-        <img class="brand__logo" src="/images/icon-512.png" width="38" height="38" alt="" />
         <span class="brand__text">
           <span class="brand__name">Play <span class="gradient-text">RxJS</span></span>
           <span class="brand__tagline">{{ 'ui.tagline' | t }} <app-icon name="bolt" [size]="11" /></span>
@@ -37,6 +36,20 @@ import { LangSwitch } from './lang-switch';
       </button>
 
       <app-lang-switch class="header__lang" />
+
+      <a
+        class="header__support"
+        [routerLink]="nav.link()"
+        fragment="support"
+        [attr.aria-label]="'support.title' | t"
+        [attr.title]="'support.title' | t"
+      >
+        <app-icon name="heart" [size]="20" />
+      </a>
+
+      <a class="header__logo" [routerLink]="nav.link()" aria-label="Play RxJS — {{ 'ui.home' | t }}">
+        <img class="brand__logo" src="/images/icon-96.webp" width="38" height="38" alt="" />
+      </a>
     </header>
   `,
   styles: `
@@ -72,6 +85,27 @@ import { LangSwitch } from './lang-switch';
       &:hover {
         color: var(--text);
       }
+    }
+    .header__lang {
+      flex-shrink: 0;
+    }
+    .header__support {
+      display: inline-flex;
+      flex-shrink: 0;
+      padding: 0.45rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--pink);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      &:hover {
+        color: var(--pink);
+        border-color: var(--border-strong);
+        box-shadow: var(--glow-pink);
+      }
+    }
+    .header__logo {
+      display: inline-flex;
+      flex-shrink: 0;
     }
     .brand__logo {
       display: block;
@@ -143,6 +177,21 @@ import { LangSwitch } from './lang-switch';
       .search-trigger {
         width: auto;
         padding: 0.55rem;
+      }
+    }
+    /* Not enough room for everything: the PRX logo moves left, next to the menu, as the home link */
+    @media (max-width: 480px) {
+      .header {
+        gap: 0.45rem;
+      }
+      .brand {
+        display: none;
+      }
+      .header__menu {
+        order: -2;
+      }
+      .header__logo {
+        order: -1;
       }
     }
   `,

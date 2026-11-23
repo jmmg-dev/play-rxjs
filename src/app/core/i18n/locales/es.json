@@ -4,8 +4,17 @@
     "title": "Play, run, learn"
   },
   "aboutMe": {
-    "title": "Sobre mí",
+    "title": "Sobre el proyecto",
     "description": "<p>He creado este sitio <b>web tutorial</b> con el objetivo de <b>contribuir</b> a la <b>comunidad de desarrolladores</b>, a la cual debo gran parte de mi crecimiento profesional. Mi <b>gratitud</b> hacia quienes han compartido su conocimiento de forma desinteresada es inmensa, y es a ellos a quienes <b>dedico esta documentación</b>.</p><p><b>RxJS</b> es una herramienta <b>excepcional</b> para el desarrollo de código reactivo, aunque su comprensión puede resultar compleja y abrumadora debido a sus conceptos avanzados. Por ello, he procurado que esta guía sea lo más accesible y clara posible, utilizando <b>ejemplos sencillos</b> que permiten observar en tiempo real el comportamiento de los distintos operadores, así como las diferencias entre ellos.</p><p>A menudo, una imagen vale más que mil palabras, y espero que este <b>enfoque visual</b> y práctico haga más fácil el aprendizaje. Espero que disfruten esta documentación.</p>"
+  },
+  "support": {
+    "title": "Apoya mis proyectos",
+    "text": "Si te gusta mi trabajo, puedes contribuir con una pequeña aportación a su mantenimiento y a la creación de nuevos proyectos. Así puedo seguir ofreciéndolos sin publicidad y con la mejor experiencia posible.",
+    "thanks": "¡Muchas gracias! :)",
+    "menu": "Apoyar",
+    "methods": {
+      "kofi": "Invítame a un café en Ko-fi"
+    }
   },
   "operators": {
     "title": "Operadores de RxJS",
@@ -914,7 +923,6 @@
       "back": "Volver al inicio"
     },
     "footer": "Hecho con ♥ para la comunidad de desarrolladores.",
-    "author": "Autor",
     "buttons": {
       "subscribe": "Suscribirse",
       "unsubscribe": "Desuscribirse",
@@ -944,7 +952,7 @@
     "isNewHint": "Nuevo en RxJS 7"
   },
   "seo": {
-    "homeTitle": "Play RxJS — Documentación interactiva de RxJS con ejemplos en vivo",
+    "homeTitle": "Play RxJS — Documentación de RxJS con ejemplos en vivo",
     "homeDescription": "Aprende RxJS con una documentación amigable: observables, subjects y más de 140 operadores explicados con ejemplos editables que puedes ejecutar en tiempo real.",
     "categoryTitle": "{title} — RxJS explicado con ejemplos en vivo",
     "operatorTitle": "{name} — {category} de RxJS con ejemplo en vivo",

@@ -59,8 +59,6 @@
               }
             ],
             "styles": [
-              "node_modules/@fontsource-variable/space-grotesk/index.css",
-              "node_modules/@fontsource-variable/jetbrains-mono/index.css",
               "src/styles.scss"
             ],
             "server": "src/main.server.ts",
@@ -70,7 +68,9 @@
                 "localhost",
                 "127.0.0.1",
                 "*.vercel.app",
-                "playrxjs.vercel.app"
+                "playrxjs.vercel.app",
+                "playrxjs.com",
+                "www.playrxjs.com"
               ]
             },
             "ssr": {

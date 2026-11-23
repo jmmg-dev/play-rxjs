@@ -7,7 +7,7 @@ import { I18n } from '../core/i18n/i18n.service';
 import { TranslatePipe } from '../core/i18n/translate.pipe';
 import { Nav } from '../core/nav.service';
 import { Seo } from '../core/seo.service';
-import { AUTHOR } from '../core/site';
+import { AUTHOR, PAYMENT_METHODS } from '../core/site';
 import { Icon } from '../shared/icon';
 
 @Component({
@@ -27,6 +27,7 @@ export class HomePage {
   protected readonly subjects = getCategory('subjects')!;
   protected readonly realLife = getCategory('realLife')!;
   protected readonly author = AUTHOR;
+  protected readonly paymentMethods = PAYMENT_METHODS;
   protected readonly stats = [
     { value: TOTAL_ITEMS, label: 'ui.stats.operators' },
     { value: CATEGORIES.length, label: 'ui.stats.sections' },

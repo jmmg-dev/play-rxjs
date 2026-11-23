@@ -14,11 +14,18 @@ import { Icon } from '../shared/icon';
     <footer class="footer">
       <div class="footer__inner">
         <div class="footer__brand">
-          <p class="footer__name">Play <span class="gradient-text">RxJS</span></p>
+          <p class="footer__name">
+            <img class="footer__logo" src="/images/icon-96.webp" width="32" height="32" alt="" />
+            <span>Play <span class="gradient-text">RxJS</span></span>
+          </p>
           <p class="footer__text">{{ 'ui.footer' | t }}</p>
-          <p class="footer__author">
-            {{ 'ui.author' | t }}:
-            <a [href]="author.linkedin" target="_blank" rel="noopener author">{{ author.name }}</a>
+          <p class="poweredby">
+            <a href="https://jmmg.dev" target="_blank" rel="noopener" aria-label="Powered by JMMG.dev">
+              <span aria-hidden="true">Powered by</span>
+              <img src="/brand/jmmg-dev-dark-bg.svg" alt="" width="80" height="15" />
+            </a>
+            <span aria-hidden="true">·</span>
+            <span>© 2026 JMMG.dev</span>
           </p>
         </div>
         <nav class="footer__links" [attr.aria-label]="'operators.title' | t">
@@ -28,11 +35,10 @@ import { Icon } from '../shared/icon';
         </nav>
         <div class="footer__social">
           <a [href]="author.linkedin" target="_blank" rel="noopener" aria-label="LinkedIn"><app-icon name="linkedin" /></a>
-          <a [href]="author.portfolio" target="_blank" rel="noopener" aria-label="Portfolio"><app-icon name="user" /></a>
-          <a href="https://rxjs.dev" target="_blank" rel="noopener" aria-label="rxjs.dev"><app-icon name="external" /></a>
+          <a [href]="author.repo" target="_blank" rel="noopener" aria-label="GitHub"><app-icon name="github" /></a>
+          <a [href]="author.web" target="_blank" rel="noopener" aria-label="jmmg.dev"><app-icon name="globe" /></a>
         </div>
       </div>
-      <p class="footer__copy">© {{ year }} {{ author.name }} · RxJS 7.8 · Angular 22</p>
     </footer>
   `,
   styles: `
@@ -50,11 +56,18 @@ import { Icon } from '../shared/icon';
       gap: 2rem;
     }
     .footer__name {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
       margin: 0 0 0.4rem;
       font: 700 1.3rem var(--mono);
     }
-    .footer__text,
-    .footer__author {
+    .footer__logo {
+      display: block;
+      border-radius: 7px;
+      box-shadow: 0 0 0 1px var(--border-strong), 0 0 14px rgba(242, 153, 251, 0.3);
+    }
+    .footer__text {
       margin: 0 0 0.3rem;
       color: var(--muted);
       font-size: 0.9rem;
@@ -86,11 +99,23 @@ import { Icon } from '../shared/icon';
         }
       }
     }
-    .footer__copy {
-      max-width: var(--content-w);
-      margin: 2.5rem auto 0;
+    .poweredby {
+      margin: 0.8rem 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem;
       color: var(--subtle);
       font: 0.78rem var(--mono);
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        color: inherit;
+      }
+      img {
+        display: block;
+      }
     }
     @media (max-width: 820px) {
       .footer__inner {
@@ -103,5 +128,4 @@ export class Footer {
   protected readonly nav = inject(Nav);
   protected readonly categories = OPERATOR_CATEGORIES;
   protected readonly author = AUTHOR;
-  protected readonly year = new Date().getFullYear();
 }

@@ -44,7 +44,7 @@ app.use(
     index: false,
     redirect: false,
     setHeaders: (res, path) => {
-      if (!/-[A-Z0-9]{8}\.(js|css|woff2?)$/.test(path)) {
+      if (!/-[A-Za-z0-9_]{8}\.(js|css|woff2?)$/.test(path)) {
         res.setHeader('Cache-Control', 'public, max-age=3600');
       }
     },

@@ -16,7 +16,7 @@ import { Icon } from '../shared/icon';
     <aside id="sidebar" class="sidebar" [class.sidebar--open]="nav.drawerOpen()">
       <div class="sidebar__top">
         <a class="sidebar__brand" [routerLink]="nav.link()" aria-label="Play RxJS — {{ 'ui.home' | t }}" (click)="nav.drawerOpen.set(false)">
-          <img src="/images/icon-512.png" width="32" height="32" alt="" />
+          <img src="/images/icon-96.webp" width="32" height="32" alt="" />
           <span>Play <span class="gradient-text">RxJS</span></span>
         </a>
         <button type="button" class="sidebar__close" [attr.aria-label]="'ui.closeMenu' | t" (click)="nav.drawerOpen.set(false)">
@@ -66,6 +66,10 @@ import { Icon } from '../shared/icon';
             }
           </div>
         }
+        <a class="support-link" [routerLink]="nav.link()" fragment="support" (click)="nav.drawerOpen.set(false)">
+          <app-icon name="heart" [size]="16" />
+          <span>{{ 'support.menu' | t }}</span>
+        </a>
       </nav>
     </aside>
   `,
@@ -209,6 +213,23 @@ import { Icon } from '../shared/icon';
     }
     .is-active .dot {
       box-shadow: 0 0 0 1.5px var(--dark);
+    }
+    .support-link {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: 0.5rem;
+      padding: 0.9rem 0.5rem 0.4rem;
+      border-top: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.93rem;
+      app-icon {
+        color: var(--pink);
+      }
+      &:hover {
+        color: var(--pink);
+      }
     }
     .backdrop {
       display: none;

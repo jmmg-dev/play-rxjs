@@ -104,7 +104,7 @@
         <app-icon name="trash" [size]="15" />
       </button>
     </div>
-    <ol #consoleList class="pg__logs" role="log" aria-live="polite" aria-relevant="additions">
+    <ol #consoleList class="pg__logs" aria-live="polite" aria-relevant="additions">
       @for (log of logs(); track log.id) {
         <li class="log log--{{ log.level }}">
           <span class="log__time">{{ log.time }}</span>

@@ -98,6 +98,7 @@ export class Seo {
       url: SITE_URL,
       name: SITE_NAME,
       inLanguage: [...LANGS],
+      sameAs: [AUTHOR.repo],
       author: { '@id': `${SITE_URL}/#author` },
     };
     const author = {
@@ -105,7 +106,7 @@ export class Seo {
       '@id': `${SITE_URL}/#author`,
       name: AUTHOR.name,
       jobTitle: AUTHOR.jobTitle,
-      url: AUTHOR.portfolio,
+      url: AUTHOR.web,
       sameAs: [AUTHOR.linkedin],
     };
     const page = {

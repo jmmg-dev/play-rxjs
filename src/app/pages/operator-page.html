@@ -49,8 +49,12 @@
           </h2>
           <p>{{ 'ui.playgroundHint' | t }}</p>
         </div>
-        @for (current of [ex]; track current) {
-          <app-playground [code]="current.code" [ui]="current.ui ?? []" [name]="id()" [info]="key() + '.example' | t" />
+        <!-- Server rendered as usual; its code (editor highlighting, sandbox) only hydrates once it scrolls into view.
+             On client-side navigations it renders immediately. -->
+        @defer (on immediate; hydrate on viewport) {
+          @for (current of [ex]; track current) {
+            <app-playground [code]="current.code" [ui]="current.ui ?? []" [name]="id()" [info]="key() + '.example' | t" />
+          }
         }
       </section>
     }

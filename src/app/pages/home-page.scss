@@ -96,16 +96,33 @@
   justify-self: center;
 }
 
-.hero__logo {
+.hero__logo-wrap {
   position: relative;
   z-index: 1;
   width: 64%;
+  border-radius: 50%;
+  animation: float 7s ease-in-out infinite;
+  /* Cyan glow layer: only its opacity is animated, so the GPU crossfades it without repainting */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 3px solid var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 3.5rem rgba(163, 254, 255, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    animation: glow 6s ease-in-out infinite;
+  }
+}
+
+.hero__logo {
+  display: block;
+  width: 100%;
   height: auto;
   border-radius: 50%;
   border: 3px solid var(--pink);
-  animation:
-    glow 6s ease-in-out infinite,
-    float 7s ease-in-out infinite;
+  box-shadow: 0 0 2.5rem rgba(242, 153, 251, 0.55);
 }
 
 .ring {
@@ -402,6 +419,7 @@
 
 .about__links {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 0.5rem;
 }
@@ -409,6 +427,51 @@
 .about__text h2 {
   margin-bottom: 1rem;
   color: var(--pink);
+}
+
+/* ---------- Support ---------- */
+.support {
+  margin: 5rem 0 0;
+  padding: 2.5rem;
+  border-radius: 22px;
+  text-align: center;
+  scroll-margin-top: calc(var(--header-h) + 24px);
+  h2 {
+    margin: 0.6rem 0 1rem;
+  }
+  @media (max-width: 600px) {
+    padding: 1.6rem;
+  }
+}
+
+.support__heart {
+  color: var(--pink);
+  filter: drop-shadow(0 0 12px rgba(242, 153, 251, 0.45));
+}
+
+/* Continuous heartbeat; the global reduced-motion rule stops it */
+.support__heart {
+  animation: heartbeat 1.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.support__text,
+.support__thanks {
+  max-width: 60ch;
+  margin-inline: auto;
+}
+
+.support__thanks {
+  margin-top: 0.75rem;
+  font-weight: 600;
+}
+
+.support__methods {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
 }
 
 /* ---------- Responsive ---------- */
@@ -478,19 +541,30 @@
 }
 
 @keyframes glow {
-  0%,
-  100% {
-    border-color: var(--pink);
-    box-shadow: 0 0 2.5rem rgba(242, 153, 251, 0.55);
-  }
   50% {
-    border-color: var(--cyan);
-    box-shadow: 0 0 3.5rem rgba(163, 254, 255, 0.5);
+    opacity: 1;
   }
 }
 
 @keyframes blink {
   50% {
     opacity: 0.35;
+  }
+}
+
+@keyframes heartbeat {
+  0%,
+  45%,
+  100% {
+    transform: scale(1);
+  }
+  12% {
+    transform: scale(1.2);
+  }
+  24% {
+    transform: scale(0.95);
+  }
+  34% {
+    transform: scale(1.12);
   }
 }

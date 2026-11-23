@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://playrxjs.vercel.app/sitemap.xml
+Sitemap: https://playrxjs.com/sitemap.xml

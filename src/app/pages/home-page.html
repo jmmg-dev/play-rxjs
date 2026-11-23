@@ -27,7 +27,9 @@
     <div class="hero__visual" aria-hidden="true">
       <div class="ring ring--1"></div>
       <div class="ring ring--2"></div>
-      <img class="hero__logo" ngSrc="/images/rxjs.webp" width="512" height="512" priority alt="" />
+      <div class="hero__logo-wrap">
+        <img class="hero__logo" ngSrc="/images/rxjs.webp" width="512" height="512" priority alt="" />
+      </div>
       @for (b of orbitBalls; track $index) {
         <div class="orbiter orbiter--{{ b.ring }}" [style.--angle.deg]="b.angle">
           <span class="ball ball--{{ b.tone }}">{{ b.label }}</span>
@@ -113,7 +115,7 @@
     </section>
   </div>
 
-  <!-- About me -->
+  <!-- About the project -->
   <section class="about glass" aria-labelledby="about-title">
     <div class="about__profile">
       <img ngSrc="/images/photo.webp" width="468" height="468" [alt]="author.name" class="about__photo" />
@@ -123,14 +125,33 @@
         <a class="btn btn--ghost btn--sm" [href]="author.linkedin" target="_blank" rel="noopener author">
           <app-icon name="linkedin" [size]="15" /> LinkedIn
         </a>
-        <a class="btn btn--ghost btn--sm" [href]="author.portfolio" target="_blank" rel="noopener">
-          <app-icon name="user" [size]="15" /> CV
+        <a class="btn btn--ghost btn--sm" [href]="author.repo" target="_blank" rel="noopener">
+          <app-icon name="github" [size]="15" /> GitHub
+        </a>
+        <a class="btn btn--ghost btn--sm" [href]="author.web" target="_blank" rel="noopener">
+          <app-icon name="globe" [size]="15" /> jmmg.dev
         </a>
       </div>
     </div>
     <div class="about__text">
       <h2 id="about-title">{{ 'aboutMe.title' | t }}</h2>
       <div class="prose" [innerHTML]="'aboutMe.description' | t"></div>
+    </div>
+  </section>
+
+  <!-- Support -->
+  <section id="support" class="support glass" aria-labelledby="support-title">
+    <app-icon class="support__heart" name="heart" [size]="40" />
+    <h2 id="support-title">{{ 'support.title' | t }}</h2>
+    <p class="support__text">{{ 'support.text' | t }}</p>
+    <p class="support__thanks">{{ 'support.thanks' | t }}</p>
+    <div class="support__methods">
+      @for (method of paymentMethods; track method.id; let first = $first) {
+        <a class="btn" [class.btn--primary]="first" [class.btn--ghost]="!first" [href]="method.url" target="_blank" rel="noopener">
+          <app-icon [name]="method.icon" [size]="18" />
+          {{ 'support.methods.' + method.id | t }}
+        </a>
+      }
     </div>
   </section>
 </div>
