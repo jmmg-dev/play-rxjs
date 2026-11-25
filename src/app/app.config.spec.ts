@@ -12,13 +12,13 @@ describe('appConfig', () => {
 
   const scrollToTarget = async () => {
     // Hydration warns that there is no server state to reuse, which is expected in a unit test
-    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    vi.spyOn(console, 'warn').mockImplementation(() => undefined);
     TestBed.configureTestingModule({ providers: appConfig.providers });
     await TestBed.inject(ApplicationInitStatus).donePromise;
     const target = document.createElement('section');
     target.id = 'target';
     document.body.appendChild(target);
-    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined);
     TestBed.inject(ViewportScroller).scrollToAnchor('target');
     return scrollTo.mock.calls[0][0] as ScrollToOptions;
   };

@@ -17,4 +17,6 @@ export const AUTHOR = {
 export const OG_IMAGE = { path: '/images/social_media.jpg', width: 1280, height: 640 };
 
 /** Donation methods shown in the home "Support" section; the first one is the highlighted button. */
-export const PAYMENT_METHODS = [{ id: 'kofi', name: 'Ko-fi', url: 'https://ko-fi.com/jmmgdev', icon: 'coffee' }] as const;
+export const PAYMENT_METHODS = [
+  { id: 'kofi', name: 'Ko-fi', url: 'https://ko-fi.com/jmmgdev', icon: 'coffee' },
+] as const;

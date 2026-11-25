@@ -1,4 +1,4 @@
-@use 'page';
+@use "page";
 
 .intro {
   position: relative;
@@ -63,7 +63,7 @@
   animation: rise 0.45s ease both;
   animation-delay: calc(min(var(--i, 0), 12) * 30ms);
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: radial-gradient(420px 140px at 0% 0%, rgba(242, 153, 251, 0.1), transparent 70%);
@@ -112,7 +112,9 @@
   margin-top: 1rem;
   font: 600 0.8rem var(--mono);
   color: var(--muted);
-  transition: gap 0.2s ease, color 0.2s ease;
+  transition:
+    gap 0.2s ease,
+    color 0.2s ease;
 }
 
 .others {

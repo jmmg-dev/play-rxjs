@@ -1,1 +1,12 @@
+# Build output and caches
+dist/
+.angular/
 coverage/
+
+# Dependencies and lockfiles
+node_modules/
+package-lock.json
+
+# Static assets (images, fonts, SVG) and generated data
+public/
+src/app/content/marbles.json

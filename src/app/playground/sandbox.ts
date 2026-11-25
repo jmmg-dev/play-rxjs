@@ -197,7 +197,10 @@ export class Sandbox {
     const data = event.data as { tag?: string; type?: string; payload?: unknown };
     if (data?.tag !== MESSAGE_TAG) return;
     if (data.type === 'ready' && this.pendingCode !== undefined) {
-      frame.contentWindow?.postMessage({ tag: MESSAGE_TAG, type: 'run', code: this.pendingCode }, '*');
+      frame.contentWindow?.postMessage(
+        { tag: MESSAGE_TAG, type: 'run', code: this.pendingCode },
+        '*',
+      );
       this.pendingCode = undefined;
     } else if (data.type === 'log') {
       const { level, text } = data.payload as { level: LogLevel; text: string };

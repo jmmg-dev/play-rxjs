@@ -58,7 +58,9 @@ export class OperatorPage {
       const lang = this.i18n.lang();
       const name = this.i18n.t(`${this.key()}.title`);
       const categoryTitle = this.i18n.t(`${cat.key}.title`);
-      const description = truncate(stripHtml(firstParagraph(this.i18n.t(`${this.key()}.description`))));
+      const description = truncate(
+        stripHtml(firstParagraph(this.i18n.t(`${this.key()}.description`))),
+      );
       const code = this.example()?.code;
       this.seo.update({
         title: `${name} · ${categoryTitle} | ${SITE_NAME}`,

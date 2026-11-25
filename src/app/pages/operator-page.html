@@ -28,7 +28,8 @@
         <aside class="callout" role="note">
           <app-icon name="warning" [size]="18" />
           <p>
-            {{ 'ui.deprecatedText' | t }} <code>{{ replacement }}</code>.
+            {{ 'ui.deprecatedText' | t }} <code>{{ replacement }}</code
+            >.
           </p>
         </aside>
       }
@@ -53,7 +54,12 @@
              On client-side navigations it renders immediately. -->
         @defer (on immediate; hydrate on viewport) {
           @for (current of [ex]; track current) {
-            <app-playground [code]="current.code" [ui]="current.ui ?? []" [name]="id()" [info]="key() + '.example' | t" />
+            <app-playground
+              [code]="current.code"
+              [ui]="current.ui ?? []"
+              [name]="id()"
+              [info]="key() + '.example' | t"
+            />
           }
         }
       </section>
@@ -61,16 +67,28 @@
 
     <nav class="pager" [attr.aria-label]="('ui.previous' | t) + ' / ' + ('ui.next' | t)">
       @if (prev(); as p) {
-        <a class="pager__link" [routerLink]="nav.link(p.category.path + '/' + p.item.id)" rel="prev">
-          <span class="pager__dir"><app-icon name="arrowLeft" [size]="14" /> {{ 'ui.previous' | t }}</span>
+        <a
+          class="pager__link"
+          [routerLink]="nav.link(p.category.path + '/' + p.item.id)"
+          rel="prev"
+        >
+          <span class="pager__dir"
+            ><app-icon name="arrowLeft" [size]="14" /> {{ 'ui.previous' | t }}</span
+          >
           <span class="pager__name">{{ p.category.key + '.' + p.item.id + '.title' | t }}</span>
         </a>
       } @else {
         <span></span>
       }
       @if (next(); as n) {
-        <a class="pager__link pager__link--next" [routerLink]="nav.link(n.category.path + '/' + n.item.id)" rel="next">
-          <span class="pager__dir">{{ 'ui.next' | t }} <app-icon name="arrowRight" [size]="14" /></span>
+        <a
+          class="pager__link pager__link--next"
+          [routerLink]="nav.link(n.category.path + '/' + n.item.id)"
+          rel="next"
+        >
+          <span class="pager__dir"
+            >{{ 'ui.next' | t }} <app-icon name="arrowRight" [size]="14"
+          /></span>
           <span class="pager__name">{{ n.category.key + '.' + n.item.id + '.title' | t }}</span>
         </a>
       }
@@ -79,10 +97,17 @@
 
   @if (siblings().length) {
     <section class="related" aria-labelledby="related-title">
-      <h2 id="related-title" class="related__title">{{ 'ui.moreInSection' | t }} · {{ cat().key + '.title' | t }}</h2>
+      <h2 id="related-title" class="related__title">
+        {{ 'ui.moreInSection' | t }} · {{ cat().key + '.title' | t }}
+      </h2>
       <div class="related__list">
         @for (s of siblings(); track s.id) {
-          <a class="chip" [class.mono]="isCode()" [routerLink]="nav.link(cat().path + '/' + s.id)">{{ cat().key + '.' + s.id + '.title' | t }}</a>
+          <a
+            class="chip"
+            [class.mono]="isCode()"
+            [routerLink]="nav.link(cat().path + '/' + s.id)"
+            >{{ cat().key + '.' + s.id + '.title' | t }}</a
+          >
         }
       </div>
     </section>

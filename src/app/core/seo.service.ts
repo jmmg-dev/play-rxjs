@@ -47,7 +47,11 @@ export class Seo {
       ['name', 'description', data.description],
       ['name', 'keywords', this.i18n.t('seo.keywords')],
       ['name', 'author', AUTHOR.name],
-      ['name', 'robots', data.noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'],
+      [
+        'name',
+        'robots',
+        data.noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1',
+      ],
       ['property', 'og:type', data.type ?? 'website'],
       ['property', 'og:site_name', SITE_NAME],
       ['property', 'og:title', data.title],
@@ -77,7 +81,9 @@ export class Seo {
 
   private setLinks(data: SeoData, url: string): void {
     const head = this.doc.head;
-    head.querySelectorAll('link[rel="canonical"], link[rel="alternate"][hreflang]').forEach((el) => el.remove());
+    head
+      .querySelectorAll('link[rel="canonical"], link[rel="alternate"][hreflang]')
+      .forEach((el) => el.remove());
     const add = (attrs: Record<string, string>) => {
       const link = this.doc.createElement('link');
       Object.entries(attrs).forEach(([k, v]) => link.setAttribute(k, v));
@@ -142,6 +148,9 @@ export class Seo {
       script.type = 'application/ld+json';
       this.doc.head.appendChild(script);
     }
-    script.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
+    script.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': graph,
+    }).replace(/</g, '\\u003c');
   }
 }

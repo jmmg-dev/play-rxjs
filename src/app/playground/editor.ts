@@ -1,5 +1,11 @@
 // Loaded lazily in the browser only: keeps CodeMirror out of the initial bundle.
-import { autocompletion, closeBrackets, closeBracketsKeymap, completeFromList, completionKeymap } from '@codemirror/autocomplete';
+import {
+  autocompletion,
+  closeBrackets,
+  closeBracketsKeymap,
+  completeFromList,
+  completionKeymap,
+} from '@codemirror/autocomplete';
 import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
 import { javascript, javascriptLanguage } from '@codemirror/lang-javascript';
 import { bracketMatching, indentOnInput, syntaxHighlighting } from '@codemirror/language';
@@ -31,7 +37,9 @@ interface EditorOptions {
 
 const rxjsNames = [
   ...new Set([
-    ...FLAT_ITEMS.map((i) => i.item.id).filter((id) => /^[a-zA-Z]+$/.test(id) && id !== 'unsubscribeSeveral'),
+    ...FLAT_ITEMS.map((i) => i.item.id).filter(
+      (id) => /^[a-zA-Z]+$/.test(id) && id !== 'unsubscribeSeveral',
+    ),
     'pipe',
     'subscribe',
     'unsubscribe',
@@ -68,14 +76,20 @@ const theme = EditorView.theme(
     '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection': {
       backgroundColor: 'rgba(163,254,255,0.18) !important',
     },
-    '.cm-matchingBracket': { backgroundColor: 'rgba(163,254,255,0.18)', outline: '1px solid rgba(163,254,255,0.4)' },
+    '.cm-matchingBracket': {
+      backgroundColor: 'rgba(163,254,255,0.18)',
+      outline: '1px solid rgba(163,254,255,0.4)',
+    },
     '.cm-tooltip': {
       backgroundColor: 'var(--surface-solid)',
       border: '1px solid var(--border-strong)',
       borderRadius: '10px',
       overflow: 'hidden',
     },
-    '.cm-tooltip-autocomplete > ul > li[aria-selected]': { backgroundColor: 'rgba(242,153,251,0.2)', color: 'var(--clear)' },
+    '.cm-tooltip-autocomplete > ul > li[aria-selected]': {
+      backgroundColor: 'rgba(242,153,251,0.2)',
+      color: 'var(--clear)',
+    },
     '.cm-completionDetail': { color: 'var(--cyan)', fontStyle: 'normal', marginLeft: '0.6em' },
   },
   { dark: true },

@@ -72,7 +72,11 @@ export class LangSwitch {
   protected readonly langs = LANGS;
 
   protected readonly links = computed(
-    () => Object.fromEntries(LANGS.map((l) => [l, this.nav.link(this.nav.restPath(), l)])) as Record<Lang, string>,
+    () =>
+      Object.fromEntries(LANGS.map((l) => [l, this.nav.link(this.nav.restPath(), l)])) as Record<
+        Lang,
+        string
+      >,
   );
 
   protected remember(lang: Lang): void {

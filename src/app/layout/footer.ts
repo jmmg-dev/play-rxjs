@@ -20,7 +20,12 @@ import { Icon } from '../shared/icon';
           </p>
           <p class="footer__text">{{ 'ui.footer' | t }}</p>
           <p class="poweredby">
-            <a href="https://jmmg.dev" target="_blank" rel="noopener" aria-label="Powered by JMMG.dev">
+            <a
+              href="https://jmmg.dev"
+              target="_blank"
+              rel="noopener"
+              aria-label="Powered by JMMG.dev"
+            >
               <span aria-hidden="true">Powered by</span>
               <img src="/brand/jmmg-dev-dark-bg.svg" alt="" width="80" height="15" />
             </a>
@@ -34,9 +39,15 @@ import { Icon } from '../shared/icon';
           }
         </nav>
         <div class="footer__social">
-          <a [href]="author.linkedin" target="_blank" rel="noopener" aria-label="LinkedIn"><app-icon name="linkedin" /></a>
-          <a [href]="author.repo" target="_blank" rel="noopener" aria-label="GitHub"><app-icon name="github" /></a>
-          <a [href]="author.web" target="_blank" rel="noopener" aria-label="jmmg.dev"><app-icon name="globe" /></a>
+          <a [href]="author.linkedin" target="_blank" rel="noopener" aria-label="LinkedIn"
+            ><app-icon name="linkedin"
+          /></a>
+          <a [href]="author.repo" target="_blank" rel="noopener" aria-label="GitHub"
+            ><app-icon name="github"
+          /></a>
+          <a [href]="author.web" target="_blank" rel="noopener" aria-label="jmmg.dev"
+            ><app-icon name="globe"
+          /></a>
         </div>
       </div>
     </footer>
@@ -65,7 +76,9 @@ import { Icon } from '../shared/icon';
     .footer__logo {
       display: block;
       border-radius: 7px;
-      box-shadow: 0 0 0 1px var(--border-strong), 0 0 14px rgba(242, 153, 251, 0.3);
+      box-shadow:
+        0 0 0 1px var(--border-strong),
+        0 0 14px rgba(242, 153, 251, 0.3);
     }
     .footer__text {
       margin: 0 0 0.3rem;

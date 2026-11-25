@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "schematicCollections": ["angular-eslint"]
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -123,6 +124,7 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "runner": "vitest",
+            "runnerConfig": "vitest-base.config.ts",
             "tsConfig": "tsconfig.spec.json",
             "setupFiles": ["src/test-setup.ts"],
             "coverageInclude": ["src/app/**/*.ts"],
@@ -139,6 +141,12 @@
               "functions": 90,
               "branches": 90
             }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }

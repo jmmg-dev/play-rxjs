@@ -15,7 +15,10 @@ export function buildSitemap(): string {
   const urls = paths.flatMap(({ path, priority }) =>
     LANGS.map((lang) => {
       const alternates = [
-        ...LANGS.map((l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${localizedUrl(l, path)}"/>`),
+        ...LANGS.map(
+          (l) =>
+            `    <xhtml:link rel="alternate" hreflang="${l}" href="${localizedUrl(l, path)}"/>`,
+        ),
         `    <xhtml:link rel="alternate" hreflang="x-default" href="${localizedUrl('en', path)}"/>`,
       ].join('\n');
       return `  <url>\n    <loc>${localizedUrl(lang, path)}</loc>\n${alternates}\n    <lastmod>${lastmod}</lastmod>\n    <priority>${priority}</priority>\n  </url>`;

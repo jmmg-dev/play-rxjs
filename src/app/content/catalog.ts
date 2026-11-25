@@ -1,6 +1,10 @@
 import { Category, CategoryKey, ExampleMap, GroupKey, MarbleData } from './model';
 
-const items = (ids: string): { id: string }[] => ids.split(/\s+/).filter(Boolean).map((id) => ({ id }));
+const items = (ids: string): { id: string }[] =>
+  ids
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((id) => ({ id }));
 
 export const CATEGORIES: Category[] = [
   {

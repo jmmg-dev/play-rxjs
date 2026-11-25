@@ -16,7 +16,9 @@ export function highlightLines(code: string): string[] {
     tsParser.parse(code),
     classHighlighter,
     (text, classes) => {
-      lines[lines.length - 1] += classes ? `<span class="${classes}">${escape(text)}</span>` : escape(text);
+      lines[lines.length - 1] += classes
+        ? `<span class="${classes}">${escape(text)}</span>`
+        : escape(text);
     },
     () => lines.push(''),
   );

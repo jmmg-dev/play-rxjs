@@ -25,11 +25,18 @@ import { LangSwitch } from './lang-switch';
       <a class="brand" [routerLink]="nav.link()" aria-label="Play RxJS — {{ 'ui.home' | t }}">
         <span class="brand__text">
           <span class="brand__name">Play <span class="gradient-text">RxJS</span></span>
-          <span class="brand__tagline">{{ 'ui.tagline' | t }} <app-icon name="bolt" [size]="11" /></span>
+          <span class="brand__tagline"
+            >{{ 'ui.tagline' | t }} <app-icon name="bolt" [size]="11"
+          /></span>
         </span>
       </a>
 
-      <button type="button" class="search-trigger" (click)="nav.searchOpen.set(true)" [attr.aria-label]="'ui.openSearch' | t">
+      <button
+        type="button"
+        class="search-trigger"
+        (click)="nav.searchOpen.set(true)"
+        [attr.aria-label]="'ui.openSearch' | t"
+      >
         <app-icon name="search" [size]="16" />
         <span class="search-trigger__text">{{ 'ui.search' | t }}</span>
         <kbd>Ctrl K</kbd>
@@ -47,7 +54,11 @@ import { LangSwitch } from './lang-switch';
         <app-icon name="heart" [size]="20" />
       </a>
 
-      <a class="header__logo" [routerLink]="nav.link()" aria-label="Play RxJS — {{ 'ui.home' | t }}">
+      <a
+        class="header__logo"
+        [routerLink]="nav.link()"
+        aria-label="Play RxJS — {{ 'ui.home' | t }}"
+      >
         <img class="brand__logo" src="/images/icon-96.webp" width="38" height="38" alt="" />
       </a>
     </header>
@@ -96,7 +107,9 @@ import { LangSwitch } from './lang-switch';
       border: 1px solid var(--border);
       border-radius: 10px;
       color: var(--pink);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
       &:hover {
         color: var(--pink);
         border-color: var(--border-strong);
@@ -110,7 +123,9 @@ import { LangSwitch } from './lang-switch';
     .brand__logo {
       display: block;
       border-radius: 7px;
-      box-shadow: 0 0 0 1px var(--border-strong), 0 0 18px rgba(242, 153, 251, 0.35);
+      box-shadow:
+        0 0 0 1px var(--border-strong),
+        0 0 18px rgba(242, 153, 251, 0.35);
     }
     .brand__text {
       display: flex;
@@ -142,7 +157,9 @@ import { LangSwitch } from './lang-switch';
       color: var(--subtle);
       font: 500 0.9rem var(--font);
       cursor: pointer;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
       &:hover {
         border-color: var(--border-strong);
         box-shadow: var(--glow-pink);

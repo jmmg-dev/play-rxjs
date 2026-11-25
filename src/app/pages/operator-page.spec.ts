@@ -7,8 +7,12 @@ import { I18n } from '../core/i18n/i18n.service';
 import { OperatorPage } from './operator-page';
 
 class NoopObserver {
-  observe() {}
-  disconnect() {}
+  observe() {
+    // Diagrams never scroll into view in jsdom
+  }
+  disconnect() {
+    // Nothing to release
+  }
 }
 
 describe('OperatorPage', () => {

@@ -4,7 +4,9 @@
   <header class="intro">
     <div class="intro__head">
       <span class="intro__icon"><app-icon [name]="cat().icon" [size]="26" /></span>
-      <p class="eyebrow">{{ 'ui.groups.' + cat().group | t }} · {{ cat().items.length }} {{ 'ui.examples' | t }}</p>
+      <p class="eyebrow">
+        {{ 'ui.groups.' + cat().group | t }} · {{ cat().items.length }} {{ 'ui.examples' | t }}
+      </p>
     </div>
     <h1 [innerHTML]="cat().key + '.title' | t"></h1>
     <div class="prose intro__text" [innerHTML]="cat().key + '.description' | t"></div>
@@ -15,7 +17,9 @@
       <li>
         <a class="card" [routerLink]="nav.link(cat().path + '/' + item.id)" [style.--i]="i">
           <div class="card__head">
-            <h2 class="card__title" [class.mono]="isCode()">{{ cat().key + '.' + item.id + '.title' | t }}</h2>
+            <h2 class="card__title" [class.mono]="isCode()">
+              {{ cat().key + '.' + item.id + '.title' | t }}
+            </h2>
             @if (item.isNew) {
               <span class="badge badge--new">{{ 'ui.isNew' | t }}</span>
             }

@@ -11,7 +11,9 @@
     0 30px 80px -40px rgba(0, 0, 0, 0.8),
     inset 0 1px 0 rgba(245, 242, 240, 0.04);
   overflow: hidden;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  transition:
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
   &--running {
     border-color: rgba(163, 254, 255, 0.35);
     box-shadow:

@@ -21,7 +21,10 @@ const loadTs = (file) => {
   return module.exports;
 };
 
-const catalogSrc = readFileSync(join(root, 'content/catalog.ts'), 'utf8').replace(/import\('\.\/examples\/[^']+'\)/g, 'null');
+const catalogSrc = readFileSync(join(root, 'content/catalog.ts'), 'utf8').replace(
+  /import\('\.\/examples\/[^']+'\)/g,
+  'null',
+);
 const { CATEGORIES } = (() => {
   const js = transform(catalogSrc, { transforms: ['typescript', 'imports'] }).code;
   const module = { exports: {} };
@@ -39,35 +42,67 @@ const modules = {
   'rxjs/fetch': { fromFetch: offline('fetch') },
   'rxjs/webSocket': { webSocket: () => new rxjs.Subject() },
 };
-const userService = { getUsers: () => rxjs.of([]).pipe(rxjs.delay(10)), getHobbies: () => rxjs.of([]) };
+const userService = {
+  getUsers: () => rxjs.of([]).pipe(rxjs.delay(10)),
+  getHobbies: () => rxjs.of([]),
+};
 
 let failures = 0;
 const reports = [];
 const lateErrors = [];
 const timers = [];
 for (const category of CATEGORIES) {
-  const examples = loadTs(join(root, `content/examples/${fileFor[category.key] ?? category.key}.ts`)).default;
+  const examples = loadTs(
+    join(root, `content/examples/${fileFor[category.key] ?? category.key}.ts`),
+  ).default;
   const ids = category.items.map((i) => i.id);
   const extra = Object.keys(examples).filter((id) => !ids.includes(id));
-  if (extra.length) (failures++, console.log(`✗ ${category.key}: examples without catalog entry: ${extra}`));
+  if (extra.length)
+    (failures++, console.log(`✗ ${category.key}: examples without catalog entry: ${extra}`));
   for (const id of ids) {
     const problems = [];
     for (const lang of ['en', 'es']) {
       const entry = locales[lang][category.key]?.[id];
-      if (!entry?.title || !entry?.description || !entry?.example) problems.push(`missing ${lang} text`);
+      if (!entry?.title || !entry?.description || !entry?.example)
+        problems.push(`missing ${lang} text`);
     }
     const example = examples[id];
     if (!example) problems.push('missing example');
     else {
       try {
-        const js = transform(example.code, { transforms: ['typescript', 'imports'], disableESTransforms: true }).code;
+        const js = transform(example.code, {
+          transforms: ['typescript', 'imports'],
+          disableESTransforms: true,
+        }).code;
         const logs = [];
-        const fakeConsole = { log: (...a) => logs.push(a), error: (...a) => problems.push('console.error ' + a.join(' ')) };
-        rxjs.config.onUnhandledError = (e) => lateErrors.push(`${category.key}/${id}? ${e?.message}`);
+        const fakeConsole = {
+          log: (...a) => logs.push(a),
+          error: (...a) => problems.push('console.error ' + a.join(' ')),
+        };
+        rxjs.config.onUnhandledError = (e) =>
+          lateErrors.push(`${category.key}/${id}? ${e?.message}`);
         const setI = (fn, ms) => (timers.push(setInterval(fn, ms)), timers.at(-1));
-        new Function('require', 'exports', 'module', 'userService', 'document', 'console', 'setInterval', js)(
-          (n) => modules[n] ?? (() => { throw new Error('module ' + n); })(),
-          {}, { exports: {} }, userService, document, fakeConsole, setI,
+        new Function(
+          'require',
+          'exports',
+          'module',
+          'userService',
+          'document',
+          'console',
+          'setInterval',
+          js,
+        )(
+          (n) =>
+            modules[n] ??
+            (() => {
+              throw new Error('module ' + n);
+            })(),
+          {},
+          { exports: {} },
+          userService,
+          document,
+          fakeConsole,
+          setI,
         );
       } catch (err) {
         problems.push(err.message);

@@ -104,7 +104,7 @@
   animation: float 7s ease-in-out infinite;
   /* Cyan glow layer: only its opacity is animated, so the GPU crossfades it without repainting */
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     border: 3px solid var(--cyan);
@@ -264,7 +264,7 @@
     margin-bottom: 1.8rem;
   }
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0 0 auto 0;
     height: 2px;

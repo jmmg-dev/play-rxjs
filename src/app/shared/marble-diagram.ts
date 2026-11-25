@@ -62,13 +62,21 @@ export class MarbleDiagram {
   );
   protected readonly lineStart = computed(() => this.x0() - 12);
 
-  protected readonly inputs = computed(() => this.data().inputs.map((l, i) => this.lane(l, TOP + LANE_H * i + LANE_H / 2)));
-  protected readonly boxY = computed(() => TOP + LANE_H * this.data().inputs.length + (this.data().inputs.length ? BOX_GAP : 0));
+  protected readonly inputs = computed(() =>
+    this.data().inputs.map((l, i) => this.lane(l, TOP + LANE_H * i + LANE_H / 2)),
+  );
+  protected readonly boxY = computed(
+    () => TOP + LANE_H * this.data().inputs.length + (this.data().inputs.length ? BOX_GAP : 0),
+  );
   protected readonly boxH = BOX_H;
   protected readonly outputs = computed(() =>
-    this.data().outputs.map((l, i) => this.lane(l, this.boxY() + BOX_H + BOX_GAP + LANE_H * i + LANE_H / 2)),
+    this.data().outputs.map((l, i) =>
+      this.lane(l, this.boxY() + BOX_H + BOX_GAP + LANE_H * i + LANE_H / 2),
+    ),
   );
-  protected readonly height = computed(() => this.boxY() + BOX_H + BOX_GAP + LANE_H * this.data().outputs.length + 10);
+  protected readonly height = computed(
+    () => this.boxY() + BOX_H + BOX_GAP + LANE_H * this.data().outputs.length + 10,
+  );
 
   protected readonly summary = computed(() =>
     this.data()
@@ -120,7 +128,14 @@ export class MarbleDiagram {
     }
 
     const tail = last ? last.x + last.width / 2 + 7 : 0;
-    const end = (t?: number) => (t === undefined ? undefined : Math.min(Math.max(xOf(t), tail), max + 8));
-    return { y, label: source.label, marbles, complete: end(source.complete), error: end(source.error) };
+    const end = (t?: number) =>
+      t === undefined ? undefined : Math.min(Math.max(xOf(t), tail), max + 8);
+    return {
+      y,
+      label: source.label,
+      marbles,
+      complete: end(source.complete),
+      error: end(source.error),
+    };
   }
 }

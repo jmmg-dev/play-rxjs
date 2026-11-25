@@ -22,12 +22,27 @@
         </defs>
 
         <ng-template #laneTpl let-lane>
-          <line class="lane" [attr.x1]="lineStart()" [attr.x2]="lane.complete ?? lane.error ?? lineEnd" [attr.y1]="lane.y" [attr.y2]="lane.y" />
+          <line
+            class="lane"
+            [attr.x1]="lineStart()"
+            [attr.x2]="lane.complete ?? lane.error ?? lineEnd"
+            [attr.y1]="lane.y"
+            [attr.y2]="lane.y"
+          />
           @if (lane.complete === undefined && lane.error === undefined) {
-            <path class="lane__arrow" [attr.d]="'M' + (lineEnd - 7) + ' ' + (lane.y - 5) + 'l7 5l-7 5'" />
+            <path
+              class="lane__arrow"
+              [attr.d]="'M' + (lineEnd - 7) + ' ' + (lane.y - 5) + 'l7 5l-7 5'"
+            />
           }
           @if (lane.complete !== undefined) {
-            <line class="end" [attr.x1]="lane.complete" [attr.x2]="lane.complete" [attr.y1]="lane.y - 12" [attr.y2]="lane.y + 12" />
+            <line
+              class="end"
+              [attr.x1]="lane.complete"
+              [attr.x2]="lane.complete"
+              [attr.y1]="lane.y - 12"
+              [attr.y2]="lane.y + 12"
+            />
           }
           @if (lane.error !== undefined) {
             <path
@@ -50,16 +65,33 @@
         </ng-template>
 
         @for (lane of inputs(); track $index) {
-          <ng-container [ngTemplateOutlet]="laneTpl" [ngTemplateOutletContext]="{ $implicit: lane }" />
+          <ng-container
+            [ngTemplateOutlet]="laneTpl"
+            [ngTemplateOutletContext]="{ $implicit: lane }"
+          />
         }
         @for (lane of outputs(); track $index) {
-          <ng-container [ngTemplateOutlet]="laneTpl" [ngTemplateOutletContext]="{ $implicit: lane }" />
+          <ng-container
+            [ngTemplateOutlet]="laneTpl"
+            [ngTemplateOutletContext]="{ $implicit: lane }"
+          />
         }
 
         <!-- Curtain + playhead: reveals the timelines from left to right -->
         <g class="curtain" [class.curtain--play]="playing()">
-          <rect [attr.x]="lineStart() - 6" y="0" [attr.width]="width + 40" [attr.height]="height()" />
-          <line class="curtain__head" [attr.x1]="lineStart() - 6" [attr.x2]="lineStart() - 6" y1="0" [attr.y2]="height()" />
+          <rect
+            [attr.x]="lineStart() - 6"
+            y="0"
+            [attr.width]="width + 40"
+            [attr.height]="height()"
+          />
+          <line
+            class="curtain__head"
+            [attr.x1]="lineStart() - 6"
+            [attr.x2]="lineStart() - 6"
+            y1="0"
+            [attr.y2]="height()"
+          />
         </g>
 
         @for (lane of inputs(); track $index) {
@@ -73,7 +105,16 @@
           }
         }
 
-        <rect class="op" x="10" [attr.y]="boxY()" [attr.width]="width - 20" [attr.height]="boxH" rx="9" />
+        <rect
+          class="op"
+          x="10"
+          [attr.y]="boxY()"
+          [attr.width]="width - 20"
+          [attr.height]="boxH"
+          rx="9"
+        />
+        <!-- Kept on one line: whitespace inside SVG <text> ends up in the rendered label -->
+        <!-- prettier-ignore -->
         <text class="op__text" [attr.x]="width / 2" [attr.y]="boxY() + boxH / 2 + 4.5" text-anchor="middle">{{ data().op }}</text>
       </svg>
     </div>

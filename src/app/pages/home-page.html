@@ -11,7 +11,9 @@
           {{ 'ui.startLearning' | t }}
           <app-icon name="arrowRight" [size]="16" />
         </a>
-        <a class="btn btn--ghost" [routerLink]="nav.link()" fragment="operators">{{ 'ui.exploreOperators' | t }}</a>
+        <a class="btn btn--ghost" [routerLink]="nav.link()" fragment="operators">{{
+          'ui.exploreOperators' | t
+        }}</a>
       </div>
       <dl class="stats">
         @for (s of stats; track s.label) {
@@ -28,7 +30,14 @@
       <div class="ring ring--1"></div>
       <div class="ring ring--2"></div>
       <div class="hero__logo-wrap">
-        <img class="hero__logo" ngSrc="/images/rxjs.webp" width="512" height="512" priority alt="" />
+        <img
+          class="hero__logo"
+          ngSrc="/images/rxjs.webp"
+          width="512"
+          height="512"
+          priority
+          alt=""
+        />
       </div>
       @for (b of orbitBalls; track $index) {
         <div class="orbiter orbiter--{{ b.ring }}" [style.--angle.deg]="b.angle">
@@ -79,7 +88,9 @@
           <a class="category" [routerLink]="nav.link(c.path)">
             <span class="category__top">
               <span class="category__icon"><app-icon [name]="c.icon" [size]="20" /></span>
-              <span class="category__count mono">{{ c.items.length }} {{ 'ui.operatorsLabel' | t }}</span>
+              <span class="category__count mono"
+                >{{ c.items.length }} {{ 'ui.operatorsLabel' | t }}</span
+              >
             </span>
             <h3 class="category__title">{{ c.key + '.title' | t }}</h3>
             <span class="category__text" [innerHTML]="c.key + '.shortDescription' | t"></span>
@@ -118,11 +129,22 @@
   <!-- About the project -->
   <section class="about glass" aria-labelledby="about-title">
     <div class="about__profile">
-      <img ngSrc="/images/photo.webp" width="468" height="468" [alt]="author.name" class="about__photo" />
+      <img
+        ngSrc="/images/photo.webp"
+        width="468"
+        height="468"
+        [alt]="author.name"
+        class="about__photo"
+      />
       <h3>{{ author.name }}</h3>
       <p class="about__job">{{ author.jobTitle }}</p>
       <div class="about__links">
-        <a class="btn btn--ghost btn--sm" [href]="author.linkedin" target="_blank" rel="noopener author">
+        <a
+          class="btn btn--ghost btn--sm"
+          [href]="author.linkedin"
+          target="_blank"
+          rel="noopener author"
+        >
           <app-icon name="linkedin" [size]="15" /> LinkedIn
         </a>
         <a class="btn btn--ghost btn--sm" [href]="author.repo" target="_blank" rel="noopener">
@@ -147,7 +169,14 @@
     <p class="support__thanks">{{ 'support.thanks' | t }}</p>
     <div class="support__methods">
       @for (method of paymentMethods; track method.id; let first = $first) {
-        <a class="btn" [class.btn--primary]="first" [class.btn--ghost]="!first" [href]="method.url" target="_blank" rel="noopener">
+        <a
+          class="btn"
+          [class.btn--primary]="first"
+          [class.btn--ghost]="!first"
+          [href]="method.url"
+          target="_blank"
+          rel="noopener"
+        >
           <app-icon [name]="method.icon" [size]="18" />
           {{ 'support.methods.' + method.id | t }}
         </a>

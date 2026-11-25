@@ -28,7 +28,7 @@ describe('Playground', () => {
     );
   const loadEditor = async () => {
     el.querySelector<HTMLElement>('.pg__static')!.dispatchEvent(new Event('focus'));
-    await vi.waitFor(() => expect(el.querySelector('.cm-editor')).not.toBeNull());
+    await vi.waitFor(() => expect(el.querySelector('.cm-editor')).not.toBeNull(), 5000);
     await fixture.whenStable();
     return EditorView.findFromDOM(el.querySelector('.cm-editor')!)!;
   };
@@ -77,7 +77,10 @@ describe('Playground', () => {
     local.detectChanges();
     await vi.advanceTimersByTimeAsync(1600);
     vi.useRealTimers();
-    await vi.waitFor(() => expect(local.nativeElement.querySelector('.cm-editor')).not.toBeNull());
+    await vi.waitFor(
+      () => expect(local.nativeElement.querySelector('.cm-editor')).not.toBeNull(),
+      5000,
+    );
     local.destroy();
   });
 

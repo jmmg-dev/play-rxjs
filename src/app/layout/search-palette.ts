@@ -24,11 +24,7 @@ interface SearchEntry {
   isCategory: boolean;
 }
 
-const normalize = (s: string) =>
-  s
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '');
+const normalize = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
 @Component({
   selector: 'app-search-palette',
@@ -36,7 +32,15 @@ const normalize = (s: string) =>
   imports: [Icon, TranslatePipe],
   host: { '(document:keydown)': 'onGlobalKey($event)' },
   template: `
-    <dialog #dialog class="palette" (close)="nav.searchOpen.set(false)" (click)="onBackdrop($event)" aria-labelledby="search-title">
+    <!-- Clicking the backdrop closes it; from the keyboard the native dialog closes with Esc -->
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
+    <dialog
+      #dialog
+      class="palette"
+      (close)="nav.searchOpen.set(false)"
+      (click)="onBackdrop($event)"
+      aria-labelledby="search-title"
+    >
       @if (nav.searchOpen()) {
         <div class="palette__box">
           <h2 id="search-title" class="visually-hidden">{{ 'ui.searchLabel' | t }}</h2>
@@ -62,6 +66,8 @@ const normalize = (s: string) =>
           </div>
           <ul id="search-results" class="palette__results" role="listbox">
             @for (r of results(); track r.url; let i = $index) {
+              <!-- Keyboard selection is handled by the combobox input (arrows + Enter, aria-activedescendant) -->
+              <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
               <li
                 [id]="'search-opt-' + i"
                 role="option"
@@ -100,7 +106,9 @@ const normalize = (s: string) =>
       border-radius: 18px;
       background: var(--surface-solid);
       color: var(--text);
-      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6), var(--glow-pink);
+      box-shadow:
+        0 30px 90px rgba(0, 0, 0, 0.6),
+        var(--glow-pink);
       overflow: hidden;
       &::backdrop {
         background: rgba(10, 6, 11, 0.65);
@@ -226,7 +234,11 @@ export class SearchPalette {
     if (q.length < 2) return [];
     return this.index()
       .filter((e) => e.haystack.includes(q))
-      .sort((a, b) => Number(b.haystack.startsWith(q)) - Number(a.haystack.startsWith(q)) || a.title.length - b.title.length)
+      .sort(
+        (a, b) =>
+          Number(b.haystack.startsWith(q)) - Number(a.haystack.startsWith(q)) ||
+          a.title.length - b.title.length,
+      )
       .slice(0, 8);
   });
 

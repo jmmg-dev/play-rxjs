@@ -1,6 +1,16 @@
 import { ViewportScroller } from '@angular/common';
-import { ApplicationConfig, DOCUMENT, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideClientHydration, withEventReplay, withIncrementalHydration } from '@angular/platform-browser';
+import {
+  ApplicationConfig,
+  DOCUMENT,
+  inject,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
+import {
+  provideClientHydration,
+  withEventReplay,
+  withIncrementalHydration,
+} from '@angular/platform-browser';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 import { routes } from './app.routes';
 
@@ -11,7 +21,8 @@ import { routes } from './app.routes';
 function anchorOffset(): void {
   const doc = inject(DOCUMENT);
   inject(ViewportScroller).setOffset(() => {
-    const header = parseFloat(getComputedStyle(doc.documentElement).getPropertyValue('--header-h')) || 64;
+    const header =
+      parseFloat(getComputedStyle(doc.documentElement).getPropertyValue('--header-h')) || 64;
     return [0, header + 24];
   });
 }

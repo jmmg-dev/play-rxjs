@@ -48,7 +48,9 @@ export class Playground {
 
   protected readonly lines = computed(() => highlightLines(this.code()));
   protected readonly current = signal<string | null>(null);
-  protected readonly modified = computed(() => this.current() !== null && this.current() !== this.code());
+  protected readonly modified = computed(
+    () => this.current() !== null && this.current() !== this.code(),
+  );
   protected readonly running = signal(false);
   protected readonly editorReady = signal(false);
   protected readonly logs = signal<LogEntry[]>([]);
@@ -70,7 +72,8 @@ export class Playground {
         onHeight: (height) => this.frameHeight.set(height),
       });
       // Upgrade the static snippet to a full editor when the browser is idle
-      if ('requestIdleCallback' in window) requestIdleCallback(() => this.loadEditor(), { timeout: 4000 });
+      if ('requestIdleCallback' in window)
+        requestIdleCallback(() => this.loadEditor(), { timeout: 4000 });
       else setTimeout(() => this.loadEditor(), 1500);
     });
     destroyRef.onDestroy(() => {

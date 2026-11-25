@@ -12,14 +12,30 @@ import { Icon } from '../shared/icon';
   imports: [RouterLink, RouterLinkActive, Icon, TranslatePipe],
   host: { '(document:keydown.escape)': 'nav.drawerOpen.set(false)' },
   template: `
-    <div class="backdrop" [class.backdrop--visible]="nav.drawerOpen()" (click)="nav.drawerOpen.set(false)"></div>
+    <!-- Clicking the backdrop closes the drawer; from the keyboard it closes with Esc or the close button -->
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
+    <div
+      class="backdrop"
+      [class.backdrop--visible]="nav.drawerOpen()"
+      (click)="nav.drawerOpen.set(false)"
+    ></div>
     <aside id="sidebar" class="sidebar" [class.sidebar--open]="nav.drawerOpen()">
       <div class="sidebar__top">
-        <a class="sidebar__brand" [routerLink]="nav.link()" aria-label="Play RxJS — {{ 'ui.home' | t }}" (click)="nav.drawerOpen.set(false)">
+        <a
+          class="sidebar__brand"
+          [routerLink]="nav.link()"
+          aria-label="Play RxJS — {{ 'ui.home' | t }}"
+          (click)="nav.drawerOpen.set(false)"
+        >
           <img src="/images/icon-96.webp" width="32" height="32" alt="" />
           <span>Play <span class="gradient-text">RxJS</span></span>
         </a>
-        <button type="button" class="sidebar__close" [attr.aria-label]="'ui.closeMenu' | t" (click)="nav.drawerOpen.set(false)">
+        <button
+          type="button"
+          class="sidebar__close"
+          [attr.aria-label]="'ui.closeMenu' | t"
+          (click)="nav.drawerOpen.set(false)"
+        >
           <app-icon name="close" />
         </button>
       </div>
@@ -56,7 +72,10 @@ import { Icon } from '../shared/icon';
                           <span class="dot" [attr.title]="'ui.isNewHint' | t"></span>
                         }
                         @if (item.deprecated) {
-                          <span class="dot dot--deprecated" [attr.title]="'ui.deprecated' | t"></span>
+                          <span
+                            class="dot dot--deprecated"
+                            [attr.title]="'ui.deprecated' | t"
+                          ></span>
                         }
                       </a>
                     </li>
@@ -66,7 +85,12 @@ import { Icon } from '../shared/icon';
             }
           </div>
         }
-        <a class="support-link" [routerLink]="nav.link()" fragment="support" (click)="nav.drawerOpen.set(false)">
+        <a
+          class="support-link"
+          [routerLink]="nav.link()"
+          fragment="support"
+          (click)="nav.drawerOpen.set(false)"
+        >
           <app-icon name="heart" [size]="16" />
           <span>{{ 'support.menu' | t }}</span>
         </a>

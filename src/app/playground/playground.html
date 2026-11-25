@@ -39,7 +39,12 @@
           <span class="pg__label">{{ 'ui.stop' | t }}</span>
         </button>
       }
-      <button type="button" class="btn btn--primary btn--sm pg__run" (click)="run()" title="Ctrl + Enter">
+      <button
+        type="button"
+        class="btn btn--primary btn--sm pg__run"
+        (click)="run()"
+        title="Ctrl + Enter"
+      >
         <app-icon name="play" [size]="15" />
         {{ 'ui.run' | t }}
       </button>
@@ -76,13 +81,22 @@
         (pointerdown)="focusEditor()"
         (focus)="focusEditor()"
       >
-        <pre class="pg__gutter" aria-hidden="true">@for (line of lines(); track $index) {<span>{{ $index + 1 }}</span>}</pre>
-        <pre class="pg__code"><code>@for (line of lines(); track $index) {<span [innerHTML]="line"></span>}</code></pre>
+        <pre
+          class="pg__gutter"
+          aria-hidden="true"
+        >@for (line of lines(); track $index) {<span>{{ $index + 1 }}</span>}</pre>
+        <pre
+          class="pg__code"
+        ><code>@for (line of lines(); track $index) {<span [innerHTML]="line"></span>}</code></pre>
       </div>
     }
   </div>
 
-  <div class="pg__sandbox" [class.pg__sandbox--visible]="running()" [style.height.px]="running() ? frameHeight() : 0">
+  <div
+    class="pg__sandbox"
+    [class.pg__sandbox--visible]="running()"
+    [style.height.px]="running() ? frameHeight() : 0"
+  >
     <div #frameHost class="pg__frame-host"></div>
   </div>
 
@@ -91,7 +105,9 @@
       <span class="pg__console-title">
         <app-icon name="terminal" [size]="15" />
         {{ 'ui.console' | t }}
-        <span class="pg__state" [class.pg__state--on]="running()">{{ (running() ? 'ui.running' : 'ui.idle') | t }}</span>
+        <span class="pg__state" [class.pg__state--on]="running()">{{
+          (running() ? 'ui.running' : 'ui.idle') | t
+        }}</span>
       </span>
       <button
         type="button"
@@ -112,7 +128,8 @@
         </li>
       } @empty {
         <li class="pg__empty">
-          <span class="pg__prompt">❯</span> {{ (running() ? 'ui.consoleWaiting' : 'ui.consoleEmpty') | t }}
+          <span class="pg__prompt">❯</span>
+          {{ (running() ? 'ui.consoleWaiting' : 'ui.consoleEmpty') | t }}
         </li>
       }
     </ol>
