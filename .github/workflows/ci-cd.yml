@@ -1,4 +1,4 @@
-name: Tests
+name: CI/CD
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main, master]
 
 jobs:
-  test:
+  checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,8 +16,15 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      # Lint and formatting are fixed locally on every commit (/git-up); here they are only
+      # checked. --if-present skips them until the project defines the scripts.
+      - name: Lint
+        run: npm run lint --if-present
+      - name: Format
+        run: npm run format:check --if-present
       # Fails if a test fails or coverage drops below 90 % (thresholds live in angular.json)
-      - run: npm run test:coverage
+      - name: Tests and coverage
+        run: npm run test:coverage
       - if: always()
         uses: actions/upload-artifact@v4
         with:
