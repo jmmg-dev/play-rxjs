@@ -6,6 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "test": "ng test --watch=false",
+    "test:watch": "ng test",
+    "test:coverage": "ng test --watch=false --coverage",
     "serve:ssr": "node dist/play-rxjs/server/server.mjs",
     "check:examples": "node scripts/check-examples.mjs",
     "marbles": "node scripts/generate-marbles.mjs"
@@ -43,8 +46,11 @@
     "@angular/compiler-cli": "^22.2.0",
     "@types/express": "^5.0.1",
     "@types/node": "^22.12.0",
+    "@vitest/coverage-v8": "^4.1.12",
+    "jsdom": "^29.1.1",
     "prettier": "^3.8.1",
-    "typescript": "~6.0.2"
+    "typescript": "~6.0.2",
+    "vitest": "^4.1.12"
   },
   "description": "Play RxJS v2 — interactive, bilingual RxJS documentation with live playgrounds (Angular 22 SSR)",
   "author": "Juan Manuel Muñoz González",

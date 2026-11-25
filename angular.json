@@ -58,9 +58,7 @@
                 "output": "vendor"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
@@ -77,9 +75,7 @@
               "entry": "src/server.ts"
             },
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/app/pages"
-              ]
+              "includePaths": ["src/app/pages"]
             },
             "allowedCommonJsDependencies": [
               "ts-interface-checker",
@@ -122,6 +118,28 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "runner": "vitest",
+            "tsConfig": "tsconfig.spec.json",
+            "setupFiles": ["src/test-setup.ts"],
+            "coverageInclude": ["src/app/**/*.ts"],
+            "coverageExclude": [
+              "src/**/*.spec.ts",
+              "src/app/app.config.ts",
+              "src/app/app.config.server.ts",
+              "src/app/app.routes.server.ts"
+            ],
+            "coverageReporters": ["text", "html", "lcov", "json-summary"],
+            "coverageThresholds": {
+              "lines": 90,
+              "statements": 90,
+              "functions": 90,
+              "branches": 90
+            }
+          }
         }
       }
     }
