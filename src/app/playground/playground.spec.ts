@@ -61,11 +61,30 @@ describe('Playground', () => {
     expect(el.querySelector('.pg__empty')?.textContent).toBeTruthy();
   });
 
+  it('focuses the editor when pressed after it loaded but before it is shown', async () => {
+    const pg = fixture.componentInstance as unknown as {
+      loadEditor(): Promise<void>;
+      focusEditor(): Promise<void>;
+    };
+    // Loaded in the background: ready, but not rendered yet
+    await pg.loadEditor();
+    expect(el.querySelector('.pg__static')).not.toBeNull();
+    await pg.focusEditor();
+    await fixture.whenStable();
+    await vi.waitFor(() => expect(document.activeElement).toBe(el.querySelector('.cm-content')));
+  });
+
   it('upgrades to the CodeMirror editor when focused, and only once', async () => {
     const view = await loadEditor();
     expect(view.state.doc.toString()).toContain('of(1, 2)');
     expect(el.querySelector('.pg__static')).toBeNull();
+    // The cursor lands in the editor, so the user can type right away
+    await vi.waitFor(() => expect(document.activeElement).toBe(el.querySelector('.cm-content')));
     await (fixture.componentInstance as unknown as { loadEditor(): Promise<void> }).loadEditor();
+    // Focusing again once it is visible focuses it straight away
+    (document.activeElement as HTMLElement).blur();
+    await (fixture.componentInstance as unknown as { focusEditor(): Promise<void> }).focusEditor();
+    expect(document.activeElement).toBe(el.querySelector('.cm-content'));
     expect(el.querySelectorAll('.cm-editor')).toHaveLength(1);
   });
 
@@ -115,6 +134,7 @@ describe('Playground', () => {
     expect(el.querySelector('.log--error')).not.toBeNull();
     expect(el.querySelector<HTMLElement>('.pg__sandbox')!.style.height).toBe('80px');
 
+    expect(button('.btn--secondary').getAttribute('aria-label')).toBe('Stop');
     button('.btn--secondary').click();
     await fixture.whenStable();
     expect(frame()).toBeNull();

@@ -22,7 +22,8 @@ import { LangSwitch } from './lang-switch';
         <app-icon name="menu" [size]="22" />
       </button>
 
-      <a class="brand" [routerLink]="nav.link()" aria-label="Play RxJS — {{ 'ui.home' | t }}">
+      <!-- Named by its visible text (Play RxJS + tagline), so voice control users can say what they see -->
+      <a class="brand" [routerLink]="nav.link()">
         <span class="brand__text">
           <span class="brand__name">Play <span class="gradient-text">RxJS</span></span>
           <span class="brand__tagline"
@@ -35,7 +36,8 @@ import { LangSwitch } from './lang-switch';
         type="button"
         class="search-trigger"
         (click)="nav.searchOpen.set(true)"
-        [attr.aria-label]="'ui.openSearch' | t"
+        [attr.aria-label]="('ui.search' | t) + ' Ctrl K'"
+        aria-keyshortcuts="Control+K"
       >
         <app-icon name="search" [size]="16" />
         <span class="search-trigger__text">{{ 'ui.search' | t }}</span>

@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  signal,
+  untracked,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CATEGORIES, GROUPS } from '../content/catalog';
 import { Category } from '../content/model';
@@ -44,8 +51,9 @@ import { Icon } from '../shared/icon';
           <div class="group">
             <p class="group__title">{{ 'ui.groups.' + group | t }}</p>
             @for (category of byGroup(group); track category.key) {
-              <details class="cat" [open]="isActive(category)">
-                <summary class="cat__summary">
+              <!-- A link and a separate toggle button: a link inside <summary> nests two controls -->
+              <div class="cat">
+                <div class="cat__head">
                   <a
                     class="cat__link"
                     [routerLink]="nav.link(category.path)"
@@ -56,10 +64,25 @@ import { Icon } from '../shared/icon';
                     <app-icon [name]="category.icon" [size]="16" />
                     <span>{{ category.key + '.title' | t }}</span>
                   </a>
-                  <span class="cat__count">{{ category.items.length }}</span>
-                  <app-icon class="cat__chevron" name="chevron" [size]="14" />
-                </summary>
-                <ul class="cat__items">
+                  <button
+                    type="button"
+                    class="cat__toggle"
+                    [attr.aria-expanded]="isOpen(category)"
+                    [attr.aria-controls]="'cat-' + category.key"
+                    [attr.aria-label]="
+                      category.items.length +
+                      ' ' +
+                      ('ui.examples' | t) +
+                      ' · ' +
+                      (category.key + '.title' | t)
+                    "
+                    (click)="toggle(category)"
+                  >
+                    <span class="cat__count">{{ category.items.length }}</span>
+                    <app-icon class="cat__chevron" name="chevron" [size]="14" />
+                  </button>
+                </div>
+                <ul class="cat__items" [id]="'cat-' + category.key" [hidden]="!isOpen(category)">
                   @for (item of category.items; track item.id) {
                     <li>
                       <a
@@ -81,7 +104,7 @@ import { Icon } from '../shared/icon';
                     </li>
                   }
                 </ul>
-              </details>
+              </div>
             }
           </div>
         }
@@ -152,20 +175,27 @@ import { Icon } from '../shared/icon';
       text-transform: uppercase;
       color: var(--subtle);
     }
-    .cat__summary {
+    .cat__head {
       display: flex;
       align-items: center;
       gap: 0.35rem;
-      padding: 0.15rem 0.35rem 0.15rem 0;
+      padding: 0.15rem 0 0.15rem 0;
       border-radius: var(--radius-sm);
-      list-style: none;
-      cursor: pointer;
-      &::-webkit-details-marker {
-        display: none;
-      }
       &:hover {
         background: rgba(245, 242, 240, 0.04);
       }
+    }
+    .cat__toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      align-self: stretch;
+      padding: 0 0.35rem 0 0.5rem;
+      border: 0;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
     }
     .cat__link {
       flex: 1;
@@ -188,7 +218,7 @@ import { Icon } from '../shared/icon';
       color: var(--subtle);
       transition: transform 0.2s ease;
     }
-    details[open] > .cat__summary .cat__chevron {
+    .cat__toggle[aria-expanded='true'] .cat__chevron {
       transform: rotate(90deg);
     }
     .cat__items {
@@ -304,12 +334,25 @@ export class Sidebar {
   protected readonly nav = inject(Nav);
   protected readonly groups = GROUPS;
 
+  /** Sections the user opened or closed by hand; the rest follow the current page. */
+  private readonly toggled = signal<Partial<Record<string, boolean>>>({});
+
   constructor() {
-    // Close the drawer after every navigation
+    // Close the drawer after every navigation, and let the current section open again
     effect(() => {
       this.nav.url();
       this.nav.drawerOpen.set(false);
+      untracked(() => this.toggled.set({}));
     });
+  }
+
+  protected isOpen(category: Category): boolean {
+    return this.toggled()[category.key] ?? this.isActive(category);
+  }
+
+  protected toggle(category: Category): void {
+    const open = !this.isOpen(category);
+    this.toggled.update((state) => ({ ...state, [category.key]: open }));
   }
 
   protected byGroup(group: string): Category[] {

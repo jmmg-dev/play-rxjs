@@ -21,22 +21,45 @@ describe('Sidebar', () => {
     return { fixture, el: fixture.nativeElement as HTMLElement, nav: TestBed.inject(Nav) };
   };
 
-  it('lists every category with its item count', async () => {
+  const toggles = (el: HTMLElement) => [...el.querySelectorAll<HTMLButtonElement>('.cat__toggle')];
+  const expanded = (el: HTMLElement) => toggles(el).filter((b) => b.ariaExpanded === 'true');
+
+  it('lists every category with its item count, without nesting the link in the toggle', async () => {
     const { el } = await setup('/es');
-    const cats = el.querySelectorAll('details.cat');
-    expect(cats).toHaveLength(CATEGORIES.length);
-    expect(cats[0].querySelector('.cat__count')?.textContent).toBe(
-      String(CATEGORIES[0].items.length),
-    );
+    expect(toggles(el)).toHaveLength(CATEGORIES.length);
+    const first = toggles(el)[0];
+    expect(first.textContent?.trim()).toBe(String(CATEGORIES[0].items.length));
+    expect(first.getAttribute('aria-label')).toMatch(new RegExp(`^${CATEGORIES[0].items.length} `));
+    expect(first.querySelector('a')).toBeNull();
+    expect(el.querySelector('summary, details')).toBeNull();
   });
 
   it('opens only the category of the current page', async () => {
     const { el } = await setup('/es/operators/transformation/map');
-    const open = [...el.querySelectorAll<HTMLDetailsElement>('details.cat')].filter((d) => d.open);
-    expect(open).toHaveLength(1);
-    expect(open[0].querySelector('.cat__link')?.getAttribute('href')).toBe(
-      '/es/operators/transformation',
+    expect(expanded(el)).toHaveLength(1);
+    const list = el.querySelector<HTMLUListElement>(
+      `#${expanded(el)[0].getAttribute('aria-controls')}`,
+    )!;
+    expect(list.hidden).toBe(false);
+    expect(list.querySelector('a.is-active')?.getAttribute('href')).toBe(
+      '/es/operators/transformation/map',
     );
+    expect(el.querySelectorAll('ul.cat__items:not([hidden])')).toHaveLength(1);
+  });
+
+  it('opens and closes sections by hand until the next navigation', async () => {
+    const { el, fixture } = await setup('/es/operators/transformation/map');
+    const [first] = toggles(el);
+    const current = expanded(el)[0];
+    first.click();
+    current.click();
+    fixture.detectChanges();
+    expect(first.ariaExpanded).toBe('true');
+    expect(current.ariaExpanded).toBe('false');
+    await TestBed.inject(Router).navigateByUrl('/es/operators/transformation/filter');
+    fixture.detectChanges();
+    expect(first.ariaExpanded).toBe('false');
+    expect(current.ariaExpanded).toBe('true');
   });
 
   it('marks new and deprecated operators', async () => {

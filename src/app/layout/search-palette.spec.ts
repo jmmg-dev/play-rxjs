@@ -148,6 +148,14 @@ describe('SearchPalette', () => {
     expect(nav.searchOpen()).toBe(false);
   });
 
+  it('closes with Escape even when the field has text', async () => {
+    await open();
+    await type('map');
+    const event = await key('Escape');
+    expect(event.defaultPrevented).toBe(true);
+    expect(nav.searchOpen()).toBe(false);
+  });
+
   it('syncs the state when the dialog is closed by the browser (Esc)', async () => {
     await open();
     dialog().dispatchEvent(new Event('close'));

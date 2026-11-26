@@ -10,3 +10,8 @@ package-lock.json
 # Static assets (images, fonts, SVG) and generated data
 public/
 src/app/content/marbles.json
+
+# Playwright output
+test-results/
+playwright-report/
+blob-report/

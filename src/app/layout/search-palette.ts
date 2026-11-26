@@ -267,6 +267,12 @@ export class SearchPalette {
   }
 
   protected onKey(event: KeyboardEvent): void {
+    // In a search field the browser spends the first Esc clearing the text: close right away instead
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      this.nav.searchOpen.set(false);
+      return;
+    }
     const total = this.results().length;
     if (!total) return;
     if (event.key === 'ArrowDown') {

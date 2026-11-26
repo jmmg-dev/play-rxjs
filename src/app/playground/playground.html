@@ -17,7 +17,7 @@
           (click)="infoOpen.set(!infoOpen())"
           [attr.aria-expanded]="infoOpen()"
           [attr.aria-controls]="'pg-info-' + name()"
-          [attr.aria-label]="'ui.infoTitle' | t"
+          [attr.aria-label]="('ui.info' | t) + ': ' + ('ui.infoTitle' | t)"
         >
           <app-icon name="info" [size]="15" />
           <span class="pg__label">{{ 'ui.info' | t }}</span>
@@ -34,7 +34,12 @@
         <span class="pg__label">{{ 'ui.reset' | t }}</span>
       </button>
       @if (running()) {
-        <button type="button" class="btn btn--secondary btn--sm" (click)="stop()">
+        <button
+          type="button"
+          class="btn btn--secondary btn--sm"
+          (click)="stop()"
+          [attr.aria-label]="'ui.stop' | t"
+        >
           <app-icon name="stop" [size]="15" />
           <span class="pg__label">{{ 'ui.stop' | t }}</span>
         </button>

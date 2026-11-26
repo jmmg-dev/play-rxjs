@@ -9,8 +9,10 @@ Interactive, bilingual (English / Spanish) RxJS documentation. Every example is 
 - CodeMirror 6 (editor, lazy loaded) + Lezer (identical syntax highlighting on the server)
 - Sucrase (in-browser TypeScript transpilation, lazy loaded)
 - Express server, deployable on Vercel
+- ESLint (`angular-eslint`) + Prettier
 - Vitest + jsdom (unit tests, run through Angular's `@angular/build:unit-test` builder) with v8 coverage
-- GitHub Actions (tests and coverage gate on every push / pull request to `main`)
+- Playwright + axe-core (end-to-end tests against the production build, desktop and mobile)
+- GitHub Actions (lint, unit tests with coverage gate and E2E on every push / pull request to `main`)
 
 ## How it works
 
@@ -49,6 +51,11 @@ npm run check:examples  # smoke test of every example
 npm test                # unit tests, single run
 npm run test:watch      # unit tests in watch mode
 npm run test:coverage   # unit tests + coverage report (fails below 90 %)
+npm run test:e2e        # end-to-end tests (builds and serves the app on :3100)
+npm run test:e2e:ui     # Playwright UI, to run and debug E2E tests
+npm run test:e2e:report # last E2E HTML report
+npm run lint            # ESLint (lint:fix to fix)
+npm run format          # Prettier (format:check to only check)
 ```
 
 ## Testing
@@ -60,7 +67,48 @@ Unit tests use **Vitest** with a **jsdom** environment, run by Angular's officia
 - **Coverage gate**: v8 coverage over `src/app/**` with a **90 %** minimum for lines, statements, functions and branches (`coverageThresholds` in `angular.json`); `npm run test:coverage` fails below it. The HTML report is written to `coverage/play-rxjs/index.html`. Only bootstrap and provider/route configuration files are excluded (`main*.ts`, `server.ts`, `app.config*.ts`, `app.routes.server.ts`).
 - **CI/CD**: `.github/workflows/ci-cd.yml` (job `checks`) runs `npm ci`, the `lint` and `format:check` scripts when they exist, and `npm run test:coverage` on every push and pull request to `main` / `master` (Node version from `.nvmrc`) and uploads the coverage report as an artifact. To block merging when it fails, enable a branch protection rule that requires the `checks` check.
 
-Server rendering and real browser behaviour (layout, animations, the sandbox iframe actually running RxJS) are not covered by unit tests; `npm run check:examples` complements them by running every example against the real RxJS.
+### End-to-end tests
+
+**Playwright** runs the E2E tests in `e2e/` against the **production build** served by the SSR server (`npm run build` + `npm run serve:ssr` on port 3100, started by `webServer` in `playwright.config.ts`), in desktop Chrome and an emulated Pixel 7.
+
+- **Every route** (`routes.spec.ts`): the list is built from the same catalog as the sitemap — and a test checks that both match — so new sections and operators are covered automatically. Each of the 330 pages (165 per language) must answer `200`, have a single visible `h1`, a title and the right `lang`; unknown pages must answer a real `404` with the error page. Runs on desktop only (the HTML is the same on mobile).
+- **Critical flows**: navigation (home → section → operator, pager, breadcrumbs, skip link, desktop sidebar, mobile drawer), language switch (same page, remembered for `/`, browser language, a full walk in each language), search (button, Ctrl+K, arrow keys, Enter, Esc), playground (run, console output, stop, clear, edit + Ctrl+Enter, reset, compile errors, info panel) and support (header heart and menu entry → `#support` below the header, Ko-fi in a new tab, mocked).
+- **No errors allowed**: a shared fixture (`e2e/fixtures.ts`) fails any test whose page logs a console error, throws, or gets a failed / 4xx response from our own server.
+- **Accessibility**: `@axe-core/playwright` checks the home, a section, an operator and the 404 page in both languages and fails on serious or critical violations.
+- **CI/CD**: the `e2e` job of `ci-cd.yml` runs after `checks`, installs Chromium, runs `npm run test:e2e` and uploads the HTML report (`playwright-report`) as an artifact. To block deploys or merges when it fails, add the `e2e` check to Vercel's Deployment Checks and to the branch protection rule.
+
+#### Running the E2E tests
+
+| Tool                                                                       | Version | Role                                                                         |
+| -------------------------------------------------------------------------- | ------- | ---------------------------------------------------------------------------- |
+| [Playwright](https://playwright.dev) (`@playwright/test`)                  | 1.65    | Test runner, browser automation, HTML report and UI mode                     |
+| Chromium                                                                   | bundled | Browser for both projects: `desktop` (Desktop Chrome) and `mobile` (Pixel 7) |
+| [axe-core](https://github.com/dequelabs/axe-core) (`@axe-core/playwright`) | 4.14    | Accessibility checks (WCAG rules) on the rendered pages                      |
+
+Install the browser once per machine (CI does it with `--with-deps`):
+
+```bash
+npx playwright install chromium
+```
+
+| Command                                  | What it does                                                                                 |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `npm run test:e2e`                       | Builds the app, serves it on :3100 and runs the whole suite in desktop and mobile (~2.5 min) |
+| `npm run test:e2e:ui`                    | Playwright UI: pick tests, watch them step by step in the browser and rerun the failing ones |
+| `npm run test:e2e:report`                | Opens the HTML report of the last run (traces and screenshots of failures)                   |
+| `npx playwright test e2e/search.spec.ts` | Runs a single file                                                                           |
+| `npx playwright test --project=desktop`  | Runs only one project (`desktop` or `mobile`)                                                |
+| `npx playwright test -g "Ko-fi"`         | Runs only the tests whose name matches the text                                              |
+| `npx playwright test --headed`           | Shows the browser while the tests run                                                        |
+
+**Faster local runs**: outside CI, Playwright reuses a server already listening on port 3100 instead of building again. Build once and keep the server running in another terminal, then run the tests as many times as needed (rebuild after changing code):
+
+```bash
+npm run build
+PORT=3100 npm run serve:ssr   # PowerShell: $env:PORT=3100; npm run serve:ssr
+```
+
+Together with `npm run check:examples` (every example run against the real RxJS), this covers what unit tests cannot: server rendering and the real browser (layout, hydration, the sandbox iframe running RxJS).
 
 ## Deploying to Vercel
 

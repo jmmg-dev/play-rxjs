@@ -5,6 +5,7 @@ import {
   computed,
   DestroyRef,
   ElementRef,
+  Injector,
   inject,
   input,
   signal,
@@ -42,6 +43,7 @@ export class Playground {
   readonly info = input('');
 
   private readonly i18n = inject(I18n);
+  private readonly injector = inject(Injector);
   private readonly cmHost = viewChild.required<ElementRef<HTMLElement>>('cmHost');
   private readonly frameHost = viewChild.required<ElementRef<HTMLElement>>('frameHost');
   private readonly consoleList = viewChild<ElementRef<HTMLElement>>('consoleList');
@@ -99,7 +101,11 @@ export class Playground {
 
   protected async focusEditor(): Promise<void> {
     await this.loadEditor();
-    this.editor?.focus();
+    // The editor host stays display:none until a render shows it (even when editorReady is
+    // already true, if the editor finished loading just before): focus it after that render
+    if (this.cmHost().nativeElement.classList.contains('pg__cm--hidden'))
+      afterNextRender(() => this.editor?.focus(), { injector: this.injector });
+    else this.editor?.focus();
   }
 
   async run(): Promise<void> {
