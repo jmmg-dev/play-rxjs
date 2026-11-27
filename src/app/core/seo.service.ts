@@ -38,7 +38,7 @@ export class Seo {
   update(data: SeoData): void {
     const lang = this.i18n.lang();
     const url = localizedUrl(lang, data.path);
-    const image = SITE_URL + OG_IMAGE.path;
+    const image = SITE_URL + OG_IMAGE.path(lang);
 
     this.doc.documentElement.lang = lang;
     this.title.setTitle(data.title);
@@ -61,7 +61,7 @@ export class Seo {
       ['property', 'og:image', image],
       ['property', 'og:image:width', String(OG_IMAGE.width)],
       ['property', 'og:image:height', String(OG_IMAGE.height)],
-      ['property', 'og:image:alt', SITE_NAME],
+      ['property', 'og:image:alt', this.i18n.t('seo.imageAlt')],
       ['name', 'twitter:card', 'summary_large_image'],
       ['name', 'twitter:title', data.title],
       ['name', 'twitter:description', data.description],
@@ -89,8 +89,9 @@ export class Seo {
       Object.entries(attrs).forEach(([k, v]) => link.setAttribute(k, v));
       head.appendChild(link);
     };
-    add({ rel: 'canonical', href: url });
+    // A noindex page (the 404) is not the canonical version of anything
     if (data.noindex) return;
+    add({ rel: 'canonical', href: url });
     for (const lang of LANGS) {
       add({ rel: 'alternate', hreflang: lang, href: localizedUrl(lang, data.path) });
     }

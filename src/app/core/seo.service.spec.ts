@@ -42,7 +42,11 @@ describe('Seo', () => {
     expect(meta('property="og:url"')).toBe('https://playrxjs.com/es/subjects');
     expect(meta('property="og:type"')).toBe('website');
     expect(meta('property="og:locale"')).toBe('es_ES');
-    expect(meta('property="og:image"')).toBe('https://playrxjs.com/images/social_media.jpg');
+    expect(meta('property="og:image"')).toBe('https://playrxjs.com/images/social-card-es.jpg');
+    expect(meta('property="og:image:width"')).toBe('1200');
+    expect(meta('property="og:image:height"')).toBe('630');
+    expect(meta('property="og:image:alt"')).toContain('documentación interactiva');
+    expect(meta('name="twitter:image"')).toBe('https://playrxjs.com/images/social-card-es.jpg');
     expect(meta('name="twitter:card"')).toBe('summary_large_image');
     const alternates = [...doc.head.querySelectorAll('meta[property="og:locale:alternate"]')];
     expect(alternates.map((m) => m.getAttribute('content'))).toEqual(['en_US']);
@@ -67,10 +71,11 @@ describe('Seo', () => {
     expect(meta('name="description"')).toBe('B');
   });
 
-  it('marks noindex pages and skips their hreflang links', () => {
+  it('marks noindex pages and skips their canonical and hreflang links', () => {
+    seo.update({ title: 'T', description: 'D', path: '/subjects' });
     seo.update({ title: 'T', description: 'D', path: '/missing', noindex: true });
     expect(meta('name="robots"')).toBe('noindex, follow');
-    expect(doc.head.querySelector('link[rel="canonical"]')).not.toBeNull();
+    expect(doc.head.querySelector('link[rel="canonical"]')).toBeNull();
     expect(doc.head.querySelector('link[hreflang]')).toBeNull();
   });
 

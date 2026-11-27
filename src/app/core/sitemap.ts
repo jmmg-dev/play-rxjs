@@ -2,17 +2,17 @@ import { CATEGORIES } from '../content/catalog';
 import { LANGS } from '../content/model';
 import { localizedUrl } from './seo.service';
 
-/** XML sitemap with hreflang alternates for every documentation page. */
+/**
+ * XML sitemap with hreflang alternates for every documentation page.
+ * No lastmod (it would be the request date, which search engines learn to ignore) and no
+ * priority (Google ignores it).
+ */
 export function buildSitemap(): string {
   const paths = [
-    { path: '', priority: '1.0' },
-    ...CATEGORIES.flatMap((c) => [
-      { path: `/${c.path}`, priority: '0.8' },
-      ...c.items.map((i) => ({ path: `/${c.path}/${i.id}`, priority: '0.7' })),
-    ]),
+    '',
+    ...CATEGORIES.flatMap((c) => [`/${c.path}`, ...c.items.map((i) => `/${c.path}/${i.id}`)]),
   ];
-  const lastmod = new Date().toISOString().slice(0, 10);
-  const urls = paths.flatMap(({ path, priority }) =>
+  const urls = paths.flatMap((path) =>
     LANGS.map((lang) => {
       const alternates = [
         ...LANGS.map(
@@ -21,7 +21,7 @@ export function buildSitemap(): string {
         ),
         `    <xhtml:link rel="alternate" hreflang="x-default" href="${localizedUrl('en', path)}"/>`,
       ].join('\n');
-      return `  <url>\n    <loc>${localizedUrl(lang, path)}</loc>\n${alternates}\n    <lastmod>${lastmod}</lastmod>\n    <priority>${priority}</priority>\n  </url>`;
+      return `  <url>\n    <loc>${localizedUrl(lang, path)}</loc>\n${alternates}\n  </url>`;
     }),
   );
   return `<?xml version="1.0" encoding="UTF-8"?>

@@ -116,6 +116,7 @@ The repo is ready to import in Vercel (no framework preset needed, everything is
 
 - `dist/play-rxjs/browser` (assets + prerendered pages) is served from the CDN.
 - Any other request goes to the `api/index.mjs` function, which runs the Angular SSR Express handler (`reqHandler`).
+- The build command deletes `browser/index.csr.html` (the server bundle keeps its own copy): otherwise Vercel serves that empty app shell for `/` and the server never redirects it to `/en` or `/es`.
 
 Before going live with a custom domain, update:
 

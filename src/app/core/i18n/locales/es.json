@@ -956,6 +956,7 @@
     "categoryTitle": "{title} — RxJS explicado con ejemplos en vivo",
     "operatorTitle": "{name} — {category} de RxJS con ejemplo en vivo",
     "operatorTitleConcept": "{name} — {category} de RxJS",
-    "keywords": "RxJS, documentación RxJS, programación reactiva, observables, operadores RxJS, ejemplos RxJS, playground RxJS, Angular"
+    "keywords": "RxJS, documentación RxJS, programación reactiva, observables, operadores RxJS, ejemplos RxJS, playground RxJS, Angular",
+    "imageAlt": "Play RxJS: documentación interactiva de RxJS con ejemplos editables en vivo"
   }
 }

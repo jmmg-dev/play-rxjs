@@ -14,7 +14,12 @@ export const AUTHOR = {
   repo: 'https://github.com/jmmg-dev/play-rxjs',
 };
 
-export const OG_IMAGE = { path: '/images/social_media.jpg', width: 1280, height: 640 };
+/** Social card (Open Graph / Twitter), one per language because it carries text. */
+export const OG_IMAGE = {
+  path: (lang: string) => `/images/social-card-${lang}.jpg`,
+  width: 1200,
+  height: 630,
+};
 
 /** Donation methods shown in the home "Support" section; the first one is the highlighted button. */
 export const PAYMENT_METHODS = [

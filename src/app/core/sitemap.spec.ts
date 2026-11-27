@@ -3,9 +3,6 @@ import { LANGS } from '../content/model';
 import { buildSitemap } from './sitemap';
 
 describe('buildSitemap', () => {
-  beforeEach(() => vi.useFakeTimers({ now: new Date('2026-11-25T10:00:00Z') }));
-  afterEach(() => vi.useRealTimers());
-
   it('is a urlset with the xhtml namespace', () => {
     const xml = buildSitemap();
     expect(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>')).toBe(true);
@@ -21,15 +18,17 @@ describe('buildSitemap', () => {
     expect(xml).toContain('<loc>https://playrxjs.com/es/operators/transformation/switchMap</loc>');
   });
 
-  it('adds hreflang alternates, x-default, lastmod and priority to each url', () => {
+  it('adds hreflang alternates and x-default to each url', () => {
     const xml = buildSitemap();
     const home = xml.split('</url>')[0];
     expect(home).toContain('hreflang="en" href="https://playrxjs.com/en"');
     expect(home).toContain('hreflang="es" href="https://playrxjs.com/es"');
     expect(home).toContain('hreflang="x-default" href="https://playrxjs.com/en"');
-    expect(home).toContain('<lastmod>2026-11-25</lastmod>');
-    expect(home).toContain('<priority>1.0</priority>');
-    expect(xml).toContain('<priority>0.8</priority>');
-    expect(xml).toContain('<priority>0.7</priority>');
+  });
+
+  it('leaves out lastmod and priority, which would not be accurate', () => {
+    const xml = buildSitemap();
+    expect(xml).not.toContain('<lastmod>');
+    expect(xml).not.toContain('<priority>');
   });
 });
